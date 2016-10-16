@@ -2,6 +2,17 @@
   'use strict';
 
   angular
-    .module('neotrackingWeb', ['ngCookies', 'ngSanitize', 'ngMessages', 'ngAria', 'ngResource', 'ngRoute', 'ngMaterial', 'toastr']);
+    .module('neotrackingWeb', [
+          'authService',
+          'ngCookies',
+          'ngSanitize',
+          'ngMessages',
+          'ngAria',
+          'ngResource',
+          'ngRoute',
+          'ngMaterial',
+          'toastr',
+          'satellizer'
+      ]);
 
 })();

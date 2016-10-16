@@ -12,7 +12,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthenticateController extends Controller
 {
-    public function authenticate(Request $request)
+    public function authenticatse(Request $request)
     {
         // grab credentials from the request
         $credentials = $request->only('email', 'password');
@@ -29,5 +29,18 @@ class AuthenticateController extends Controller
 
         // all good so return the token
         return response()->json(compact('token'));
+    }
+    public function authenticate(Request $request){
+        $credentials = $request->only('email','password');
+        $token = null;
+        try{
+            if(!$token = JWTAuth::attempt($credentials)){
+                return response()->json(['error' => 'invalid_credentials']);
+            }
+        }catch(JWTException $ex){
+            return response()->json(['error' => 'some_crappy_error'],500);
+        }
+        $user = JWTAuth::toUser($token);
+        return response()->json(compact('token', 'user'));
     }
 }
