@@ -12,6 +12,13 @@
         controller: 'MainController',
         controllerAs: 'main'
       })
+        .when('/login',{
+            templateUrl: 'app/pages/login/views/login.html',
+            controller: 'LoginController as ctrl'
+        })
+        .when('/admin', {
+            templateUrl: 'app/pages/admin/views/admin.html'
+        })
       .otherwise({
         redirectTo: '/'
       });
