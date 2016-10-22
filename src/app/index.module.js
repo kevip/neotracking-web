@@ -11,6 +11,7 @@
           'ngResource',
           'ngRoute',
           'ngMaterial',
+          'ui.router',
           'toastr',
           'satellizer'
       ]);
