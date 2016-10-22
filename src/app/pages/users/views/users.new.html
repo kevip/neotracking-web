@@ -1,0 +1,37 @@
+
+<section class="container">
+    <div class="row">
+        <div></div>
+    </div>
+</section>
+<section class="container usuarios">
+
+<h5>Alta de Usuarios</h5>
+<ul class="collection">
+
+<li class="collection-item avatar" ng-repeat="usuario in ctrl.usuarios">
+    <div>
+        <img src="http://lorempixel.com/50/50" alt="" class="circle">
+    </div>
+    <div>
+        <span class="title">{{usuario.celular}} </span>
+        <p>{{usuario.nombres}}&nbsp {{usuario.apellidos}} </br>Fecha de registro: {{usuario.fecha_ingreso}}
+    </p>
+    </div>
+    <div class="secondary-content">
+    <a href="#modal1" ><i class="small material-icons">done</i></a>
+    <a class="modal-trigger" href="#modal1"><i class="small material-icons">clear</i></a>
+    </div>
+    </li>
+</ul>
+</section>
+<div id="modal1" class="modal">
+<div class="modal-content">
+<h4>Confirmación de Eliminación</h4>
+<p>¿Desea eliminar este usuario?</p>
+</div>
+<div class="modal-footer">
+<a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
+<a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Aceptar</a>
+</div>
+</div>

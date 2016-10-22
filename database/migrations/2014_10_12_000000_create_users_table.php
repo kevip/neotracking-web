@@ -18,8 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('company');
-            $table->string('phone_number');
-            $table->tinyInteger('status')->default(0);
+            $table->string('phone_number')->unique();
+            $table->enum('status',['accepted', 'registered', 'removed'])->default('baja');
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();

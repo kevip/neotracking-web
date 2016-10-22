@@ -14,7 +14,7 @@ angular.module('authService',[])
             }
         }
     })
-    .factory('authUser',function($auth, sessionControl, toastr, $location){
+    .factory('authUser',function($auth, sessionControl, toastr, $location,$log){
 
         var cacheSession = function(email, username, id, avatar){
             sessionControl.set('userIsLogin', true);
@@ -34,13 +34,14 @@ angular.module('authService',[])
         var login = function(loginForm){
             $auth.login(loginForm).then(
                 function(res){
+                    $log.log(res);
                     var user = res.data.user;
                     cacheSession(user.email, user.username,user.id, loginForm.avatar);
                     $location.path('/');
                     toastr.success("Bienvenido");
                 },
                 function(err){
-                    console.log(err);
+                    $log.log(err);
                     toastr.error(err.data.error, 'Error');
                 }
             );
@@ -57,7 +58,7 @@ angular.module('authService',[])
             logout: function(){
                 $auth.logout();
                 unCacheSession();
-                console.log("gg");
+                $log.log("gg");
                 $location.path('/login');
             }
         }

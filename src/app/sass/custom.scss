@@ -1,0 +1,35 @@
+header{
+  padding-top: 20px;
+}
+.logo{
+  display: inline-block;
+}
+
+.logo .slogan{
+  display: inline-block;
+}
+
+.logout{
+  display: inline-block;
+  vertical-align: middle;
+  color: #ee6e73;
+}
+
+.collection-item > div {
+  display: inline-block;
+  margin-right: 20px;
+  vertical-align: top;
+}
+
+.footer-container{
+  margin-top: 50px;
+}
+
+.filtros, .filtros input, .filtros label, .filtros h6{
+  font-size: 10px;
+}
+
+.filtros input[type="checkbox"] + label{
+  padding-left: 20px;
+}
+

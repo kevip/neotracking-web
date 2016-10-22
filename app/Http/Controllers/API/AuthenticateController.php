@@ -20,7 +20,7 @@ class AuthenticateController extends Controller
         try {
             // attempt to verify the credentials and create a token for the user
             if (! $token = JWTAuth::attempt($credentials)) {
-                throw new UnauthorizedHttpException('Bearer', 'Invalid Credentials');
+                throw new UnauthorizedHttpException('Bearer', 'Acceso Invalido');
             }
         } catch (JWTException $e) {
             // something went wrong whilst attempting to encode the token
@@ -35,10 +35,10 @@ class AuthenticateController extends Controller
         $token = null;
         try{
             if(!$token = JWTAuth::attempt($credentials)){
-                return response()->json(['error' => 'invalid_credentials']);
+                return response()->json(['error' => 'Acceso Invalido'],401);
             }
         }catch(JWTException $ex){
-            return response()->json(['error' => 'some_crappy_error'],500);
+            return response()->json(['error' => 'No se pudo crear token'],500);
         }
         $user = JWTAuth::toUser($token);
         return response()->json(compact('token', 'user'));
