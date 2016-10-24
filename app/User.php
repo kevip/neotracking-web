@@ -9,13 +9,14 @@ use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
+    protected $table = 'users';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'username',
+        'name',
         'first_name',
         'last_name',
         'company',

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMovimientosTable extends Migration
+class CreateCategoriaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,9 @@ class CreateMovimientosTable extends Migration
      */
     public function up()
     {
-        Schema::create('movimientos', function (Blueprint $table) {
+        Schema::create('categoria', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_stock')->unsigned();
-            $table->date('fecha');
-            $table->time('hora');
             $table->string('tipo');
-            $table->integer('cantidad');
-            $table->foreign('id_stock')->references('id')->on('stock')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +26,6 @@ class CreateMovimientosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('movimientos');
+        Schema::drop('categoria');
     }
 }

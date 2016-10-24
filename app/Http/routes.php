@@ -15,12 +15,37 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::group(['middleware' => ['cors']], function(){
+
     Route::post('auth_login','API\AuthenticateController@authenticate');
+
     Route::group(['middleware' => ['jwt.auth']], function(){
 
         Route::group(['prefix' => 'api'], function(){
-            Route::resource('user','API\UserController');
+
+            Route::resource('user', 'API\UserController');
+
+            Route::resource('tienda', 'API\TiendasController');
+
+            Route::Resource('stock', 'API\StockController');
+
+            Route::put('user/{id}/alta', 'API\UserController@alta');
+
+            Route::put('user/{id}/baja', 'API\UserController@baja');
         });
+
+    });
+
+
+    Route::get('usuarios','API\UserController@index');
+    Route::get('tiendas','API\TiendasController@index');
+    Route::get('tracks','API\TracksController@index');
+    Route::get('tracks/{id}','API\TracksController@find');
+    Route::get('movimientos','API\MovementsController@index');
+    Route::put('usuario/{id}/alta','API\UserController@alta');
+    Route::put('usuario/{id}/baja','API\UserController@baja');
+    Route::put('mobiliario/{id}/baja','API\UserController@baja');
+    Route::group(['prefix' => 'admin'],function(){
+        Route::get('');
     });
 
 });

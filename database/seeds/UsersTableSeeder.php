@@ -17,12 +17,14 @@ class UsersTableSeeder extends Seeder
             [
                 'username'      => 'Admin',
                 'email'     => 'admin@trackingsystem.com',
-                'password'  => 'admin'
+                'password'  => 'admin',
+                'phone_number' => '956235689'
             ],
             [
                 'username'      => 'Supervisor',
                 'email'     => 'support@trackingsystem.com',
-                'password'  => 'support'
+                'password'  => 'support',
+                'phone_number' => '956121545'
             ]
         ];
 

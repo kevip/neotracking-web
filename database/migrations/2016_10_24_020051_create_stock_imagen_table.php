@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTiendaImagenTable extends Migration
+class CreateStockImagenTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,13 @@ class CreateTiendaImagenTable extends Migration
      */
     public function up()
     {
-        Schema::create('tienda_imagen', function (Blueprint $table) {
+        Schema::create('stock_imagen', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('tienda_id')->unsigned();
+            $table->integer('stock_id')->unsigned();
             $table->string('url');
             $table->string('name');
             $table->string('type');
-            $table->foreign('tienda_id')->references('id')->on('tienda')->onDelete('cascade');
+            $table->foreign('stock_id')->references('id')->on('stock')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateTiendaImagenTable extends Migration
      */
     public function down()
     {
-        Scehma::drop('tienda_imagen');
+        Schema::drop('stock_imagen');
     }
 }
