@@ -16,6 +16,26 @@ class UserRepository
     ];
 
     /**
+     * @param Request $request
+     * @param $id
+     * @return User
+     */
+    public function alta(Request $request, $id)
+    {
+        return $this->cambiarEstado($this->USER_STATUS["accepted"], $id);
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return User
+     */
+    public function baja(Request $request, $id)
+    {
+        return $this->cambiarEstado($this->USER_STATUS["removed"], $id);
+    }
+
+    /**
      * @param $id
      * @return User
      */
@@ -52,35 +72,6 @@ class UserRepository
     }
 
     /**
-     * @param Request $request
-     * @param User $user
-     */
-    private function syncRoles(Request $request, User $user)
-    {
-        $user->roles()->sync(collect($request->roles)->pluck('id')->all());
-    }
-
-    /**
-     * @param Request $request
-     * @param $id
-     * @return User
-     */
-    public function alta(Request $request, $id)
-    {
-        return $this->cambiarEstado($this->USER_STATUS["accepted"], $id);
-    }
-
-    /**
-     * @param Request $request
-     * @param $id
-     * @return User
-     */
-    public function baja(Request $request, $id)
-    {
-        return $this->cambiarEstado($this->USER_STATUS["removed"], $id);
-    }
-
-    /**
      * @param $status
      * @param $id
      * @return User
@@ -98,12 +89,21 @@ class UserRepository
             }
             if($authorized){
                 $usr->status = $status;
+                $usr->save();
             }
         }
 
-        $usr->save();
-
         return $usr;
     }
+
+    /**
+     * @param Request $request
+     * @param User $user
+     */
+    private function syncRoles(Request $request, User $user)
+    {
+        $user->roles()->sync(collect($request->roles)->pluck('id')->all());
+    }
+
 
 }

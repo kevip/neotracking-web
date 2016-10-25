@@ -26,17 +26,26 @@ Route::group(['middleware' => ['cors']], function(){
 
             Route::resource('tienda', 'API\TiendasController');
 
-            Route::Resource('stock', 'API\StockController');
+            Route::resource('stock', 'API\StockController');
 
-            Route::put('user/{id}/alta', 'API\UserController@alta');
+            Route::group(['prefix' => 'user'], function(){
 
-            Route::put('user/{id}/baja', 'API\UserController@baja');
+                Route::get('pendientes', 'API\UserController@index');
+
+                Route::put('{id}/alta', 'API\UserController@alta');
+
+                Route::put('{id}/baja', 'API\UserController@baja');
+
+
+            });
+
         });
 
     });
 
 
     Route::get('usuarios','API\UserController@index');
+    Route::get('usuarios/pendientes','API\UserController@pendientes');
     Route::get('tiendas','API\TiendasController@index');
     Route::get('tracks','API\TracksController@index');
     Route::get('tracks/{id}','API\TracksController@find');

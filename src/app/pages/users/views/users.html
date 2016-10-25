@@ -12,7 +12,7 @@
 
         <li class="collection-item avatar" ng-repeat="usuario in ctrl.usuarios">
             <img src="http://lorempixel.com/50/50" alt="" class="circle">
-            <span class="title">{{usuario.celular}}</span>
+            <span class="title"> {{usuario.username}}<span ng-if=""> - {{usuario.celular}}</span></span>
             <p>{{usuario.nombres}}&nbsp  {{ usuario.apellidos}} </br>Fecha de registro: {{usuario.fecha_ingreso}}
         </p>
             <div class="secondary-content">

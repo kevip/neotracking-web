@@ -58,7 +58,7 @@ angular.module('authService',[])
             logout: function(){
                 $auth.logout();
                 unCacheSession();
-                $log.log("gg");
+                //$log.log("gg");
                 $location.path('/login');
             }
         }

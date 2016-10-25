@@ -22,7 +22,7 @@ class UserController extends Controller
 
     public function index()
     {
-        return User::all();
+        return User::with('roles')->get();
     }
 
     public function show($id)
@@ -40,11 +40,23 @@ class UserController extends Controller
 
     }
 
+    /**
+     * Alta de usuario
+     * @param Request $request
+     * @param $id
+     * @return User
+     */
     public function alta(Request $request, $id)
     {
         return $this->userRepository->alta($request, $id);
     }
 
+    /**
+     * Baja de usuario
+     * @param Request $request
+     * @param $id
+     * @return User
+     */
     public function baja(Request $request, $id)
     {
         return $this->userRepository->baja($request, $id);
