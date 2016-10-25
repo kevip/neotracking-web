@@ -33,15 +33,26 @@
               module: 'private'
           })
           .state('index.furniture-detail',{
-              url: '/furniture/detail',
+              url: '/furniture/:id/detail',
               templateUrl: 'app/pages/furniture/views/furniture.detail.html',
               controller: 'FurnitureDetailController as ctrl',
+              resolve: {
+                stock: ['Stock','$stateParams',function(Stock, $stateParams){
+                    return Stock.find({id: $stateParams.id});
+                }]
+              },
               module: 'private'
           })
           .state('index.users',{
               url: '/users',
               templateUrl: 'app/pages/users/views/users.html',
               controller: 'UsersController as ctrl',
+              module: 'private'
+          })
+          .state('index.tracks',{
+              url: '/tracks',
+              templateUrl: 'app/pages/track/views/tracks.html',
+              controller: 'TracksController as ctrl',
               module: 'private'
           })
           .state('index.user-new',{

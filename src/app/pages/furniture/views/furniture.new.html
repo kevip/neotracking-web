@@ -9,34 +9,28 @@
 
 <h5>Alta de Mobiliarios</h5>
 <ul class="collection">
-    <li class="collection-item avatar" ng-repeat="mobiliario in ctrl.mobiliarios ">
+    <li data-id="{{mobiliario.id}}" class="collection-item avatar" ng-repeat="mobiliario in ctrl.mobiliarios ">
         <div>
-        <img src="{{ mobiliario.image}} " alt="" >
+            <img src="{{ mobiliario.stock_imagen[0].url}} " alt="" style="width:120px">
         </div>
 
         <div>
-        <span class="title"><b>Código: {{mobiliario.codigo}}</b></span>
-        <p>
-        Título: {{ mobiliario.titulo }}</br>
-        Usuario: {{ mobiliario.usuario }}</br>Fecha de registro: {{mobiliario.fecha_ingreso}}</br>
-        Ubicación: {{ mobiliario.ubicacion }}
-    </p>
+            <p>
+                Descripcion: {{ mobiliario.descripcion }}</br>
+                Cantidad: {{ mobiliario.cantidad }}</br>
+                Area: {{mobiliario.categoria.tipo}}</br>
+                Categoria: {{mobiliario.subcategoria1.tipo}}</br>
+                Subcategoria: {{mobiliario.subcategoria2.tipo}}</br>
+                Ubicación: {{ mobiliario.ubicacion.tipo }}
+            </p>
         </div>
         <div class="secondary-content">
-        <a title="Ver Detalle" ui-sref="index.furniture-detail" ><i class="small material-icons">visibility</i></a>
-        <a title="Aprobar" href="#modal1" ><i class="small material-icons">done</i></a>
-        <a title="Eliminar" class="modal-trigger" href="#modal1"><i class="small material-icons">clear</i></a>
+            <a title="Ver Detalle" ui-sref="index.furniture-detail({id:mobiliario.id})" ><i class="small material-icons">visibility</i></a>
+            <a ng-click="ctrl.showModalAlta($event)" ><i class="small material-icons">done</i></a>
+            <a ng-click="ctrl.showModalBaja($event)" ><i class="small material-icons">clear</i></a>
+            <!--<a title="Aprobar" href="#modal1" class="modal-trigger"><i class="small material-icons">done</i></a>
+            <a title="Eliminar" href="#modal2" class="modal-trigger"><i class="small material-icons">clear</i></a>-->
         </div>
     </li>
 </ul>
 </section>
-<div id="modal1" class="modal">
-<div class="modal-content">
-<h4>Confirmación de Eliminación</h4>
-<p>¿Desea eliminar este mobiliario?</p>
-</div>
-<div class="modal-footer">
-<a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
-<a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Aceptar</a>
-</div>
-</div>

@@ -20,7 +20,14 @@ class StockController extends Controller
 
     public function index()
     {
-        return Stock::all();
+        return Stock::with([
+            'stockImagen',
+            'categoria',
+            'subcategoria1',
+            'subcategoria2',
+            'ubicacion'
+
+        ])->get();
     }
 
     public function store(Request $request)
@@ -30,6 +37,13 @@ class StockController extends Controller
 
     public function show($id)
     {
-        return $this->stockRepository->find($id);
+        return Stock::with([
+            'stockImagen',
+            'categoria',
+            'subcategoria1',
+            'subcategoria2',
+            'ubicacion'
+
+        ])->find($id);
     }
 }

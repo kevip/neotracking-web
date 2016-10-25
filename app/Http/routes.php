@@ -28,6 +28,8 @@ Route::group(['middleware' => ['cors']], function(){
 
             Route::resource('stock', 'API\StockController');
 
+            Route::resource('track','API\TracksController@index');
+
             Route::group(['prefix' => 'user'], function(){
 
                 Route::get('pendientes', 'API\UserController@index');

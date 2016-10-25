@@ -26,20 +26,24 @@
             <ul class="hide-on-med-and-down">
                 <li ng-class="{active: $state.current.name=='index.home'}"><a ui-sref="index.home">Reportes - {{$state.current.name}}</a></li>
                 <li ng-class="{active: $state.current.name=='index.furniture'}"><a ui-sref="index.furniture">Mobiliarios<span class="new badge">2</span></a></li>
-                <li ng-class="{active: $state.current.name=='index.users'}">
-                    <a class="dropdown-button" href="javascript:void(0);" data-activates="dropdown_usuarios" dropdown data-hover="true">
+                <li ng-class="{active: $state.current.name=='index.user-new'}">
+                    <a ui-sref="index.user-new">Usuarios<span class="new badge">2</span></a>
+                    <!--<a class="dropdown-button" href="javascript:void(0);" data-activates="dropdown_usuarios" dropdown data-hover="true">
                         Usuarios<i class="material-icons right">arrow_drop_down</i>
-                    </a>
+                    </a>-->
                     <!--<a class='dropdown-button btn' href='javascript:void(0);' data-activates='dropdown_usuarios' dropdown data-hover="true">
                         This is a dropdown
                     </a>-->
                 </li>
+                <li ng-class="{active: $state.current.name=='index.tracks'}"><a ui-sref="index.tracks">Tracks<span class="new badge">1</span></a></li>
 
             </ul>
             <ul class="side-nav" id="mobile-demo">
                 <li ng-class="{active: $state.current.name=='index.home'}"><a ui-sref="index.home">Reportes</a></li>
-                <li ng-class="{active: $state.current.name=='index.furniture'}"><a ui-sref="index.user-new">Mobiliarios<span class="new badge">2</span></a></li>
-                <li ng-class="{active: $state.current.name=='index.users'}"><a class="dropdown-button" href="javascript:void(0);" data-activates="dropdown_usuarios_mobile">Usuarios<i class="material-icons right">arrow_drop_down</i></a></li>
+                <li ng-class="{active: $state.current.name=='index.furniture'}"><a ui-sref="index.furniture">Mobiliarios<span class="new badge">2</span></a></li>
+                <!--<li ng-class="{active: $state.current.name=='index.users'}"><a class="dropdown-button" href="javascript:void(0);" data-activates="dropdown_usuarios_mobile">Usuarios<i class="material-icons right">arrow_drop_down</i></a></li>-->
+                <li ng-class="{active: $state.current.name=='index.user-new'}"><a ui-sref="index.user-new">Usuarios<span class="new badge">2</span></a></li>
+                <li ng-class="{active: $state.current.name=='index.tracks'}"><a ui-sref="index.tracks">Tracks<span class="new badge">1</span></a></li>
 
             </ul>
         </nav>

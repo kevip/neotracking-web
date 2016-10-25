@@ -7,9 +7,12 @@
 
     /** @ngInject */
 
-    FurnitureDetailController.$inject = [];
+    FurnitureDetailController.$inject = [
+        '$stateParams',
+        'stock'
+    ];
 
-    function FurnitureDetailController() {
+    function FurnitureDetailController($stateParams, stock) {
         var vm = this;
         vm.mobiliarios = [
             {
@@ -25,7 +28,8 @@
                 "fecha_ingreso":"2016-10-22",
                 "ubicacion":"Plaza Vea Bolichera"}
         ];
-
+        vm.mobiliario = stock;
+        console.log(stock);
 
     }
 })();

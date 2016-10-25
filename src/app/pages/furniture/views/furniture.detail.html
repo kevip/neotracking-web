@@ -7,6 +7,9 @@
 
             <div class="carousel carousel-slider center" data-indicators="true">
                 <div class="carousel-item " href="#one!">
+                    <img class="responsive-img" src="{{ctrl.mobiliario.stock_imagen[0].url}}" style="width: 380px;height:380px">
+                </div><!--
+                <div class="carousel-item " href="#one!">
                     <img class="responsive-img" src="http://lorempixel.com/600/600/abstract/img234">
                 </div>
                 <div class="carousel-item " href="#two!">
@@ -17,20 +20,32 @@
                 </div>
                 <div class="carousel-item " href="#four!">
                     <img class="responsive-img" src="http://lorempixel.com/600/600/abstract/img456">
-                </div>
+                </div>-->
             </div>
         </div>
         <div class="col s12 m6">
             <div class="detalle-contenido">
-                <p class="flow-text"><b>Código:</b> 234234234</p>
+                <!--<p class="flow-text"><b>Código:</b> 234234234</p>-->
                 <p class="flow-text">
-                    Usuario: 987623423
+                    Descripcion: {{ ctrl.mobiliario.descripcion }}
                 </p>
                 <p class="flow-text">
-                    Nombre del Usuario: Juan Pérez
+                    Cantidad: {{ ctrl.mobiliario.cantidad }}
                 </p>
                 <p class="flow-text">
-                    Ubicación: Plaza Vea Bolichera
+                    Area: {{ctrl.mobiliario.categoria.tipo}}
+                </p>
+                <p class="flow-text">
+                    Categoria: {{ctrl.mobiliario.subcategoria1.tipo}}
+                </p>
+                <p class="flow-text">
+                    Subcategoria: {{ctrl.mobiliario.subcategoria2.tipo}}
+                </p>
+                <p class="flow-text">
+                    Fecha: {{ ctrl.mobiliario.fecha }}
+                </p>
+                <p class="flow-text">
+                    Ubicación: {{ ctrl.mobiliario.ubicacion.tipo }}
                 </p>
                 <div>
                     <a class="waves-effect waves-light btn"><i class="material-icons left">done</i>Agregar</a></a>

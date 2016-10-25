@@ -1,0 +1,36 @@
+<section class="container">
+    <div class="row">
+        <div></div>
+    </div>
+</section>
+<section class="container usuarios">
+
+    <h5>Registro de tracking</h5>
+    <table class="striped">
+        <thead>
+        <tr>
+            <th data-field="id">Tienda</th>
+            <th data-field="id">Código</th>
+            <th data-field="id">Observacion</th>
+            <th data-field="id">Latitud</th>
+            <th data-field="id">Longitud</th>
+            <th data-field="id">usr</th>
+            <th data-field="id">num</th>
+            <th data-field="id">dtime</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="track in ctrl.tracks">
+            <td>{{track.tienda.name}}</td>
+            <td>{{track.codigo}}</td>
+            <td>{{track.obs}}</td>
+            <td>{{track.lat}}</td>
+            <td>{{track.lng}}</td>
+            <td>{{track.usr}}</td>
+            <td>{{track.num}}</td>
+            <td>{{track.dtime}}</td>
+        </tr>
+        </tbody>
+    </table>
+</section>

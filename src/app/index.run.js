@@ -30,9 +30,9 @@
       function stateChangeStart(e, toState, toParams, fromState, fromParams){
           //if( ($.inArray($location.path(), privateRoutes) !== -1) && !authUser.isLoggedIn()){
           if( toState.module==="private" && !authUser.isLoggedIn()){
-              console.log("entré");
               toastr.error("Debe iniciar sesion");
-              $state.go('login');
+              $location.path('/login');
+              //$state.go('login');
           }
 
       }
