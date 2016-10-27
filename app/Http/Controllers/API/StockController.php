@@ -45,7 +45,7 @@ class StockController extends Controller
     }
     public function store(Request $request)
     {
-
+        return $this->stockRepository->search($request);
     }
 
     public function show($id)

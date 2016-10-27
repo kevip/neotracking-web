@@ -3,13 +3,13 @@
         <div class="col m12">
             <h3>Reporte de Stock</h3>
         </div>
-        <form class="filtros" action="#">
+        <form class="filtros">
             <div class="col m1">
                 <h6>Área</h6>
                 <div class="col m6">
                     <p>
                         <div ng-repeat="categoria in ctrl.categorias">
-                            <input type="checkbox" id="{{'cat'+$index}}" ng-change="ctrl.sync(bool, categoria)" ng-model="bool" />
+                            <input type="checkbox" id="{{'cat'+$index}}" ng-change="ctrl.sync(bool, categoria, 'categoria')" ng-model="bool" />
                             <label for="{{'cat'+$index}}">{{categoria.tipo}}</label>
                         </div>
                     </p>
@@ -20,7 +20,7 @@
                 <div class="col m12">
                     <p>
                         <div ng-repeat="subcategoria1 in ctrl.subcategorias1">
-                            <input type="checkbox" id="{{'subcat1'+$index}}" ng-change="ctrl.sync(bool, subcategoria1)" ng-model="bool" />
+                            <input type="checkbox" id="{{'subcat1'+$index}}" ng-change="ctrl.sync(bool, subcategoria1, 'subcategoria1')" ng-model="bool" />
                             <label for="{{'subcat1'+$index}}">{{subcategoria1.tipo}}</label>
                         </div>
                     </p>
@@ -32,7 +32,7 @@
                 <div class="col m12">
                     <p>
                         <div ng-repeat="subcategoria2 in ctrl.subcategorias2">
-                            <input type="checkbox" id="{{'subcat2'+$index}}" ng-change="ctrl.sync(bool, subcategoria2)" ng-model="bool" />
+                            <input type="checkbox" id="{{'subcat2'+$index}}" ng-change="ctrl.sync(bool, subcategoria2, 'subcategoria2')" ng-model="bool" />
                             <label for="{{'subcat2'+$index}}">{{subcategoria2.tipo}}</label>
                         </div>
                     </p>
@@ -44,7 +44,7 @@
                 <div class="col m12">
                     <p>
                         <div ng-repeat="region1 in ctrl.region1">
-                            <input type="checkbox" id="{{'reg1'+$index}}" ng-change="ctrl.sync(bool, region1)" ng-model="bool" />
+                            <input type="checkbox" id="{{'reg1'+$index}}" ng-change="ctrl.sync(bool, region1, 'region1')" ng-model="bool" />
                             <label for="{{'reg1'+$index}}">{{region1.nombre}}</label>
                         </div>
                     </p>
@@ -55,7 +55,7 @@
                 <div class="col m12">
                     <p>
                         <div ng-repeat="region2 in ctrl.region2">
-                            <input type="checkbox" id="{{'reg2'+$index}}" ng-change="ctrl.sync(bool, region2)" ng-model="bool" />
+                            <input type="checkbox" id="{{'reg2'+$index}}" ng-change="ctrl.sync(bool, region2, 'region2')" ng-model="bool" />
                             <label for="{{'reg2'+$index}}">{{region2.nombre}}</label>
                         </div>
                     </p>
@@ -66,7 +66,7 @@
                 <div class="col m12">
                     <p>
                         <div ng-repeat="departamento in ctrl.departamentos">
-                            <input type="checkbox" id="{{'depa'+$index}}" ng-change="ctrl.sync(bool, departamento)" ng-model="bool" />
+                            <input type="checkbox" id="{{'depa'+$index}}" ng-change="ctrl.sync(bool, departamento, 'departamento')" ng-model="bool" />
                             <label for="{{'depa'+$index}}">{{departamento.nombre}}</label>
                         </div>
                     </p>
@@ -77,7 +77,7 @@
                 <div class="col m12">
                     <p>
                         <div ng-repeat="provincia in ctrl.provincias">
-                            <input type="checkbox" id="{{'prov'+$index}}" ng-change="ctrl.ctrl.sync(bool, provincia)" ng-model="bool" />
+                            <input type="checkbox" id="{{'prov'+$index}}" ng-change="ctrl.sync(bool, provincia, 'provincia')" ng-model="bool" />
                             <label for="{{'prov'+$index}}">{{provincia.nombre}}</label>
                         </div>
                     </p>
@@ -88,12 +88,13 @@
                 <div class="col m12">
                     <p>
                         <div ng-repeat="tipoStock in ctrl.tipoStock">
-                            <input type="checkbox" id="{{'ts'+$index}}" ng-change="ctrl.sync(bool, tipoStock)" ng-model="bool" />
+                            <input type="checkbox" id="{{'ts'+$index}}" ng-change="ctrl.sync(bool, tipoStock, 'tipoStock')" ng-model="bool" />
                             <label for="{{'ts'+$index}}">{{tipoStock.tipo}}</label>
                         </div>
                     </p>
                 </div>
             </div>
+            <a class="btn" ng-click="ctrl.submit($event)">Filtrar</a>
         </form>
         <div class="row">
             <md-toolbar class="md-table-toolbar md-default">

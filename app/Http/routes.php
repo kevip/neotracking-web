@@ -40,14 +40,7 @@ Route::group(['middleware' => ['cors']], function(){
 
             Route::get('tipo-stock', 'API\StockController@getTipo');
 
-
-            Route::group(['prefix' => 'stock'], function(){
-
-                Route::get('tipo', 'API\StockController@getTipo');
-
-                Route::post('search', 'API\StockController@search');
-
-            });
+            Route::get('stock/search', 'API\StockController@search');
 
             Route::resource('tienda', 'API\TiendasController');
 
@@ -93,5 +86,6 @@ Route::group(['middleware' => ['cors']], function(){
 
 
     });
+
 
 });
