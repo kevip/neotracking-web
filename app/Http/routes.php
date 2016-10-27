@@ -22,13 +22,40 @@ Route::group(['middleware' => ['cors']], function(){
 
         Route::group(['prefix' => 'api'], function(){
 
-            Route::resource('user', 'API\UserController');
+            Route::resource('categoria', 'API\CategoriasController');
 
-            Route::resource('tienda', 'API\TiendasController');
+            Route::get('departamento', 'API\UbicacionController@getDepartamentos');
+
+            Route::get('provincia', 'API\UbicacionController@getProvincias');
+
+            Route::get('region1', 'API\UbicacionController@getRegion1');
+
+            Route::get('region2', 'API\UbicacionController@getRegion2');
+
+            Route::resource('subcategoria1', 'API\Subcategoria1Controller');
+
+            Route::resource('subcategoria2', 'API\Subcategoria2Controller');
 
             Route::resource('stock', 'API\StockController');
 
-            Route::resource('track','API\TracksController@index');
+            Route::get('tipo-stock', 'API\StockController@getTipo');
+
+
+            Route::group(['prefix' => 'stock'], function(){
+
+                Route::get('tipo', 'API\StockController@getTipo');
+
+                Route::post('search', 'API\StockController@search');
+
+            });
+
+            Route::resource('tienda', 'API\TiendasController');
+
+            Route::resource('tracking','API\TracksController');
+
+            Route::resource('ubicacion', 'API\UbicacionController');
+
+            Route::resource('user', 'API\UserController');
 
             Route::group(['prefix' => 'user'], function(){
 
@@ -45,18 +72,26 @@ Route::group(['middleware' => ['cors']], function(){
 
     });
 
+    /**
+     * rutas publicas temporales
+     */
+    Route::resource('user', 'API\UserController');
 
-    Route::get('usuarios','API\UserController@index');
-    Route::get('usuarios/pendientes','API\UserController@pendientes');
-    Route::get('tiendas','API\TiendasController@index');
-    Route::get('tracks','API\TracksController@index');
-    Route::get('tracks/{id}','API\TracksController@find');
-    Route::get('movimientos','API\MovementsController@index');
-    Route::put('usuario/{id}/alta','API\UserController@alta');
-    Route::put('usuario/{id}/baja','API\UserController@baja');
-    Route::put('mobiliario/{id}/baja','API\UserController@baja');
-    Route::group(['prefix' => 'admin'],function(){
-        Route::get('');
+    Route::resource('tienda', 'API\TiendasController');
+
+    Route::resource('stock', 'API\StockController');
+
+    Route::resource('tracking','API\TracksController');
+
+    Route::group(['prefix' => 'user'], function(){
+
+        Route::get('pendientes', 'API\UserController@index');
+
+        Route::put('{id}/alta', 'API\UserController@alta');
+
+        Route::put('{id}/baja', 'API\UserController@baja');
+
+
     });
 
 });

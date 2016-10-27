@@ -22,7 +22,7 @@ class CreateTrackTable extends Migration
             $table->string('num');
             $table->integer('usr');
             $table->dateTime('dtime');
-            $table->enum('status',['en alta', 'en baja', 'pendiente']);
+            $table->enum('status',['en alta', 'en baja', 'pendiente'])->default('pendiente');
             $table->timestamps();
 
             $table->foreign('tienda_id')->references('id')->on('tienda')->onDelete('cascade');

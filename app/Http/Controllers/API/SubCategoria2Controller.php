@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Categoria;
+use App\Models\Subcategoria2;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class CategoriasController extends Controller
+class SubCategoria2Controller extends Controller
 {
-
     public function index(){
-        return Categoria::all();
+        return Subcategoria2::all();
     }
 }

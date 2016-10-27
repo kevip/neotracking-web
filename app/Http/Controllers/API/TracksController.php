@@ -22,7 +22,7 @@ class TracksController extends Controller
      * @return Track
      */
     public function index(){
-        return Track::with(['tienda'])->get();
+        return Track::with(['tienda', 'trackImagen'])->get();
     }
 
     /**

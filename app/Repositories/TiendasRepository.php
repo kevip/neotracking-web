@@ -27,7 +27,7 @@ class TiendasRepository {
             'state'        => $request->state
         ]);
 
-        return $tienda;
+        return $tienda->id;
     }
 
 

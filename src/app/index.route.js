@@ -18,6 +18,33 @@
               url: '/',
               templateUrl: 'app/pages/home/views/home.html',
               controller: 'HomeController as ctrl',
+              resolve: {
+                  categorias: ['Categoria','$stateParams',function(Categoria, $stateParams){
+                      return Categoria.all();
+                  }],
+                  subcategorias1: ['Subcategoria1','$stateParams',function(Subcategoria1, $stateParams){
+                      return Subcategoria1.all();
+                  }],
+                  subcategorias2: ['Subcategoria2','$stateParams',function(Subcategoria2, $stateParams){
+                      return Subcategoria2.all();
+                  }],
+                  region1: ['$http', 'API_URL', function($http, API_URL){
+                      return $http.get(API_URL+'region1');
+                  }],
+                  region2: ['$http', 'API_URL', function($http, API_URL){
+                      return $http.get(API_URL+'region2');
+                  }],
+                  provincias: ['$http', 'API_URL', function($http, API_URL){
+                      return $http.get(API_URL+'provincia');
+                  }],
+                  departamentos: ['$http', 'API_URL', function($http, API_URL){
+                      return $http.get(API_URL+'departamento');
+                  }],
+                  tipoStock: ['$http', 'API_URL', function($http, API_URL){
+                      return $http.get(API_URL+'tipo-stock');
+                  }]
+
+              },
               module: 'private'
           })
           .state('login',{

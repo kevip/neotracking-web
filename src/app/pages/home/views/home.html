@@ -8,97 +8,56 @@
                 <h6>Área</h6>
                 <div class="col m6">
                     <p>
-                        <input type="checkbox" id="test11" />
-                        <label for="test11">TV</label>
-                        </br>
-                        <input type="checkbox" id="test12" />
-                        <label for="test12">REF</label>
-                        </br>
-                        <input type="checkbox" id="test13" />
-                        <label for="test13">CAV</label>
-                    </p>
-                </div>
-            </div>
-            <div class="col m2">
-                <h6>Categoría</h6>
-                <div class="col m6">
-                    <p>
-                        <input type="checkbox" id="test21" />
-                        <label for="test21">Mesa</label>
-                        </br>
-                        <input type="checkbox" id="test22" />
-                        <label for="test22">Pared</label>
-                        </br>
-                        <input type="checkbox" id="test23" />
-                        <label for="test23">Columna</label>
-                    </p>
-
-                </div>
-                <div class="col m6">
-                    <p>
-                        <input type="checkbox" id="test24" />
-                        <label for="test24">Ruma</label>
-                        </br>
-                        <input type="checkbox" id="test25" />
-                        <label for="test25">Totem</label>
-                        </br>
-                        <input type="checkbox" id="test26" />
-                        <label for="test26">Tarima</label>
-                    </p>
-                </div>
-            </div>
-            <div class="col m3">
-                <h6>Sub Categoría</h6>
-                <div class="col m8">
-                    <p>
-                        <input type="checkbox" id="test31" />
-                        <label for="test31">Smart TV</label>
-                        </br>
-                        <input type="checkbox" id="test32" />
-                        <label for="test32">Super Ultra HDTV</label>
-                        </br>
-                        <input type="checkbox" id="test33" />
-                        <label for="test33">Coreana</label>
-                    </p>
-
-                </div>
-                <div class="col m4">
-                    <p>
-                        <input type="checkbox" id="test34" />
-                        <label for="test34">Cubo</label>
-                        </br>
-                        <input type="checkbox" id="test35" />
-                        <label for="test35">Chilena</label>
-                        </br>
-                        <input type="checkbox" id="test36" />
-                        <label for="test36">Turbo</label>
+                        <div ng-repeat="categoria in ctrl.categorias">
+                            <input type="checkbox" id="{{'cat'+$index}}" ng-change="ctrl.sync(bool, categoria)" ng-model="bool" />
+                            <label for="{{'cat'+$index}}">{{categoria.tipo}}</label>
+                        </div>
                     </p>
                 </div>
             </div>
             <div class="col m1">
-                <h6>Región</h6>
-                <div class="col m6">
+                <h6>Categoría</h6>
+                <div class="col m12">
                     <p>
-                        <input type="checkbox" id="test41" />
-                        <label for="test41">Lima</label>
-                        </br>
-                        <input type="checkbox" id="test42" />
-                        <label for="test42">Provincias</label>
+                        <div ng-repeat="subcategoria1 in ctrl.subcategorias1">
+                            <input type="checkbox" id="{{'subcat1'+$index}}" ng-change="ctrl.sync(bool, subcategoria1)" ng-model="bool" />
+                            <label for="{{'subcat1'+$index}}">{{subcategoria1.tipo}}</label>
+                        </div>
+                    </p>
+
+                </div>
+            </div>
+            <div class="col m2">
+                <h6>Sub Categoría</h6>
+                <div class="col m12">
+                    <p>
+                        <div ng-repeat="subcategoria2 in ctrl.subcategorias2">
+                            <input type="checkbox" id="{{'subcat2'+$index}}" ng-change="ctrl.sync(bool, subcategoria2)" ng-model="bool" />
+                            <label for="{{'subcat2'+$index}}">{{subcategoria2.tipo}}</label>
+                        </div>
+                    </p>
+
+                </div>
+            </div>
+            <div class="col m1">
+                <h6>Región</h6>
+                <div class="col m12">
+                    <p>
+                        <div ng-repeat="region1 in ctrl.region1">
+                            <input type="checkbox" id="{{'reg1'+$index}}" ng-change="ctrl.sync(bool, region1)" ng-model="bool" />
+                            <label for="{{'reg1'+$index}}">{{region1.nombre}}</label>
+                        </div>
                     </p>
                 </div>
             </div>
             <div class="col m1">
                 <h6>Región II</h6>
-                <div class="col m6">
+                <div class="col m12">
                     <p>
-                        <input type="checkbox" id="test51" />
-                        <label for="test51">Lima</label>
-                        </br>
-                        <input type="checkbox" id="test52" />
-                        <label for="test52">Centro</label>
-                        </br>
-                        <input type="checkbox" id="test53" />
-                        <label for="test53">Oriente</label>
+                        <div ng-repeat="region2 in ctrl.region2">
+                            <input type="checkbox" id="{{'reg2'+$index}}" ng-change="ctrl.sync(bool, region2)" ng-model="bool" />
+                            <label for="{{'reg2'+$index}}">{{region2.nombre}}</label>
+                        </div>
                     </p>
                 </div>
             </div>
@@ -106,14 +65,10 @@
                 <h6>Departamento</h6>
                 <div class="col m12">
                     <p>
-                        <input type="checkbox" id="test61" />
-                        <label for="test61">Lima</label>
-                        </br>
-                        <input type="checkbox" id="test62" />
-                        <label for="test62">Centro</label>
-                        </br>
-                        <input type="checkbox" id="test63" />
-                        <label for="test63">Oriente</label>
+                        <div ng-repeat="departamento in ctrl.departamentos">
+                            <input type="checkbox" id="{{'depa'+$index}}" ng-change="ctrl.sync(bool, departamento)" ng-model="bool" />
+                            <label for="{{'depa'+$index}}">{{departamento.nombre}}</label>
+                        </div>
                     </p>
                 </div>
             </div>
@@ -121,17 +76,68 @@
                 <h6>Provincia</h6>
                 <div class="col m12">
                     <p>
-                        <input type="checkbox" id="test71" />
-                        <label for="test71">Abancay</label>
-                        </br>
-                        <input type="checkbox" id="test72" />
-                        <label for="test72">Andahuaylas</label>
-                        </br>
-                        <input type="checkbox" id="test73" />
-                        <label for="test73">Arequipa</label>
+                        <div ng-repeat="provincia in ctrl.provincias">
+                            <input type="checkbox" id="{{'prov'+$index}}" ng-change="ctrl.ctrl.sync(bool, provincia)" ng-model="bool" />
+                            <label for="{{'prov'+$index}}">{{provincia.nombre}}</label>
+                        </div>
+                    </p>
+                </div>
+            </div>
+            <div class="col m1">
+                <h6>Tipo</h6>
+                <div class="col m12">
+                    <p>
+                        <div ng-repeat="tipoStock in ctrl.tipoStock">
+                            <input type="checkbox" id="{{'ts'+$index}}" ng-change="ctrl.sync(bool, tipoStock)" ng-model="bool" />
+                            <label for="{{'ts'+$index}}">{{tipoStock.tipo}}</label>
+                        </div>
                     </p>
                 </div>
             </div>
         </form>
+        <div class="row">
+            <md-toolbar class="md-table-toolbar md-default">
+                <div class="md-toolbar-tools">
+                    <!--<span>Nutrition</span>-->
+                </div>
+            </md-toolbar>
+
+            <!-- exact table from live demo -->
+            <md-table-container>
+                <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
+                    <thead md-head md-order="query.order" md-on-reorder="getDesserts">
+                    <tr md-row>
+                        <th md-column md-order-by="nameToLower"><span>AREA</span></th>
+                        <th md-column md-numeric md-order-by="subcategoria1.tipo"><span>CATEGORIA</span></th>
+                        <th md-column md-numeric>SUB CATEGORIA</th>
+                        <th md-column md-numeric>REGION</th>
+                        <th md-column md-numeric>REGION II</th>
+                        <th md-column md-numeric>TIENDA</th>
+                        <th md-column md-numeric>DEPARTAMENTO</th>
+                        <th md-column md-numeric>PROVINCIA</th>
+                        <th md-column md-numeric>TIPO</th>
+                        <th md-column md-numeric>CANTIDAD</th>
+
+                    </tr>
+                    </thead>
+                    <tbody md-body>
+                    <tr md-row md-select="stock" md-select-id="categoria.tipo" md-auto-select ng-repeat="stock in ctrl.stock">
+                        <td md-cell>{{stock.categoria.tipo}}</td>
+                        <td md-cell>{{stock.subcategoria1.tipo}}</td>
+                        <td md-cell>{{stock.subcategoria2.tipo}}</td>
+                        <td md-cell>{{stock.ubicacion.direccion_ubicacion.region1.nombre}}</td>
+                        <td md-cell>{{stock.ubicacion.direccion_ubicacion.region2.nombre}}</td>
+                        <td md-cell>{{stock.tienda.name}}</td>
+                        <td md-cell>{{stock.ubicacion.direccion_ubicacion.departamento.nombre}}</td>
+                        <td md-cell>{{stock.ubicacion.direccion_ubicacion.provincia.nombre}}</td>
+                        <td md-cell>{{stock.tipo_stock.tipo}}</td>
+                        <td md-cell>{{stock.cantidad}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+
+            <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{ctrl.stock.count}}" md-on-paginate="getDesserts" md-page-select></md-table-pagination>
+        </div>
     </div>
 </section>

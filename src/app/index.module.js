@@ -13,7 +13,8 @@
           'ngMaterial',
           'ui.router',
           'toastr',
-          'satellizer'
+          'satellizer',
+          'md.data.table'
       ]);
 
 })();

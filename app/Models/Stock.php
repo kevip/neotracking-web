@@ -45,4 +45,14 @@ class Stock extends Model
 
     }
 
+    public function tienda(){
+        return $this->belongsTo(Tienda::class, 'tienda_id');
+
+    }
+
+    public function tipoStock(){
+        return $this->belongsTo(TipoStock::class, 'tipo_stock');
+
+    }
+
 }
