@@ -10,7 +10,7 @@
 <h5 style="margin:0;display: inline-block;">Mobiliarios</h5>
 <a style="margin-bottom: 13px;margin-left: 10px;" title="crear nuevo" ui-sref="index.furniture-new" class="btn-floating btn waves-effect waves-light red"><i class="material-icons">add</i></a>
 <ul class="collection">
-    <li data-id="{{stock.codigo}}" class="collection-item avatar" ng-repeat="stock in ctrl.stocks">
+    <li data-codigo="{{stock.codigo}}" class="collection-item avatar" ng-repeat="stock in ctrl.stocks">
         <!--<div>
             <img src="{{ mobiliario.track_imagen[0].url}}" alt="" style="width:120px; height: 120px;">
         </div>-->

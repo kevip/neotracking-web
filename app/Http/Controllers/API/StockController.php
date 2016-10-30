@@ -21,6 +21,10 @@ class StockController extends Controller
         $this->stockRepository = $stockRepository;
     }
 
+    public function baja(Request $request, $id){
+        return $this->stockRepository->baja($request, $id);
+    }
+
     public function getTipo(){
         return TipoStock::all();
     }
