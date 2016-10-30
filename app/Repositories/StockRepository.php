@@ -5,9 +5,19 @@ namespace App\Repositories;
 use Symfony\Component\HttpFoundation\Request;
 
 use App\Models\Stock;
+use App\User;
 
 class StockRepository
 {
+    private $STOCK_STATUS = [
+        "alta" =>1,
+        "baja" =>2,
+        "pendiente"=>3
+    ];
+
+    public function baja(Request $request, $codigo){
+        return $this->cambiarEstado($this->STOCK_STATUS["baja"], $codigo);
+    }
 
     public function search(Request $request){
         $query = \DB::table("stock");
@@ -127,5 +137,24 @@ class StockRepository
         return Stock::with('roles')->find($id);
     }
 
+    private function cambiarEstado($status, $codigo){
+        $user_id = \Auth::user()->id;
+        $user = User::with('roles')->find($user_id);
+        $authorized = false;
+        $stock = Stock::where('codigo',$codigo)->first();
+        if (!is_null($user)) {
+            foreach ($user->roles as $key => $role) {
+                if ($role->name == "Administrador") {
+                    $authorized = true;
+                }
+            }
+            if($authorized){
+                $stock->status = $status;
+                $stock->save();
+            }
+        }
+
+        return $stock;
+    }
 
 }

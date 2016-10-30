@@ -20,24 +20,24 @@
         vm.stocks = stocks;
 
         function showModalBaja(e){
-            var id_mobiliario = $(e.currentTarget).parent().parent().data('id');
+            var codigo = $(e.currentTarget).parent().parent().data('codigo');            
             $mdDialog.show({
                 controller: BajaMobiliarioModalController,
                 controllerAs: 'modal',
                 templateUrl: 'app/pages/furniture/views/modals/baja.modal.html',
                 locals: {
-                    id: id_mobiliario
+                    codigo: codigo
                 }
             });
         }
 
-        function BajaMobiliarioModalController($http, API_URL, id, $mdDialog, toastr){
+        function BajaMobiliarioModalController($http, API_URL, codigo, $mdDialog, toastr){
             var vm = this;
             vm.baja = baja;
             vm.cancel = cancel;
 
             function baja(){
-                $http.put(API_URL+'tracking/'+id+'/baja',{}).then(
+                $http.put(API_URL+'stock/'+codigo+'/baja',{}).then(
                     function success(res){
                         if(res){
                             toastr.success('Se dió de baja');
@@ -47,6 +47,7 @@
                     },
                     function error(err){
                         toastr.error('Ocurrió algun error, no se pudo dar de baja');
+                        console.log(err);
                         vm.cancel();
                     }
                 );
