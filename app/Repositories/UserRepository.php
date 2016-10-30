@@ -10,9 +10,9 @@ class UserRepository
 {
 
     private $USER_STATUS = [
-        "accepted"      => 1,
-        "registered"    => 2,
-        "removed"       => 3
+        "activo"      => 1,
+        "pendiente"    => 2,
+        "baja"       => 3
     ];
 
     /**
@@ -22,7 +22,7 @@ class UserRepository
      */
     public function alta(Request $request, $id)
     {
-        return $this->cambiarEstado($this->USER_STATUS["accepted"], $id);
+        return $this->cambiarEstado($this->USER_STATUS["activo"], $id);
     }
 
     /**
@@ -32,7 +32,7 @@ class UserRepository
      */
     public function baja(Request $request, $id)
     {
-        return $this->cambiarEstado($this->USER_STATUS["removed"], $id);
+        return $this->cambiarEstado($this->USER_STATUS["baja"], $id);
     }
 
     /**
@@ -50,7 +50,7 @@ class UserRepository
      */
     public function store(Request $request)
     {
-        $validator = \Validator::make($request->all(), [
+        /*$validator = \Validator::make($request->all(), [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed'
@@ -58,15 +58,18 @@ class UserRepository
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 428);
-        }
+        }*/
         $user = User::create(
             [
-                'username' => $request->username,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
                 'email' => $request->email,
-                'password' => \Hash::make($request->password),
+                'phone_number' => $request->phone_number,
+                'password' => $request->password
             ]
         );
-        $this->syncRoles($request, $user);
+        //$this->syncRoles($request, $user);
+        $user->roles()->attach($request->rol);
         return User::with('roles')->find($user->id);
     }
 
@@ -104,5 +107,22 @@ class UserRepository
         $user->roles()->sync(collect($request->roles)->pluck('id')->all());
     }
 
+    public function update($request, $id){
+        $user = User::find($id);
+        $user->email        = $request->email;
+        $user->first_name   = $request->first_name;
+        $user->last_name    = $request->last_name;
+        $user->phone_number = $request->phone_number;
+        $user->save();
+        return User::find($user->id);
+        if(!empty($request->rol)){
+            $srol = false;
+            foreach($user->roles as $key => $rol){
+                $user->roles()->detach($rol->id);
+            }
+            $user->roles()->attach($request->rol);
+        }
+        return User::find($user->id);
+    }
 
 }

@@ -1,0 +1,40 @@
+
+<section class="container">
+    <div class="row">
+        <div></div>
+    </div>
+</section>
+
+<section class="container usuarios">
+
+<h5 style="margin:0;display: inline-block;">Mobiliarios</h5>
+<a style="margin-bottom: 13px;margin-left: 10px;" title="crear nuevo" ui-sref="index.furniture-new" class="btn-floating btn waves-effect waves-light red"><i class="material-icons">add</i></a>
+<ul class="collection">
+    <li data-id="{{stock.codigo}}" class="collection-item avatar" ng-repeat="stock in ctrl.stocks">
+        <!--<div>
+            <img src="{{ mobiliario.track_imagen[0].url}}" alt="" style="width:120px; height: 120px;">
+        </div>-->
+
+        <div>
+            <p>
+                <b>Codigo:</b> {{ stock.codigo }}</br>
+                <b>Area:</b> {{ stock.categoria.tipo }}</br>
+                <b>Categoria:</b> {{ stock.subcategoria1.name }}<br/>
+                <b>Region:</b> {{ stock.ubicacion.direccion_ubicacion.region1.nombre }}<br/>
+                <b>Tienda:</b> {{ stock.tienda.name }}
+                <div class="chip yellow accent-1" ng-if="stock.status=='pendiente'">{{stock.status}}</div>
+                <div class="chip green accent-1" ng-if="stock.status=='alta'">{{stock.status}}</div>
+                <div class="chip red accent-1" ng-if="stock.status=='baja'">{{stock.status}}</div>
+
+            </p>
+        </div>
+        <div class="secondary-content">
+            <a class="icono-detalle" title="Ver Detalle" ui-sref="index.furniture-detail({codigo:stock.codigo})" ><i class="small material-icons">visibility</i></a>
+            <a class="icono-editar" title="Editar" ng-click="ctrl.showModalAlta($event)" ><i class="small material-icons">mode_edit</i></a>
+            <a class="icono-baja" title="Dar de baja" ng-if="stock.status != 'en baja'" ng-click="ctrl.showModalBaja($event)" ><i class="small material-icons">trending_down</i></a>
+            <!--<a title="Aprobar" href="#modal1" class="modal-trigger"><i class="small material-icons">done</i></a>
+            <a title="Eliminar" href="#modal2" class="modal-trigger"><i class="small material-icons">clear</i></a>-->
+        </div>
+    </li>
+</ul>
+</section>

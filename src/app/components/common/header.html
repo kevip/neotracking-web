@@ -1,5 +1,5 @@
 <header>
-    <div class="container">
+    <!--<div class="container">-->
         <div class="row valign-wrapper">
             <div class="col s6">
                 <div class="center-align valign-wrapper">     <a ui-sref="index.home">
@@ -17,7 +17,7 @@
             <li><a href="javascript:void(0);" >Administrar</a></li>
         </ul>
         <ul id="dropdown_usuarios_mobile" class="dropdown-content">
-            <li><a ui-sref="index.user-new">Nuevos Usuarios</a></li>
+            <li><a ui-sref="index.users">Nuevos Usuarios</a></li>
             <li><a ui-sref="index.home" >Administrar</a></li>
         </ul>
         <nav class="red darken-2">
@@ -26,8 +26,8 @@
             <ul class="hide-on-med-and-down">
                 <li ng-class="{active: $state.current.name=='index.home'}"><a ui-sref="index.home">Reportes - {{$state.current.name}}</a></li>
                 <li ng-class="{active: $state.current.name=='index.furniture'}"><a ui-sref="index.furniture">Mobiliarios<span class="new badge">2</span></a></li>
-                <li ng-class="{active: $state.current.name=='index.user-new'}">
-                    <a ui-sref="index.user-new">Usuarios<span class="new badge">2</span></a>
+                <li ng-class="{active: $state.current.name=='index.users'}">
+                    <a ui-sref="index.users">Usuarios<span class="new badge">2</span></a>
                     <!--<a class="dropdown-button" href="javascript:void(0);" data-activates="dropdown_usuarios" dropdown data-hover="true">
                         Usuarios<i class="material-icons right">arrow_drop_down</i>
                     </a>-->
@@ -42,11 +42,11 @@
                 <li ng-class="{active: $state.current.name=='index.home'}"><a ui-sref="index.home">Reportes</a></li>
                 <li ng-class="{active: $state.current.name=='index.furniture'}"><a ui-sref="index.furniture">Mobiliarios<span class="new badge">2</span></a></li>
                 <!--<li ng-class="{active: $state.current.name=='index.users'}"><a class="dropdown-button" href="javascript:void(0);" data-activates="dropdown_usuarios_mobile">Usuarios<i class="material-icons right">arrow_drop_down</i></a></li>-->
-                <li ng-class="{active: $state.current.name=='index.user-new'}"><a ui-sref="index.user-new">Usuarios<span class="new badge">2</span></a></li>
+                <li ng-class="{active: $state.current.name=='index.users'}"><a ui-sref="index.users">Usuarios<span class="new badge">2</span></a></li>
                 <li ng-class="{active: $state.current.name=='index.tracks'}"><a ui-sref="index.tracks">Tracks<span class="new badge">1</span></a></li>
 
             </ul>
         </nav>
 
-    </div>
+    <!--</div>-->
 </header>

@@ -9,34 +9,20 @@
 
     HomeController.$inject = [
         'API_URL',
-        'categorias',
-        'departamentos',
-        'provincias',
-        'region1',
-        'region2',
-        'subcategorias1',
-        'subcategorias2',
         '$http',
         'Stock',
-        'tipoStock'
+        'filtros'
     ];
 
     function HomeController(
         API_URL,
-        categorias,
-        departamentos,
-        provincias,
-        region1,
-        region2,
-        subcategorias1,
-        subcategorias2,
         $http,
         Stock,
-        tipoStock) {
+        filtros) {
 
         var vm = this;
 
-        vm.categorias = categorias;
+        //vm.categorias = categorias;
         vm.filters = {
             categoria: [],
             subcategoria1: [],
@@ -45,19 +31,32 @@
             region2: [],
             departamento: [],
             provincia: [],
-            tipoStock: []
+            tipoStock: [],
+            tiendas: []
         };
+        vm.categorias = filtros.categorias;
+        vm.departamentos = filtros.departamentos;
+        vm.provincias = filtros.provincias;
+        vm.region1 = filtros.region1;
+        vm.region2 = filtros.region2;
         vm.stock = Stock.all();
-        vm.departamentos = departamentos.data;//se llamo con $http
-        vm.provincias = provincias.data;//se llamo con $http
-        vm.region1 = region1.data;//se llamo con $http
-        vm.region2 = region2.data;//se llamo con $http
-        vm.subcategorias1 = subcategorias1;
-        vm.subcategorias2 = subcategorias2;
+        vm.subcategorias1 = filtros.subcategorias1;
+        vm.subcategorias2 = filtros.subcategorias2;
         vm.submit = submit;
         vm.sync = sync;
-        vm.tipoStock = tipoStock.data;//se llamo con $http
+        vm.selected = [];
+        vm.tipoStock = filtros.tipoStock;
+        vm.tiendas = filtros.tiendas;
 
+        vm.config = {
+            autoHideScrollbar: false,
+            theme: 'dark',
+            advanced:{
+                updateOnContentResize: false
+            },
+            setHeight: 200,
+            scrollInertia: 0
+        };
 
         function dropItem(filter, item){
             for(var i =0;i<filter.length;i++){
@@ -73,7 +72,6 @@
             Stock.search(vm.filters,
                 function success(response){
                     vm.stock = response;
-                    console.log(vm.stock);
                 },
                 function error(err) {
                     console.log(err);
@@ -105,6 +103,10 @@
 
                 }else if(tipo_filtro == "tipoStock"){
                     vm.filters.tipoStock.push(item);
+
+                }else if(tipo_filtro == "tienda"){
+                    vm.filters.tiendas.push(item);
+
                 }
             }
             else{
@@ -130,6 +132,9 @@
 
                 }else if(tipo_filtro == "tipoStock"){
                     dropItem(vm.filters.tipoStock, item);
+
+                }else if(tipo_filtro == "tienda"){
+                    dropItem(vm.filters.tiendas, item);
                 }
             }
         }

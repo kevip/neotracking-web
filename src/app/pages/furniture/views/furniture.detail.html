@@ -1,68 +1,38 @@
 <section class="container">
     <div class="row">
-        <div class="col s12 m12">
-            <h3>Mueble para TV 42</h3>
-        </div>
-        <div class="col s12 m6">
+        <div ng-repeat="track in ctrl.tracks" class="card">
 
-            <div class="carousel carousel-slider center" data-indicators="true" >
-                <!--<md-card layout="column" layout-align="center center" style="padding-bottom: 10px" >
-                    <jk-carousel
-                            data="ctrl.mobiliario.stock_imagen"
-                            item-template-url="'app/pages/furniture/views/mobiliario.template.html'"
-                            max-width="380"
-                            max-height="380" >
-                    </jk-carousel>
-                </md-card>-->
-                <!--<div class="carousel-item " href="#one!">
-                    <img class="responsive-img" src="{{ctrl.mobiliario.stock_imagen[0].url}}" style="width: 380px;height:380px">
-                </div>-->
-                <div class="carousel-item " href="#one!">
-                    <img class="responsive-img" src="http://lorempixel.com/600/600/abstract/img234">
-                </div>
-                <div class="carousel-item " href="#two!">
-                    <img class="responsive-img" src="http://lorempixel.com/600/600/abstract/img244">
-                </div>
-                <div class="carousel-item " href="#three!">
-                    <img class="responsive-img" src="http://lorempixel.com/600/600/abstract/img444">
-                </div>
-                <div class="carousel-item " href="#four!">
-                    <img class="responsive-img" src="http://lorempixel.com/600/600/abstract/img456">
-                </div>
+            <div class="col s12 m12">
+                <h4>Tracking {{$index}} del {{track.dtime}}</h4>
+                <img ng-if="track.track_imagen.length>0" src="{{image.url}}" alt="" ng-repeat="image in track.track_imagen" style="max-height: 180px;max-width:180px"/>
             </div>
+            <div class="col s12 m12 card">
+                <div class="detalle-contenido">
+                    <!--<p class="flow-text"><b>Código:</b> 234234234</p>-->
+                    <p class="flow-text">
+                        Tienda: {{ track.tienda.name }}
+                    </p>
+                    <p class="flow-text">
+                        Codigo de Mueble: {{ track.codigo }}
+                    </p>
+                    <p class="flow-text">
+                        Latitud: {{track.lat}}
+                    </p>
+                    <p class="flow-text">
+                        Longitud: {{track.lng}}
+                    </p>
+                    <div>
+                        <!--<a class="waves-effect waves-light btn"><i class="material-icons left">done</i>Agregar</a></a>-->
+                        <!--<a class="waves-effect red btn"><i class="material-icons left">clear</i>Borrar</a>-->
 
-        </div>
-        <div class="col s12 m6">
-            <div class="detalle-contenido">
-                <!--<p class="flow-text"><b>Código:</b> 234234234</p>-->
-                <p class="flow-text">
-                    Descripcion: {{ ctrl.mobiliario.descripcion }}
-                </p>
-                <p class="flow-text">
-                    Cantidad: {{ ctrl.mobiliario.cantidad }}
-                </p>
-                <p class="flow-text">
-                    Area: {{ctrl.mobiliario.categoria.tipo}}
-                </p>
-                <p class="flow-text">
-                    Categoria: {{ctrl.mobiliario.subcategoria1.tipo}}
-                </p>
-                <p class="flow-text">
-                    Subcategoria: {{ctrl.mobiliario.subcategoria2.tipo}}
-                </p>
-                <p class="flow-text">
-                    Fecha: {{ ctrl.mobiliario.fecha }}
-                </p>
-                <p class="flow-text">
-                    Ubicación: {{ ctrl.mobiliario.ubicacion.tipo }}
-                </p>
-                <div>
-                    <a class="waves-effect waves-light btn"><i class="material-icons left">done</i>Agregar</a></a>
-                    <a class="waves-effect red btn"><i class="material-icons left">clear</i>Borrar</a>
-
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
 </section>
+<style>
+    .detalle-contenido{
+
+    }
+</style>

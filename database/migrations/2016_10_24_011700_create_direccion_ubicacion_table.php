@@ -20,7 +20,6 @@ class CreateDireccionUbicacionTable extends Migration
             $table->integer('departamento_id')->unsigned();
             $table->integer('region1_id')->unsigned();
             $table->integer('region2_id')->unsigned();
-            $table->integer('tipo_stock_id')->unsigned();
             $table->integer('usr');
             $table->dateTime('dtime');
             $table->timestamps();
@@ -29,7 +28,6 @@ class CreateDireccionUbicacionTable extends Migration
             $table->foreign('departamento_id')->references('id')->on('departamento')->onDelete('cascade');
             $table->foreign('region1_id')->references('id')->on('region1')->onDelete('cascade');
             $table->foreign('region2_id')->references('id')->on('region2')->onDelete('cascade');
-            $table->foreign('tipo_stock_id')->references('id')->on('tipo_stock')->onDelete('cascade');
         });
     }
 

@@ -35,9 +35,9 @@ class UserController extends Controller
         $this->userRepository->store($request);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-
+        return $this->userRepository->update($request, $id);
     }
 
     /**

@@ -37,5 +37,9 @@ class TracksController extends Controller
         return $this->trackRepository->store($request);
     }
 
+    public function baja(Request $request, $id){
+        return $this->trackRepository->baja($request, $id);
+    }
+
 
 }

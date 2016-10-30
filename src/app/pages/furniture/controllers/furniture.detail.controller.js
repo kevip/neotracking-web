@@ -9,27 +9,17 @@
 
     FurnitureDetailController.$inject = [
         '$stateParams',
-        'stock'
+        '$http',
+        'API_URL'
     ];
 
-    function FurnitureDetailController($stateParams, stock) {
+    function FurnitureDetailController($stateParams, $http, API_URL) {
         var vm = this;
-        vm.mobiliarios = [
-            {
-                "codigo":1234324,
-                "titulo":"Mueble para TV 42",
-                "usuario":987654321,
-                "fecha_ingreso":"2016-10-20",
-                "ubicacion":"Tottus Centro Civico"},
-            {
-                "codigo":345345,
-                "titulo":"Mueble para TV",
-                "usuario":981234521,
-                "fecha_ingreso":"2016-10-22",
-                "ubicacion":"Plaza Vea Bolichera"}
-        ];
-        vm.mobiliario = stock;
-        console.log(stock);
+        $http.get(API_URL+'stock/'+$stateParams.codigo+'/historial').then(
+            function(res){
+                vm.tracks = res.data;
+            }
+        );
 
     }
 })();

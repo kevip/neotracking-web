@@ -14,7 +14,8 @@
           'ui.router',
           'toastr',
           'satellizer',
-          'md.data.table'
+          'md.data.table',
+          'ngScrollbars'
       ]);
 
 })();

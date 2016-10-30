@@ -77,14 +77,25 @@ class StockRepository
             $query->whereIN("stock.tipo_stock",$id_tipo_stock );
         }
 
+        if($request->has('tiendas') && sizeof($request->get('tiendas'))>0){
+            $id_tienda = [];
+            foreach($request->get('tiendas') as $key => $tienda){
+                $id_tienda[] = $tienda['id'];
+            }
+            $query->whereIN("stock.tienda_id",$id_tienda );
+        }
+
         $query = $query->join("ubicacion","stock.ubicacion_id","=","ubicacion.id")
             ->join("direccion_ubicacion","direccion_ubicacion.id","=","ubicacion.direccion_ubicacion_id")
             ->join("provincia","provincia.id","=","direccion_ubicacion.provincia_id")
             ->join("departamento","departamento.id","=","direccion_ubicacion.departamento_id")
             ->join("region1","region1.id","=","direccion_ubicacion.region1_id")
             ->join("region2","region2.id","=","direccion_ubicacion.region2_id")
+            ->join("tienda","tienda.id","=","stock.tienda_id")
             ->select("stock.id");
         $stocks = $query->get();
+
+        $id_stock = [];
         foreach($stocks as $key => $value){
             $id_stock[] = $value->id;
         }

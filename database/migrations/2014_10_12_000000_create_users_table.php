@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->string('company');
             $table->string('phone_number')->unique();
-            $table->enum('status',['accepted', 'registered', 'removed'])->default('registered');
+            $table->enum('status',['activo', 'pendiente', 'baja'])->default('pendiente');
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();

@@ -1,12 +1,14 @@
-<section class="container">
+<!--<section class="container">-->
+<div class="row">
+    <div class="col m12">
     <div class="row">
         <div class="col m12">
             <h3>Reporte de Stock</h3>
         </div>
-        <form class="filtros">
-            <div class="col m1">
+        <form class="filtros row">
+            <div class="col m1 checkbox-group-container">
                 <h6>Área</h6>
-                <div class="col m6">
+                <div class="" ng-scrollbars ng-scrollbars-config="ctrl.config">
                     <p>
                         <div ng-repeat="categoria in ctrl.categorias">
                             <input type="checkbox" id="{{'cat'+$index}}" ng-change="ctrl.sync(bool, categoria, 'categoria')" ng-model="bool" />
@@ -15,9 +17,9 @@
                     </p>
                 </div>
             </div>
-            <div class="col m1">
+            <div class="col m2 checkbox-group-container">
                 <h6>Categoría</h6>
-                <div class="col m12">
+                <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config">
                     <p>
                         <div ng-repeat="subcategoria1 in ctrl.subcategorias1">
                             <input type="checkbox" id="{{'subcat1'+$index}}" ng-change="ctrl.sync(bool, subcategoria1, 'subcategoria1')" ng-model="bool" />
@@ -27,9 +29,9 @@
 
                 </div>
             </div>
-            <div class="col m2">
+            <div class="col m2 checkbox-group-container">
                 <h6>Sub Categoría</h6>
-                <div class="col m12">
+                <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config">
                     <p>
                         <div ng-repeat="subcategoria2 in ctrl.subcategorias2">
                             <input type="checkbox" id="{{'subcat2'+$index}}" ng-change="ctrl.sync(bool, subcategoria2, 'subcategoria2')" ng-model="bool" />
@@ -39,9 +41,9 @@
 
                 </div>
             </div>
-            <div class="col m1">
+            <div class="col m1 checkbox-group-container">
                 <h6>Región</h6>
-                <div class="col m12">
+                <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config">
                     <p>
                         <div ng-repeat="region1 in ctrl.region1">
                             <input type="checkbox" id="{{'reg1'+$index}}" ng-change="ctrl.sync(bool, region1, 'region1')" ng-model="bool" />
@@ -50,9 +52,9 @@
                     </p>
                 </div>
             </div>
-            <div class="col m1">
+            <div class="col m1 checkbox-group-container">
                 <h6>Región II</h6>
-                <div class="col m12">
+                <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config">
                     <p>
                         <div ng-repeat="region2 in ctrl.region2">
                             <input type="checkbox" id="{{'reg2'+$index}}" ng-change="ctrl.sync(bool, region2, 'region2')" ng-model="bool" />
@@ -61,9 +63,9 @@
                     </p>
                 </div>
             </div>
-            <div class="col m1">
+            <div class="col m2 checkbox-group-container">
                 <h6>Departamento</h6>
-                <div class="col m12">
+                <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config">
                     <p>
                         <div ng-repeat="departamento in ctrl.departamentos">
                             <input type="checkbox" id="{{'depa'+$index}}" ng-change="ctrl.sync(bool, departamento, 'departamento')" ng-model="bool" />
@@ -72,9 +74,9 @@
                     </p>
                 </div>
             </div>
-            <div class="col m1">
+            <div class="col m2 checkbox-group-container">
                 <h6>Provincia</h6>
-                <div class="col m12">
+                <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config">
                     <p>
                         <div ng-repeat="provincia in ctrl.provincias">
                             <input type="checkbox" id="{{'prov'+$index}}" ng-change="ctrl.sync(bool, provincia, 'provincia')" ng-model="bool" />
@@ -83,9 +85,9 @@
                     </p>
                 </div>
             </div>
-            <div class="col m1">
+            <div class="col m2 checkbox-group-container">
                 <h6>Tipo</h6>
-                <div class="col m12">
+                <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config">
                     <p>
                         <div ng-repeat="tipoStock in ctrl.tipoStock">
                             <input type="checkbox" id="{{'ts'+$index}}" ng-change="ctrl.sync(bool, tipoStock, 'tipoStock')" ng-model="bool" />
@@ -94,7 +96,20 @@
                     </p>
                 </div>
             </div>
-            <a class="btn" ng-click="ctrl.submit($event)">Filtrar</a>
+            <div class="col m2 checkbox-group-container">
+                <h6>Tienda</h6>
+                <div class="" ng-scrollbars ng-scrollbars-config="ctrl.config">
+                    <p>
+                        <div ng-repeat="tienda in ctrl.tiendas">
+                            <input type="checkbox" id="{{'tienda'+$index}}" ng-change="ctrl.sync(bool, tienda, 'tienda')" ng-model="bool" />
+                            <label for="{{'tienda'+$index}}">{{tienda.name}}</label>
+                        </div>
+                    </p>
+                </div>
+            </div>
+            <div class="col m2" style="float: right;">
+                <a class="btn" ng-click="ctrl.submit($event)" style="margin-top:96px;">Filtrar</a>
+            </div>
         </form>
         <div class="row">
             <md-toolbar class="md-table-toolbar md-default">
@@ -105,7 +120,7 @@
 
             <!-- exact table from live demo -->
             <md-table-container>
-                <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
+                <table md-table md-row-select multiple ng-model="ctrl.selected" md-progress="promise">
                     <thead md-head md-order="query.order" md-on-reorder="getDesserts">
                     <tr md-row>
                         <th md-column md-order-by="nameToLower"><span>AREA</span></th>
@@ -141,4 +156,6 @@
             <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{ctrl.stock.count}}" md-on-paginate="getDesserts" md-page-select></md-table-pagination>
         </div>
     </div>
-</section>
+    </div>
+</div>
+<!--</section>-->
