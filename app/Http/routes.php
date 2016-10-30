@@ -26,32 +26,43 @@ Route::group(['middleware' => ['cors']], function(){
 
             Route::get('departamento', 'API\UbicacionController@getDepartamentos');
 
+            Route::get('filtros', 'API\ReportesController@getFiltros');
+
             Route::get('provincia', 'API\UbicacionController@getProvincias');
 
             Route::get('region1', 'API\UbicacionController@getRegion1');
 
             Route::get('region2', 'API\UbicacionController@getRegion2');
 
-            Route::resource('subcategoria1', 'API\Subcategoria1Controller');
+            Route::get('rol', 'API\RolesController@index');
 
-            Route::resource('subcategoria2', 'API\Subcategoria2Controller');
+            /*Route::resource('subcategoria1', 'API\Subcategoria1Controller',
+                ['only' => ['index', 'store', 'show']]);*/
+
+            Route::get('subcategoria1', 'API\SubCategoria1Controller@index');
+
+            Route::get('subcategoria1/{id}', 'API\SubCategoria1Controller@show');
+
+            /*Route::resource('subcategoria2', 'API\Subcategoria2Controller',
+                ['only' => ['index', 'store', 'show']]);*/
+
+            Route::get('subcategoria2', 'API\SubCategoria2Controller@index');
+
+            Route::get('subcategoria2/{id}', 'API\SubCategoria2Controller@show');
 
             Route::resource('stock', 'API\StockController');
 
             Route::get('tipo-stock', 'API\StockController@getTipo');
 
+            Route::get('stock/search', 'API\StockController@search');
 
-            Route::group(['prefix' => 'stock'], function(){
-
-                Route::get('tipo', 'API\StockController@getTipo');
-
-                Route::post('search', 'API\StockController@search');
-
-            });
+            Route::get('stock/{codigo}/historial', 'API\StockController@getHistory');
 
             Route::resource('tienda', 'API\TiendasController');
 
             Route::resource('tracking','API\TracksController');
+
+            Route::put('tracking/{id}/baja','API\TracksController@baja');
 
             Route::resource('ubicacion', 'API\UbicacionController');
 
@@ -64,7 +75,6 @@ Route::group(['middleware' => ['cors']], function(){
                 Route::put('{id}/alta', 'API\UserController@alta');
 
                 Route::put('{id}/baja', 'API\UserController@baja');
-
 
             });
 
@@ -93,5 +103,6 @@ Route::group(['middleware' => ['cors']], function(){
 
 
     });
+
 
 });

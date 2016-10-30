@@ -1,0 +1,39 @@
+a:hover{
+  color: white;
+}
+.checkbox-group-container{
+  border: 1px solid red;
+  margin: 2px;
+  min-width: 100px;
+  padding: 0 !important;
+  >div{
+    padding-left: 3px !important;
+    padding-right: 3px !important;
+  }
+}
+.icono-baja{
+  &:hover{
+    color: #D32F2F;
+  }
+}
+.icono-editar{
+  &:hover{
+    color: #fbc02d;
+  }
+}
+.icono-detalle{
+  &:hover{
+    color: #1976d2;
+  }
+}
+.icono-alta{
+  &:hover{
+    color: #388e3c;
+  }
+}
+.icono-baja,
+.icono-alta,
+.icono-editar,
+.icono-detalle{
+  cursor: pointer;
+}

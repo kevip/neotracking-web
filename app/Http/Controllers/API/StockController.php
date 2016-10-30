@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\TipoStock;
+use App\Models\Track;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Repositories\StockRepository;
 use App\Models\Stock;
+use Illuminate\Support\Facades\DB;
 
 class StockController extends Controller
 {
@@ -25,6 +27,7 @@ class StockController extends Controller
 
     public function index()
     {
+
         return Stock::with([
             'stockImagen',
             'categoria',
@@ -45,7 +48,7 @@ class StockController extends Controller
     }
     public function store(Request $request)
     {
-
+        return $this->stockRepository->search($request);
     }
 
     public function show($id)
@@ -58,5 +61,10 @@ class StockController extends Controller
             'ubicacion'
 
         ])->find($id);
+    }
+
+    public function getHistory($codigo){
+        //return Stock::with(['tracking']);
+        return Track::with(['tienda', 'trackImagen'])->where('codigo',$codigo)->get();
     }
 }

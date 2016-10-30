@@ -20,7 +20,6 @@
       $rootScope.$on('$stateChangeStart',stateChangeStart);
 
       function routeChangeStart(){
-          console.log("aa");
           console.log($location.path());
           if( ($.inArray($location.path(), privateRoutes) !== -1) && !authUser.isLoggedIn()){
               toastr.error("Debe iniciar sesion");

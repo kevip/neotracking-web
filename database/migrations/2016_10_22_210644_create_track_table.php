@@ -20,9 +20,10 @@ class CreateTrackTable extends Migration
             $table->decimal('lat',8,6);
             $table->decimal('lng',9,6);
             $table->string('num');
+            $table->string('flag');
+            $table->string('guid')->unique();
             $table->integer('usr');
             $table->dateTime('dtime');
-            $table->enum('status',['en alta', 'en baja', 'pendiente'])->default('pendiente');
             $table->timestamps();
 
             $table->foreign('tienda_id')->references('id')->on('tienda')->onDelete('cascade');

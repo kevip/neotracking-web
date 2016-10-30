@@ -14,4 +14,16 @@ class SubCategoria1Controller extends Controller
     public function index(){
         return Subcategoria1::all();
     }
+
+    public function show($id){
+        return Subcategoria1::find($id);
+    }
+
+    public function store(Request $request){
+
+    }
+
+    public function a(){
+
+    }
 }

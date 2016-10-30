@@ -15,7 +15,6 @@
         var vm = this;
 
         vm.tracks = Track.all();
-        console.log(vm.tracks);
 
     }
 })();

@@ -20,11 +20,13 @@ class CreateStockTable extends Migration
             $table->integer('subcategoria2_id')->unsigned();
             $table->integer('tienda_id')->unsigned();
             $table->integer('ubicacion_id')->unsigned();
+            $table->string('codigo')->unique();
             $table->date('fecha');
             $table->string('imagen');
             $table->string('descripcion');
             $table->string('observacion');
             $table->integer('cantidad');
+            $table->enum('status',['alta', 'baja', 'pendiente'])->default('alta');
             $table->timestamps();
 
             $table->foreign('categoria_id')->references('id')->on('categoria')->onDelete('cascade');

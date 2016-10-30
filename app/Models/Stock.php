@@ -9,14 +9,18 @@ class Stock extends Model
     protected $table = 'stock';
 
     protected $fillable = [
-        'fecha',
-        'imagen',
-        'descripcion',
-        'observacion',
         'cantidad',
         'categoria_id',
+        'codigo',
+        'descripcion',
+        'fecha',
+        'imagen',
+        'observacion',
         'subcategoria1_id',
         'subcategoria2_id',
+        'status',
+        'tienda_id',
+        'tipo_stock',
         'ubicacion_id'
     ];
 
@@ -53,6 +57,10 @@ class Stock extends Model
     public function tipoStock(){
         return $this->belongsTo(TipoStock::class, 'tipo_stock');
 
+    }
+
+    public function tracking(){
+        return $this->hasMany(Track::class, 'codigo');
     }
 
 }

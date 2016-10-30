@@ -19,29 +19,8 @@
               templateUrl: 'app/pages/home/views/home.html',
               controller: 'HomeController as ctrl',
               resolve: {
-                  categorias: ['Categoria','$stateParams',function(Categoria, $stateParams){
-                      return Categoria.all();
-                  }],
-                  subcategorias1: ['Subcategoria1','$stateParams',function(Subcategoria1, $stateParams){
-                      return Subcategoria1.all();
-                  }],
-                  subcategorias2: ['Subcategoria2','$stateParams',function(Subcategoria2, $stateParams){
-                      return Subcategoria2.all();
-                  }],
-                  region1: ['$http', 'API_URL', function($http, API_URL){
-                      return $http.get(API_URL+'region1');
-                  }],
-                  region2: ['$http', 'API_URL', function($http, API_URL){
-                      return $http.get(API_URL+'region2');
-                  }],
-                  provincias: ['$http', 'API_URL', function($http, API_URL){
-                      return $http.get(API_URL+'provincia');
-                  }],
-                  departamentos: ['$http', 'API_URL', function($http, API_URL){
-                      return $http.get(API_URL+'departamento');
-                  }],
-                  tipoStock: ['$http', 'API_URL', function($http, API_URL){
-                      return $http.get(API_URL+'tipo-stock');
+                  filtros: ['Filtro', function(Filtro){
+                      return Filtro.all().$promise;
                   }]
 
               },
@@ -54,26 +33,40 @@
               module: 'public'
           })
           .state('index.furniture',{
-              url: '/furniture/new',
-              templateUrl: 'app/pages/furniture/views/furniture.new.html',
-              controller: 'FurnitureNewController as ctrl',
-              module: 'private'
-          })
-          .state('index.furniture-detail',{
-              url: '/furniture/:id/detail',
-              templateUrl: 'app/pages/furniture/views/furniture.detail.html',
-              controller: 'FurnitureDetailController as ctrl',
+              url: '/furniture',
+              templateUrl: 'app/pages/furniture/views/furniture.html',
+              controller: 'FurnitureController as ctrl',
               resolve: {
-                stock: ['Stock','$stateParams',function(Stock, $stateParams){
-                    return Stock.find({id: $stateParams.id});
+                  stocks: ['Stock',function(Stock){
+                    return Stock.all().$promise;
+
                 }]
               },
               module: 'private'
           })
-          .state('index.users',{
-              url: '/users',
-              templateUrl: 'app/pages/users/views/users.html',
-              controller: 'UsersController as ctrl',
+          .state('index.furniture-new',{
+              url: '/furniture/new',
+              templateUrl: 'app/pages/furniture/views/furniture.new.html',
+              controller: 'FurnitureNewController as ctrl',
+              resolve: {
+                  stocks: ['Stock',function(Stock){
+                    return Stock.all().$promise;
+
+                }]
+              },
+              module: 'private'
+          })
+          .state('index.furniture-detail',{
+              url: '/furniture/:codigo/detail',
+              templateUrl: 'app/pages/furniture/views/furniture.detail.html',
+              controller: 'FurnitureDetailController as ctrl',
+              resolve: {
+                tracks: ['Stock', '$stateParams', 'API_URL',function(Stock, $stateParams, API_URL){
+                    console.log(API_URL+'stock/'+$stateParams.codigo+'/historial');
+
+                    //return Stock.find({id: $stateParams.id});
+                }]
+              },
               module: 'private'
           })
           .state('index.tracks',{
@@ -82,10 +75,27 @@
               controller: 'TracksController as ctrl',
               module: 'private'
           })
+          .state('index.users',{
+              url: '/users',
+              templateUrl: 'app/pages/users/views/users.html',
+              controller: 'UsersController as ctrl',
+              module: 'private'
+          })
           .state('index.user-new',{
               url: '/user/new',
               templateUrl: 'app/pages/users/views/users.new.html',
               controller: 'UserNewController as ctrl',
+              module: 'private'
+          })
+          .state('index.user-edit',{
+              url: '/user/:id/edit',
+              templateUrl: 'app/pages/users/views/users.edit.html',
+              controller: 'UserEditController as ctrl',
+              resolve: {
+                  user: ['User','$stateParams',function(User, $stateParams){
+                      return User.find({id: $stateParams.id}).$promise;
+                  }]
+              },
               module: 'private'
           });
       $urlRouterProvider.otherwise('/login');
