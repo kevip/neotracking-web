@@ -14,6 +14,7 @@ class CreateStockTable extends Migration
     {
         Schema::create('stock', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('nombre');
             $table->integer('categoria_id')->unsigned();
             $table->integer('tipo_stock')->unsigned();
             $table->integer('subcategoria1_id')->unsigned();

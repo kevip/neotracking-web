@@ -11,6 +11,7 @@ use App\Models\Subcategoria1;
 use App\Models\Subcategoria2;
 use App\Models\Tienda;
 use App\Models\TipoStock;
+use App\Repositories\ReportesRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -18,6 +19,13 @@ use App\Http\Controllers\Controller;
 
 class ReportesController extends Controller
 {
+
+    protected $reportesRepository;
+
+    public function __construct(ReportesRepository $reportesRepository)
+    {
+        $this->reportesRepository = $reportesRepository;
+    }
 
     public function getFiltros(){
         $filtros = [];
@@ -53,5 +61,9 @@ class ReportesController extends Controller
         ];
 
         return $filtros;
+    }
+
+    public function search(Request $request){
+        return $this->reportesRepository->search($request);
     }
 }

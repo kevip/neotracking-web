@@ -69,6 +69,12 @@
 
         function submit(e){
             e.preventDefault();
+            $http.post(API_URL+'stock/search',vm.filters).then(function success(response){
+                vm.stock = response.data;
+            },
+            function error(err){
+                console.log(err);
+            });/*
             Stock.search(vm.filters,
                 function success(response){
                     vm.stock = response;
@@ -76,7 +82,7 @@
                 function error(err) {
                     console.log(err);
                 }
-            );
+            );*/
 
         }
         function sync(bool, item, tipo_filtro){

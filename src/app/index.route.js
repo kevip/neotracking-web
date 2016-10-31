@@ -51,8 +51,8 @@
               resolve: {
                   stocks: ['Stock',function(Stock){
                     return Stock.all().$promise;
+                  }]
 
-                }]
               },
               module: 'private'
           })

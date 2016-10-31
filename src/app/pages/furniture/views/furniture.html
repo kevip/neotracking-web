@@ -19,7 +19,7 @@
             <p>
                 <b>Codigo:</b> {{ stock.codigo }}</br>
                 <b>Area:</b> {{ stock.categoria.tipo }}</br>
-                <b>Categoria:</b> {{ stock.subcategoria1.name }}<br/>
+                <b>Categoria:</b> {{ stock.subcategoria1.tipo }}<br/>
                 <b>Region:</b> {{ stock.ubicacion.direccion_ubicacion.region1.nombre }}<br/>
                 <b>Tienda:</b> {{ stock.tienda.name }}
                 <div class="chip yellow accent-1" ng-if="stock.status=='pendiente'">{{stock.status}}</div>

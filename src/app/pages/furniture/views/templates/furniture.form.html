@@ -7,8 +7,18 @@
     <div class='row'>
         <div class='input-field col s12'>
             <div class="col s2">
-                <p class="red-text text-darken-2">Código</p>
+                <p class="red-text text-darken-2">Nombre</p>
             </div>  
+            <div class="col s11">
+                <input ng-model="ctrl.stock.nombre" class='validate' type="text" placeholder="Nombre" required/>
+            </div>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='input-field col s12'>
+            <div class="col s2">
+                <p class="red-text text-darken-2">Código</p>
+            </div>
             <div class="col s11">
                 <input ng-model="ctrl.stock.codigo" class='validate' type="text" placeholder="Codigo" required/>
             </div>
@@ -53,18 +63,27 @@
             </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="input-field" style="margin-left:5px;">
-            <p ng-repeat="rol in ctrl.roles">
-                <input name="group1" type="radio" id="{{'rol'+$index}}" ng-model="ctrl.user.rol" value="{{rol.id}}" required/>
-                <label for="{{'rol'+$index}}">{{ rol.name }}</label>
-            </p>
+    <div class='row'>
+        <div class='input-field col s12'>
+            <div class="col s2">
+                <p class="red-text text-darken-2">Tipo</p>
+            </div>
+            <div class="col s11">
+                <md-select class="width-100" placeholder="Tipo" data-ng-model="ctrl.stock.tipo_stock">
+                    <!--<md-option value="one">One</md-option>-->
+                    <md-option value="{{tipoStock.id}}" ng-repeat="tipoStock in ctrl.tipoStock">{{tipoStock.tipo}}</md-option>
+                </md-select>
+            </div>
         </div>
     </div>
-    <div class='row' ng-if="ctrl.state=='index.user-new'">
+    <div class='row'>
         <div class='input-field col s12'>
-            <input ng-model="ctrl.user.password" class='validate' type='password' placeholder="Contraseña" />
+            <div class="col s2">
+                <p class="red-text text-darken-2">Tipo</p>
+            </div>
+            <div class="col s11">
+                <input type="number" ng-model="ctrl.stock.cantidad"/>
+            </div>
         </div>
     </div>
 

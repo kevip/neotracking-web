@@ -15,6 +15,7 @@ class Stock extends Model
         'descripcion',
         'fecha',
         'imagen',
+        'nombre',
         'observacion',
         'subcategoria1_id',
         'subcategoria2_id',

@@ -8,7 +8,7 @@
                 all    : {method: 'GET', isArray: true},
                 find   : {method: 'GET', isArray: false},
                 update : {method: 'PUT', params: {id: '@id'}, isArray: false},
-                search : {method: 'POST', isArray: true},
+                create : {method: 'POST', isArray: false},
                 destroy: {method: 'DELETE', isArray: false}
             });
         }]);

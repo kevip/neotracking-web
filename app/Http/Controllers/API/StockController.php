@@ -47,13 +47,16 @@ class StockController extends Controller
         ])->get();
     }
 
-    public function search(Request $request){
-        return $this->stockRepository->search($request);
-    }
+    /**
+     * create new record of stock
+     * @param Request $request
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function store(Request $request)
     {
-        return $this->stockRepository->search($request);
+        return $this->stockRepository->store($request);
     }
+
 
     public function show($id)
     {
