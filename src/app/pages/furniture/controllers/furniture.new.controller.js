@@ -9,9 +9,23 @@
 
     FurnitureNewController.$inject = [
         '$mdDialog',
-        'stocks'
+        'stocks',
+        'Categoria',
+        'Subcategoria1',
+        'Subcategoria2'
     ];
 
-    function FurnitureNewController($mdDialog, stocks) {
+    function FurnitureNewController(
+        $mdDialog, 
+        stocks, 
+        Categoria, 
+        Subcategoria1, 
+        Subcategoria2) {
+
+        var vm = this;
+        vm.areas = Categoria.all();
+        vm.categorias = Subcategoria1.all();
+        vm.subcategorias = Subcategoria2.all();
+        
     }
 })();
