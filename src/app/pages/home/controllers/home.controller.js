@@ -11,14 +11,16 @@
         'API_URL',
         '$http',
         'Stock',
-        'filtros'
+        'filtros',
+        '$scope'
     ];
 
     function HomeController(
         API_URL,
         $http,
         Stock,
-        filtros) {
+        filtros,
+        $scope) {
 
         var vm = this;
 
@@ -35,10 +37,12 @@
             tiendas: []
         };
         vm.categorias = filtros.categorias;
+        vm.cleanFilters = cleanFilters;
         vm.departamentos = filtros.departamentos;
         vm.provincias = filtros.provincias;
         vm.region1 = filtros.region1;
         vm.region2 = filtros.region2;
+        vm.showItem = showItem;
         vm.stock = Stock.all();
         vm.subcategorias1 = filtros.subcategorias1;
         vm.subcategorias2 = filtros.subcategorias2;
@@ -143,6 +147,26 @@
                     dropItem(vm.filters.tiendas, item);
                 }
             }
+        }
+
+        function showItem(item) {
+
+            if (item.checked) {
+                return true; // Keep element if it is checked
+            }
+
+            if (item.name.includes(vm.searchText)) {
+                return true; // Keep element if it matches search text
+            }
+            return false; // Remove element otherwise
+
+        }
+        function cleanFilters(){
+            for(var key in vm.filters){
+                vm.filters[key]=[];
+            }
+            $('.filled-in').attr('checked', false);
+            console.log(vm.filters);
         }
         /*$http({method:"POST",url: API_URL+"stock/search",data:vm.filters}).then(
             function success(response){

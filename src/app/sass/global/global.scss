@@ -1,6 +1,6 @@
 a:hover{
   color: white;
-}
+}/*
 .checkbox-group-container{
   border: 1px solid red;
   margin: 2px;
@@ -9,6 +9,19 @@ a:hover{
   >div{
     padding-left: 3px !important;
     padding-right: 3px !important;
+  }
+}*/
+.checkbox-group-container{
+  border: 1px solid red;
+  margin: 1px;
+  [type="checkbox"].filled-in:not(:checked) + label:after,
+  [type="checkbox"].filled-in:checked + label:after{
+    width: 14px;
+    height: 14px;
+  }
+  [type="checkbox"].filled-in:checked + label:before{
+    width: 6px;
+    height: 9px;
   }
 }
 .icono-baja{

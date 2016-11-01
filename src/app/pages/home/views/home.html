@@ -1,161 +1,187 @@
 <!--<section class="container">-->
 <div class="row">
-    <div class="col m12">
-    <div class="row">
-        <div class="col m12">
-            <h3>Reporte de Stock</h3>
-        </div>
-        <form class="filtros row">
-            <div class="col m1 checkbox-group-container">
-                <h6>Área</h6>
-                <div class="" ng-scrollbars ng-scrollbars-config="ctrl.config">
-                    <p>
-                        <div ng-repeat="categoria in ctrl.categorias">
-                            <input type="checkbox" id="{{'cat'+$index}}" ng-change="ctrl.sync(bool, categoria, 'categoria')" ng-model="bool" />
-                            <label for="{{'cat'+$index}}">{{categoria.tipo}}</label>
-                        </div>
-                    </p>
-                </div>
-            </div>
-            <div class="col m2 checkbox-group-container">
-                <h6>Categoría</h6>
-                <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config">
-                    <p>
-                        <div ng-repeat="subcategoria1 in ctrl.subcategorias1">
-                            <input type="checkbox" id="{{'subcat1'+$index}}" ng-change="ctrl.sync(bool, subcategoria1, 'subcategoria1')" ng-model="bool" />
-                            <label for="{{'subcat1'+$index}}">{{subcategoria1.tipo}}</label>
-                        </div>
-                    </p>
-
-                </div>
-            </div>
-            <div class="col m2 checkbox-group-container">
-                <h6>Sub Categoría</h6>
-                <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config">
-                    <p>
-                        <div ng-repeat="subcategoria2 in ctrl.subcategorias2">
-                            <input type="checkbox" id="{{'subcat2'+$index}}" ng-change="ctrl.sync(bool, subcategoria2, 'subcategoria2')" ng-model="bool" />
-                            <label for="{{'subcat2'+$index}}">{{subcategoria2.tipo}}</label>
-                        </div>
-                    </p>
-
-                </div>
-            </div>
-            <div class="col m1 checkbox-group-container">
-                <h6>Región</h6>
-                <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config">
-                    <p>
-                        <div ng-repeat="region1 in ctrl.region1">
-                            <input type="checkbox" id="{{'reg1'+$index}}" ng-change="ctrl.sync(bool, region1, 'region1')" ng-model="bool" />
-                            <label for="{{'reg1'+$index}}">{{region1.nombre}}</label>
-                        </div>
-                    </p>
-                </div>
-            </div>
-            <div class="col m1 checkbox-group-container">
-                <h6>Región II</h6>
-                <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config">
-                    <p>
-                        <div ng-repeat="region2 in ctrl.region2">
-                            <input type="checkbox" id="{{'reg2'+$index}}" ng-change="ctrl.sync(bool, region2, 'region2')" ng-model="bool" />
-                            <label for="{{'reg2'+$index}}">{{region2.nombre}}</label>
-                        </div>
-                    </p>
-                </div>
-            </div>
-            <div class="col m2 checkbox-group-container">
-                <h6>Departamento</h6>
-                <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config">
-                    <p>
-                        <div ng-repeat="departamento in ctrl.departamentos">
-                            <input type="checkbox" id="{{'depa'+$index}}" ng-change="ctrl.sync(bool, departamento, 'departamento')" ng-model="bool" />
-                            <label for="{{'depa'+$index}}">{{departamento.nombre}}</label>
-                        </div>
-                    </p>
-                </div>
-            </div>
-            <div class="col m2 checkbox-group-container">
-                <h6>Provincia</h6>
-                <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config">
-                    <p>
-                        <div ng-repeat="provincia in ctrl.provincias">
-                            <input type="checkbox" id="{{'prov'+$index}}" ng-change="ctrl.sync(bool, provincia, 'provincia')" ng-model="bool" />
-                            <label for="{{'prov'+$index}}">{{provincia.nombre}}</label>
-                        </div>
-                    </p>
-                </div>
-            </div>
-            <div class="col m2 checkbox-group-container">
-                <h6>Tipo</h6>
-                <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config">
-                    <p>
-                        <div ng-repeat="tipoStock in ctrl.tipoStock">
-                            <input type="checkbox" id="{{'ts'+$index}}" ng-change="ctrl.sync(bool, tipoStock, 'tipoStock')" ng-model="bool" />
-                            <label for="{{'ts'+$index}}">{{tipoStock.tipo}}</label>
-                        </div>
-                    </p>
-                </div>
-            </div>
-            <div class="col m2 checkbox-group-container">
-                <h6>Tienda</h6>
-                <div class="" ng-scrollbars ng-scrollbars-config="ctrl.config">
-                    <p>
-                        <div ng-repeat="tienda in ctrl.tiendas">
-                            <input type="checkbox" id="{{'tienda'+$index}}" ng-change="ctrl.sync(bool, tienda, 'tienda')" ng-model="bool" />
-                            <label for="{{'tienda'+$index}}">{{tienda.name}}</label>
-                        </div>
-                    </p>
-                </div>
-            </div>
-            <div class="col m2" style="float: right;">
-                <a class="btn" ng-click="ctrl.submit($event)" style="margin-top:96px;">Filtrar</a>
-            </div>
-        </form>
-        <div class="row">
-            <md-toolbar class="md-table-toolbar md-default">
-                <div class="md-toolbar-tools">
-                    <!--<span>Nutrition</span>-->
-                </div>
-            </md-toolbar>
-
-            <!-- exact table from live demo -->
-            <md-table-container>
-                <table md-table md-row-select multiple ng-model="ctrl.selected" md-progress="promise">
-                    <thead md-head md-order="query.order" md-on-reorder="getDesserts">
-                    <tr md-row>
-                        <th md-column md-order-by="nameToLower"><span>AREA</span></th>
-                        <th md-column md-numeric md-order-by="subcategoria1.tipo"><span>CATEGORIA</span></th>
-                        <th md-column md-numeric>SUB CATEGORIA</th>
-                        <th md-column md-numeric>REGION</th>
-                        <th md-column md-numeric>REGION II</th>
-                        <th md-column md-numeric>TIENDA</th>
-                        <th md-column md-numeric>DEPARTAMENTO</th>
-                        <th md-column md-numeric>PROVINCIA</th>
-                        <th md-column md-numeric>TIPO</th>
-                        <th md-column md-numeric>CANTIDAD</th>
-
-                    </tr>
-                    </thead>
-                    <tbody md-body>
-                    <tr md-row md-select="stock" md-select-id="categoria.tipo" md-auto-select ng-repeat="stock in ctrl.stock">
-                        <td md-cell>{{stock.categoria.tipo}}</td>
-                        <td md-cell>{{stock.subcategoria1.tipo}}</td>
-                        <td md-cell>{{stock.subcategoria2.tipo}}</td>
-                        <td md-cell>{{stock.ubicacion.direccion_ubicacion.region1.nombre}}</td>
-                        <td md-cell>{{stock.ubicacion.direccion_ubicacion.region2.nombre}}</td>
-                        <td md-cell>{{stock.tienda.name}}</td>
-                        <td md-cell>{{stock.ubicacion.direccion_ubicacion.departamento.nombre}}</td>
-                        <td md-cell>{{stock.ubicacion.direccion_ubicacion.provincia.nombre}}</td>
-                        <td md-cell>{{stock.tipo_stock.tipo}}</td>
-                        <td md-cell>{{stock.cantidad}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </md-table-container>
-
-            <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{ctrl.stock.count}}" md-on-paginate="getDesserts" md-page-select></md-table-pagination>
-        </div>
+    <div class="col s12 m12">
+        <h3>Reporte de Stock</h3>
     </div>
+    <form class="filtros col s12 m12 ">
+        <div class="col m2 s5 checkbox-group-container">
+            <h6>Área</h6>
+            <div class="" ng-scrollbars ng-scrollbars-config="ctrl.config">
+                <p>
+                    <div ng-repeat="categoria in ctrl.categorias">
+                        <input type="checkbox" id="{{'cat'+$index}}" ng-change="ctrl.sync(bool, categoria, 'categoria')" ng-model="bool" class="filled-in"/>
+                        <label for="{{'cat'+$index}}">{{categoria.tipo}}</label>
+                    </div>
+                </p>
+            </div>
+        </div>
+        <div class="col m2 s5 checkbox-group-container">
+            <h6>Categoría</h6>
+            <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config">
+                <p>
+                    <div ng-repeat="subcategoria1 in ctrl.subcategorias1">
+                        <input type="checkbox" id="{{'subcat1'+$index}}" ng-change="ctrl.sync(bool, subcategoria1, 'subcategoria1')" ng-model="bool" class="filled-in"/>
+                        <label for="{{'subcat1'+$index}}">{{subcategoria1.tipo}}</label>
+                    </div>
+                </p>
+
+            </div>
+        </div>
+        <div class="col m2 s5 checkbox-group-container">
+            <h6>Sub Categoría</h6>
+            <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config">
+                <p>
+                    <div ng-repeat="subcategoria2 in ctrl.subcategorias2">
+                        <input type="checkbox" id="{{'subcat2'+$index}}" ng-change="ctrl.sync(bool, subcategoria2, 'subcategoria2')" ng-model="bool" class="filled-in"/>
+                        <label for="{{'subcat2'+$index}}">{{subcategoria2.tipo}}</label>
+                    </div>
+                </p>
+
+            </div>
+        </div>
+        <div class="col m2 s5 checkbox-group-container">
+            <h6>Región</h6>
+            <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config">
+                <p>
+                    <div ng-repeat="region1 in ctrl.region1">
+                        <input type="checkbox" id="{{'reg1'+$index}}" ng-change="ctrl.sync(bool, region1, 'region1')" ng-model="bool" class="filled-in"/>
+                        <label for="{{'reg1'+$index}}">{{region1.nombre}}</label>
+                    </div>
+                </p>
+            </div>
+        </div>
+        <div class="col m2 s5 checkbox-group-container">
+            <h6>Región II</h6>
+            <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config">
+                <p>
+                    <div ng-repeat="region2 in ctrl.region2">
+                        <input type="checkbox" id="{{'reg2'+$index}}" ng-change="ctrl.sync(bool, region2, 'region2')" ng-model="bool" class="filled-in"/>
+                        <label for="{{'reg2'+$index}}">{{region2.nombre}}</label>
+                    </div>
+                </p>
+            </div>
+        </div>
+        <div class="col m2 s5 checkbox-group-container">
+            <h6>Departamento</h6>
+            <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config">
+                <p>
+                    <div ng-repeat="departamento in ctrl.departamentos">
+                        <input type="checkbox" id="{{'depa'+$index}}" ng-change="ctrl.sync(bool, departamento, 'departamento')" ng-model="bool" class="filled-in"/>
+                        <label for="{{'depa'+$index}}">{{departamento.nombre}}</label>
+                    </div>
+                </p>
+            </div>
+        </div>
+        <div class="col m2 s5 checkbox-group-container">
+            <h6>Provincia</h6>
+            <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config">
+                <p>
+                    <div ng-repeat="provincia in ctrl.provincias">
+                        <input type="checkbox" id="{{'prov'+$index}}" ng-change="ctrl.sync(bool, provincia, 'provincia')" ng-model="bool" class="filled-in"/>
+                        <label for="{{'prov'+$index}}">{{provincia.nombre}}</label>
+                    </div>
+                </p>
+            </div>
+        </div>
+        <div class="col m2 s5 checkbox-group-container">
+            <h6>Tipo</h6>
+            <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config">
+                <p>
+                    <div ng-repeat="tipoStock in ctrl.tipoStock">
+                        <input type="checkbox" id="{{'ts'+$index}}" ng-change="ctrl.sync(bool, tipoStock, 'tipoStock')" ng-model="bool" class="filled-in"/>
+                        <label for="{{'ts'+$index}}">{{tipoStock.tipo}}</label>
+                    </div>
+                </p>
+            </div>
+        </div>
+        <div class="col m4 s12 checkbox-group-container">
+            <!--<h6><input ng-model="ctrl.searchText" placeholder="Escriba el nombre de la tienda" type="text"/></h6>-->
+
+            <!--<form ng-submit="$event.preventDefault()">-->
+                <md-autocomplete
+                        md-selected-item="ctrl.selectedItem"
+                        md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                        md-search-text="ctrl.searchText"
+                        md-selected-item-change="ctrl.selectedItemChange(item)"
+                        md-items="item in ctrl.tiendas | filter: ctrl.searchText"
+                        md-item-text="item.name"
+                        md-min-length="0"
+                        placeholder="Escriba el nombre de una tienda">
+                    <md-item-template>
+                        <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.name}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        No states matching "{{ctrl.searchText}}" were found.
+                        <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a>
+                    </md-not-found>
+                </md-autocomplete>
+                <br/>
+            <!--</form>-->
+
+            <div class="" style="height: 169px; overflow-y:auto; ">
+                <p>
+                <div ng-repeat="tienda in ctrl.tiendas | filter: ctrl.showItem | orderBy: 'bool'">
+                    <input type="checkbox" id="{{'tienda'+$index}}" ng-change="ctrl.sync(tienda.bool, tienda, 'tienda')" ng-model="tienda.bool" class="filled-in"/>
+                    <label for="{{'tienda'+$index}}">{{tienda.name}}</label>
+                </div>
+                </p>
+                <!--<p>
+                    <div ng-repeat="tienda in ctrl.tiendas">
+                        <input type="checkbox" id="{{'tienda'+$index}}" ng-change="ctrl.sync(bool, tienda, 'tienda')" ng-model="bool" />
+                        <label for="{{'tienda'+$index}}">{{tienda.name}}</label>
+                    </div>
+                </p>-->
+            </div>
+        </div>
+        <div class="col m4 s12" style="padding-right: 0;">
+            <a class="btn" ng-click="ctrl.submit($event)" style="float:right;margin-top:16px;">Filtrar</a>
+            <a class="btn orange darken-4" ng-click="ctrl.cleanFilters($event)" style="float:right;margin-top:16px;margin-right:5px;">Limpiar Filtros</a>
+        </div>
+
+    </form>
+    <div class="row">
+        <md-toolbar class="md-table-toolbar md-default">
+            <div class="md-toolbar-tools">
+                <!--<span>Nutrition</span>-->
+            </div>
+        </md-toolbar>
+
+        <!-- exact table from live demo -->
+        <md-table-container>
+            <table md-table md-row-select multiple ng-model="ctrl.selected" md-progress="promise">
+                <thead md-head md-order="query.order" md-on-reorder="getDesserts">
+                <tr md-row>
+                    <th md-column md-order-by="nameToLower"><span>AREA</span></th>
+                    <th md-column md-numeric md-order-by="subcategoria1.tipo"><span>CATEGORIA</span></th>
+                    <th md-column md-numeric>SUB CATEGORIA</th>
+                    <th md-column md-numeric>REGION</th>
+                    <th md-column md-numeric>REGION II</th>
+                    <th md-column md-numeric>TIENDA</th>
+                    <th md-column md-numeric>DEPARTAMENTO</th>
+                    <th md-column md-numeric>PROVINCIA</th>
+                    <th md-column md-numeric>TIPO</th>
+                    <th md-column md-numeric>CANTIDAD</th>
+
+                </tr>
+                </thead>
+                <tbody md-body>
+                <tr md-row md-select="stock" md-select-id="categoria.tipo" md-auto-select ng-repeat="stock in ctrl.stock">
+                    <td md-cell>{{stock.categoria.tipo}}</td>
+                    <td md-cell>{{stock.subcategoria1.tipo}}</td>
+                    <td md-cell>{{stock.subcategoria2.tipo}}</td>
+                    <td md-cell>{{stock.ubicacion.direccion_ubicacion.region1.nombre}}</td>
+                    <td md-cell>{{stock.ubicacion.direccion_ubicacion.region2.nombre}}</td>
+                    <td md-cell>{{stock.tienda.name}}</td>
+                    <td md-cell>{{stock.ubicacion.direccion_ubicacion.departamento.nombre}}</td>
+                    <td md-cell>{{stock.ubicacion.direccion_ubicacion.provincia.nombre}}</td>
+                    <td md-cell>{{stock.tipo_stock.tipo}}</td>
+                    <td md-cell>{{stock.cantidad}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+
+        <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{ctrl.stock.count}}" md-on-paginate="getDesserts" md-page-select></md-table-pagination>
     </div>
 </div>
 <!--</section>-->
