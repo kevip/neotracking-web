@@ -20,18 +20,19 @@
                 <b>Codigo:</b> {{ stock.codigo }}<br>
                 <b>Area:</b> {{ stock.categoria.tipo }}<br>
                 <b>Categoria:</b> {{ stock.subcategoria1.tipo }}<br/>
-                <b>Region:</b> {{ stock.ubicacion.direccion_ubicacion.region1.nombre }}<br/>
+                <b>Region:</b> {{ stock.tienda.direccion_ubicacion.region2.nombre }}<br/>
                 <b>Tienda:</b> {{ stock.tienda.name }}
-                <div class="chip yellow accent-1" ng-if="stock.status=='pendiente'">{{stock.status}}</div>
-                <div class="chip green accent-1" ng-if="stock.status=='alta'">{{stock.status}}</div>
-                <div class="chip red accent-1" ng-if="stock.status=='baja'">{{stock.status}}</div>
+                <div class="chip red accent-1" ng-if="stock.stock_status.name=='pendiente_baja'">PENDIENTE DE BAJA</div>
+                <div class="chip green" ng-if="stock.stock_status.name=='alta'">ALTA</div>
+                <div class="chip green accent-1" ng-if="stock.stock_status.name=='pendiente_alta'">PENDIENTE DE ALTA</div>
+                <div class="chip red" ng-if="stock.stock_status.name=='baja'">BAJA</div>
 
             </p>
         </div>
         <div class="secondary-content">
             <a class="icono-detalle" title="Ver Detalle" ui-sref="index.furniture-detail({codigo:stock.codigo})" ><i class="small material-icons">visibility</i></a>
-            <a class="icono-editar" title="Editar" ng-click="ctrl.showModalAlta($event)" ><i class="small material-icons">mode_edit</i></a>
-            <a class="icono-baja" title="Dar de baja" ng-if="stock.status != 'en baja'" ng-click="ctrl.showModalBaja($event)" ><i class="small material-icons">trending_down</i></a>
+            <a class="icono-editar" title="Editar" ui-sref="index.furniture-edit({id: stock.id})" ><i class="small material-icons">mode_edit</i></a>
+            <a class="icono-baja" title="Dar de baja" ng-if="stock.stock_status.name != 'baja'" ng-click="ctrl.showModalBaja($event)" ><i class="small material-icons">trending_down</i></a>
             <!--<a title="Aprobar" href="#modal1" class="modal-trigger"><i class="small material-icons">done</i></a>
             <a title="Eliminar" href="#modal2" class="modal-trigger"><i class="small material-icons">clear</i></a>-->
         </div>

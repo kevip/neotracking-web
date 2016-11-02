@@ -10,6 +10,7 @@ class ReportesRepository {
 
 
     public function search(Request $request){
+
         $query = \DB::table("stock");
 
         if($request->has('categoria') && sizeof($request->get('categoria'))>0 ){
@@ -69,12 +70,12 @@ class ReportesRepository {
             $query->whereIN("direccion_ubicacion.provincia_id",$id_provincia );
         }
 
-        if($request->has('tipoStock') && sizeof($request->get('tipoStock'))>0){
-            $id_tipo_stock = [];
-            foreach($request->get('tipoStock') as $key => $tipo_stock){
-                $id_tipo_stock[] = $tipo_stock['id'];
+        if($request->has('tipoTienda') && sizeof($request->get('tipoTienda'))>0){
+            $id_tipo_tienda = [];
+            foreach($request->get('tipoTienda') as $key => $tipo_tienda){
+                $id_tipo_tienda[] = $tipo_tienda['id'];
             }
-            $query->whereIN("stock.tipo_stock",$id_tipo_stock );
+            $query->whereIN("tienda.tipo_tienda_id",$id_tipo_tienda );
         }
 
         if($request->has('tiendas') && sizeof($request->get('tiendas'))>0){
@@ -85,14 +86,14 @@ class ReportesRepository {
             $query->whereIN("stock.tienda_id",$id_tienda );
         }
 
-        $query = $query->join("ubicacion","stock.ubicacion_id","=","ubicacion.id")
-            ->join("direccion_ubicacion","direccion_ubicacion.id","=","ubicacion.direccion_ubicacion_id")
+        $query = $query->join("tienda","tienda.id","=","stock.tienda_id")
+            ->join("direccion_ubicacion","direccion_ubicacion.id","=","tienda.direccion_ubicacion_id")
             ->join("provincia","provincia.id","=","direccion_ubicacion.provincia_id")
             ->join("departamento","departamento.id","=","direccion_ubicacion.departamento_id")
             ->join("region1","region1.id","=","direccion_ubicacion.region1_id")
             ->join("region2","region2.id","=","direccion_ubicacion.region2_id")
-            ->join("tienda","tienda.id","=","stock.tienda_id")
             ->select("stock.id");
+
         $stocks = $query->get();
 
         $id_stock = [];
@@ -105,12 +106,12 @@ class ReportesRepository {
             'categoria',
             'subcategoria1',
             'subcategoria2',
-            'ubicacion.direccionUbicacion.region1',
-            'ubicacion.direccionUbicacion.region2',
-            'ubicacion.direccionUbicacion.departamento',
-            'ubicacion.direccionUbicacion.provincia',
-            'tipoStock',
-            'tienda'
+            'tienda.direccionUbicacion.region1',
+            'tienda.direccionUbicacion.region2',
+            'tienda.direccionUbicacion.departamento',
+            'tienda.direccionUbicacion.provincia',
+            'tienda',
+            'tienda.tipoTienda'
 
         ])->findMany($id_stock);
     }

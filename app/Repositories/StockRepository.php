@@ -44,9 +44,47 @@ class StockRepository
         $stock->save();
         return $stock;
     }
-    public function index(Request $request){
+    public function index(){
 
+        return Stock::with([
+            'stockImagen',
+            'categoria',
+            'subcategoria1',
+            'subcategoria2',
+            'stockStatus',
+            'tienda',
+            'tienda.tipoTienda',
+            'tienda.direccionUbicacion.region1',
+            'tienda.direccionUbicacion.region2',
+            'tienda.direccionUbicacion.departamento',
+            'tienda.direccionUbicacion.provincia'
 
+        ])->get();
+    }
+
+    public function update(Request $request, $id){
+        $stock = Stock::find($id);
+        $categoria = $request->categoria;
+        if(!empty($categoria)){
+            $stock->categoria_id = $categoria;
+        }
+
+        $subcategoria1 = $request->subcategoria1;
+        if(!empty($subcategoria1)){
+            $stock->subcategoria1_id = $subcategoria1;
+        }
+
+        $subcategoria2 = $request->subcategoria2;
+        if(!empty($subcategoria2)){
+            $stock->subcategoria2_id = $subcategoria2;
+        }
+        $cantidad = $request->cantidad;
+        if(!empty($cantidad)){
+            $stock->cantidad = $cantidad;
+        }
+        $stock->save();
+
+        return $stock;
     }
     /**
      * @param $id

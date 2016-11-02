@@ -11,6 +11,7 @@ use App\Models\Subcategoria1;
 use App\Models\Subcategoria2;
 use App\Models\Tienda;
 use App\Models\TipoStock;
+use App\Models\TipoTienda;
 use App\Repositories\ReportesRepository;
 use Illuminate\Http\Request;
 
@@ -46,7 +47,7 @@ class ReportesController extends Controller
 
         $provincias = Provincia::all();
 
-        $tipoStock = TipoStock::all();
+        $tipoTienda = TipoTienda::all();
 
         $filtros = [
             "categorias" => $categorias,
@@ -57,7 +58,7 @@ class ReportesController extends Controller
             "region1" => $region1,
             "region2" => $region2,
             "provincias" => $provincias,
-            "tipoStock" => $tipoStock
+            "tipoTienda" => $tipoTienda
         ];
 
         return $filtros;

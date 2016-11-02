@@ -18,6 +18,7 @@
         vm.showModalBaja = showModalBaja;
 
         vm.stocks = stocks;
+        console.log(vm.stocks);
 
         function showModalBaja(e){
             var codigo = $(e.currentTarget).parent().parent().data('codigo');            

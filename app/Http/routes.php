@@ -52,8 +52,6 @@ Route::group(['middleware' => ['cors']], function(){
 
             Route::resource('stock', 'API\StockController');
 
-            Route::get('tipo-stock', 'API\StockController@getTipo');
-
            // Route::get('stock/search', 'API\StockController@search');
 
             Route::post('stock/search', 'API\ReportesController@search');
@@ -67,6 +65,8 @@ Route::group(['middleware' => ['cors']], function(){
             //Route::resource('tienda', 'API\TiendasController');
 
             //Route::resource('tracking','API\TracksController');
+
+            Route::get('tipo-tienda', 'API\TiendasController@getTipo');
 
             Route::put('tracking/{id}/baja','API\TracksController@baja');
 

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUbicacionTable extends Migration
+class CreateStockStatusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,9 @@ class CreateUbicacionTable extends Migration
      */
     public function up()
     {
-        Schema::create('ubicacion', function (Blueprint $table) {
+        Schema::create('stock_status', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('direccion_ubicacion_id')->unsigned();
-            $table->string('tipo');
-            $table->foreign('direccion_ubicacion_id')->references('id')->on('direccion_ubicacion')->onDelete('cascade');
-
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -29,6 +26,6 @@ class CreateUbicacionTable extends Migration
      */
     public function down()
     {
-        Schema::drop('ubicacion');
+        Schema::drop('stock_status');
     }
 }

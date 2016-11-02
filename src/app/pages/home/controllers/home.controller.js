@@ -33,7 +33,7 @@
             region2: [],
             departamento: [],
             provincia: [],
-            tipoStock: [],
+            tipoTienda: [],
             tiendas: []
         };
         vm.categorias = filtros.categorias;
@@ -49,7 +49,7 @@
         vm.submit = submit;
         vm.sync = sync;
         vm.selected = [];
-        vm.tipoStock = filtros.tipoStock;
+        vm.tipoTienda = filtros.tipoTienda;
         vm.tiendas = filtros.tiendas;
 
         vm.config = {
@@ -111,8 +111,8 @@
                 }else if(tipo_filtro == "provincia"){
                     vm.filters.provincia.push(item);
 
-                }else if(tipo_filtro == "tipoStock"){
-                    vm.filters.tipoStock.push(item);
+                }else if(tipo_filtro == "tipoTienda"){
+                    vm.filters.tipoTienda.push(item);
 
                 }else if(tipo_filtro == "tienda"){
                     vm.filters.tiendas.push(item);
@@ -140,8 +140,8 @@
                 }else if(tipo_filtro == "provincia"){
                     dropItem(vm.filters.provincia, item);
 
-                }else if(tipo_filtro == "tipoStock"){
-                    dropItem(vm.filters.tipoStock, item);
+                }else if(tipo_filtro == "tipoTienda"){
+                    dropItem(vm.filters.tipoTienda, item);
 
                 }else if(tipo_filtro == "tienda"){
                     dropItem(vm.filters.tiendas, item);
@@ -150,12 +150,13 @@
         }
 
         function showItem(item) {
-
+            var name = String(item.name).toUpperCase(),
+                searchText = String(vm.searchText).toUpperCase();
             if (item.checked) {
                 return true; // Keep element if it is checked
             }
 
-            if (item.name.includes(vm.searchText)) {
+            if (name.includes(searchText)) {
                 return true; // Keep element if it matches search text
             }
             return false; // Remove element otherwise

@@ -87,18 +87,22 @@
             <h6>Tipo</h6>
             <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config">
                 <p>
-                    <div ng-repeat="tipoStock in ctrl.tipoStock">
-                        <input type="checkbox" id="{{'ts'+$index}}" ng-change="ctrl.sync(bool, tipoStock, 'tipoStock')" ng-model="bool" class="filled-in"/>
-                        <label for="{{'ts'+$index}}">{{tipoStock.tipo}}</label>
+                    <div ng-repeat="tipoTienda in ctrl.tipoTienda">
+                        <input type="checkbox" id="{{'ts'+$index}}" ng-change="ctrl.sync(bool, tipoTienda, 'tipoTienda')" ng-model="bool" class="filled-in"/>
+                        <label for="{{'ts'+$index}}">{{tipoTienda.name}}</label>
                     </div>
                 </p>
             </div>
         </div>
         <div class="col m4 s12 checkbox-group-container">
-            <!--<h6><input ng-model="ctrl.searchText" placeholder="Escriba el nombre de la tienda" type="text"/></h6>-->
+            <h6><div class="input-field">
+                <label for="search-text">Tienda</label>
+                <input id="search-text" ng-model="ctrl.searchText"  type="text"/>
+            </div>
+            </h6>
 
             <!--<form ng-submit="$event.preventDefault()">-->
-                <md-autocomplete
+                <!--<md-autocomplete
                         md-selected-item="ctrl.selectedItem"
                         md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
                         md-search-text="ctrl.searchText"
@@ -118,7 +122,7 @@
                 <br/>
             <!--</form>-->
 
-            <div class="" style="height: 169px; overflow-y:auto; ">
+            <div class="" style="height: 141px; overflow-y:auto; ">
                 <p>
                 <div ng-repeat="tienda in ctrl.tiendas | filter: ctrl.showItem | orderBy: 'bool'">
                     <input type="checkbox" id="{{'tienda'+$index}}" ng-change="ctrl.sync(tienda.bool, tienda, 'tienda')" ng-model="tienda.bool" class="filled-in"/>
@@ -169,12 +173,12 @@
                     <td md-cell>{{stock.categoria.tipo}}</td>
                     <td md-cell>{{stock.subcategoria1.tipo}}</td>
                     <td md-cell>{{stock.subcategoria2.tipo}}</td>
-                    <td md-cell>{{stock.ubicacion.direccion_ubicacion.region1.nombre}}</td>
-                    <td md-cell>{{stock.ubicacion.direccion_ubicacion.region2.nombre}}</td>
+                    <td md-cell>{{stock.tienda.direccion_ubicacion.region1.nombre}}</td>
+                    <td md-cell>{{stock.tienda.direccion_ubicacion.region2.nombre}}</td>
                     <td md-cell>{{stock.tienda.name}}</td>
-                    <td md-cell>{{stock.ubicacion.direccion_ubicacion.departamento.nombre}}</td>
-                    <td md-cell>{{stock.ubicacion.direccion_ubicacion.provincia.nombre}}</td>
-                    <td md-cell>{{stock.tipo_stock.tipo}}</td>
+                    <td md-cell>{{stock.tienda.direccion_ubicacion.departamento.nombre}}</td>
+                    <td md-cell>{{stock.tienda.direccion_ubicacion.provincia.nombre}}</td>
+                    <td md-cell>{{stock.tienda.tipo_tienda.name}}</td>
                     <td md-cell>{{stock.cantidad}}</td>
                 </tr>
                 </tbody>

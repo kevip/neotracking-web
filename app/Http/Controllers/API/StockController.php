@@ -31,20 +31,8 @@ class StockController extends Controller
 
     public function index()
     {
+        return $this->stockRepository->index();
 
-        return Stock::with([
-            'stockImagen',
-            'categoria',
-            'subcategoria1',
-            'subcategoria2',
-            'ubicacion.direccionUbicacion.region1',
-            'ubicacion.direccionUbicacion.region2',
-            'ubicacion.direccionUbicacion.departamento',
-            'ubicacion.direccionUbicacion.provincia',
-            'tipoStock',
-            'tienda'
-
-        ])->get();
     }
 
     /**
@@ -61,17 +49,18 @@ class StockController extends Controller
     public function show($id)
     {
         return Stock::with([
-            'stockImagen',
             'categoria',
             'subcategoria1',
-            'subcategoria2',
-            'ubicacion'
-
+            'subcategoria2'
         ])->find($id);
+    }
+
+    public function update(Request $request, $id){
+        return $this->stockRepository->update($request, $id);
     }
 
     public function getHistory($codigo){
         //return Stock::with(['tracking']);
-        return Track::with(['tienda', 'trackImagen'])->where('codigo',$codigo)->get();
+        return Track::with(['tienda', 'trackImagen', 'usuario'])->where('codigo',$codigo)->get();
     }
 }
