@@ -2,13 +2,20 @@
 
 namespace App\Repositories;
 
+use App\Models\Stock;
 use App\Models\Tienda;
 use App\Models\TrackImagen;
+use App\Models\Role;
+
 use App\User;
 use Symfony\Component\HttpFoundation\Request;
 
 use App\Models\Track;
+use App\Models\StockStatus;
+
 use Symfony\Component\HttpFoundation\Response;
+
+
 
 class TrackRepository
 {
@@ -47,6 +54,35 @@ class TrackRepository
 
         return $track;
     }
+
+    /**
+     * @param $codigo
+     * @return Stock
+     */
+    private function createStockOnTrack($codigo, $tienda){
+
+        $status_pendiente = StockStatus::where('name','=','pendiente_alta')->first();
+        $stock = new Stock();
+        $stock->codigo = $codigo;
+        $stock->tienda_id = $tienda;
+        $stock->status = $status_pendiente->id;
+        $stock->save();
+        return $stock;
+    }
+
+    /**
+     * @param $phone_number
+     * @return User
+     */
+    private function createUserOnTrack($phone_number){
+        $user = User::create([
+            "phone_number" => $phone_number
+        ]);
+        $rol = Role::where('name','Supervisor')->first();
+        $user->roles()->attach($rol->id);
+
+        return $user;
+    }
     /**
      * @param $id
      * @return Track
@@ -63,13 +99,30 @@ class TrackRepository
     public function store(Request $request)
     {
 
+
         $tienda = 1;
-        if($request->get('tienda')!=null){
+        if($request->get('tienda')!=null) {
             $tienda = $request->get('tienda');
         }
 
+        $codigo = $request->get('codigo');
+        $stock = Stock::where('codigo', $codigo)->first();
+        if(empty($stock)) {
+            $stck = $this->createStockOnTrack($codigo, $tienda);
+        }else{
+            if($request->get('flag')=='Baja'){
+                $this->sugerirBaja($stock);
+            }
+        }
+
+        $phone_number = $request->get('num');
+        $usr = User::where('phone_number', $phone_number)->first();
+        if(empty($usr)) {
+            $usr = $this->createUserOnTrack($phone_number);
+        }
+
         $m = new Track();
-        $m->codigo = $request->get('codigo');
+        $m->codigo = $codigo;
         $m->tienda_id = $tienda;
         $m->obs  = $request->get('obs');
         $m->lat  = $request->get('lat');
@@ -77,7 +130,7 @@ class TrackRepository
         $m->guid = $request->get('guid');
         $m->lng  = $request->get('lng');
         $m->num  = $request->get('num');
-        $m->usr  = $request->get('usr');
+        $m->usr  = $usr->id;
         $m->save();
 
         if($request->file('photo1') != null) {
@@ -142,11 +195,17 @@ class TrackRepository
         $name = $file->getClientOriginalName();
         $img->name = $name;
 
-        $img->url = 'http://www.neoprojects.com.pe/neotracking-web/public/images/' . $imageName;
+        $img->url = 'http://lg.neoprojects.com.pe/images/' . $imageName;
+        //$img->url = base_path() . '/public/images/' . $imageName;
 
         $img->save();
         return $img;
     }
 
+    private function sugerirBaja(Stock $stock){
+        $status_pendiente = StockStatus::where('name','=','pendiente_baja')->first();
+        $stock->status = $status_pendiente->id;
+        $stock->save();
+    }
 
 }

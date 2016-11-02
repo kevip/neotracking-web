@@ -52,17 +52,21 @@ Route::group(['middleware' => ['cors']], function(){
 
             Route::resource('stock', 'API\StockController');
 
-            Route::get('tipo-stock', 'API\StockController@getTipo');
+           // Route::get('stock/search', 'API\StockController@search');
 
-            Route::get('stock/search', 'API\StockController@search');
+            Route::post('stock/search', 'API\ReportesController@search');
 
-            Route::put('stock/{codigo}/baja', 'API\StockController@baja');
+            Route::put('stock/{id}/baja', 'API\StockController@baja');
 
             Route::get('stock/{codigo}/historial', 'API\StockController@getHistory');
 
-            Route::resource('tienda', 'API\TiendasController');
+            Route::post('stock-nuevo', 'API\StockController@newStock');
 
-            Route::resource('tracking','API\TracksController');
+            //Route::resource('tienda', 'API\TiendasController');
+
+            //Route::resource('tracking','API\TracksController');
+
+            Route::get('tipo-tienda', 'API\TiendasController@getTipo');
 
             Route::put('tracking/{id}/baja','API\TracksController@baja');
 
@@ -91,9 +95,11 @@ Route::group(['middleware' => ['cors']], function(){
 
     Route::resource('tienda', 'API\TiendasController');
 
+    Route::get('api/tienda', 'API\TiendasController@index');
+
     Route::resource('stock', 'API\StockController');
 
-    Route::resource('tracking','API\TracksController');
+    Route::resource('api/tracking','API\TracksController');
 
     Route::group(['prefix' => 'user'], function(){
 

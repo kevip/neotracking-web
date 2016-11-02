@@ -6,6 +6,7 @@ namespace App\Http\Controllers\API;
 use App\Models\Tienda;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\TipoTienda;
 use App\Repositories\TiendasRepository;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -24,6 +25,10 @@ class TiendasController extends Controller{
 
     public function store(Request $request){
         return $this->tiendaRepository->store($request);
+    }
+
+    public function getTipo(){
+        return TipoTienda::all();
     }
 
 }

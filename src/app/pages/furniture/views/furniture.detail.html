@@ -1,9 +1,24 @@
 <section class="container">
     <div class="row">
+        <section class="container">
+            <div class="row">
+                <div></div>
+            </div>
+        </section>
+        <nav class="red darken-2">
+            <div class="nav-wrapper">
+                <div class="col s12">
+                    <a ui-sref="index.furniture" class="breadcrumb">Mobiliarios</a>
+                    <a class="breadcrumb">Historial de mobiliario</a>
+                    <!--<a class="breadcrumb" style="float:right;">{{ctrl.user.first_name+' '+ ctrl.user.last_name}}</a>-->
+                </div>
+            </div>
+        </nav>
         <div ng-repeat="track in ctrl.tracks" class="card">
 
             <div class="col s12 m12">
-                <h4>Tracking {{$index}} del {{track.dtime}}</h4>
+                <h4>Tracking del {{track.created_at}}</h4>
+                <p>Por el usuario de teléfono: {{ track.usuario.phone_number }}</p>
                 <img ng-if="track.track_imagen.length>0" src="{{image.url}}" alt="" ng-repeat="image in track.track_imagen" style="max-height: 180px;max-width:180px"/>
             </div>
             <div class="col s12 m12 card">

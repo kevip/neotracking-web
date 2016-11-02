@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Role;
 use Symfony\Component\HttpFoundation\Request;
 
 use App\User;
@@ -114,9 +115,7 @@ class UserRepository
         $user->last_name    = $request->last_name;
         $user->phone_number = $request->phone_number;
         $user->save();
-        return User::find($user->id);
         if(!empty($request->rol)){
-            $srol = false;
             foreach($user->roles as $key => $rol){
                 $user->roles()->detach($rol->id);
             }
@@ -124,5 +123,6 @@ class UserRepository
         }
         return User::find($user->id);
     }
+
 
 }

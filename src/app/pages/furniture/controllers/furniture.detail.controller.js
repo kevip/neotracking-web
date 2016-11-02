@@ -18,6 +18,7 @@
         $http.get(API_URL+'stock/'+$stateParams.codigo+'/historial').then(
             function(res){
                 vm.tracks = res.data;
+                console.log(vm.tracks);
             }
         );
 

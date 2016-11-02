@@ -11,14 +11,16 @@
         'API_URL',
         '$http',
         'Stock',
-        'filtros'
+        'filtros',
+        '$scope'
     ];
 
     function HomeController(
         API_URL,
         $http,
         Stock,
-        filtros) {
+        filtros,
+        $scope) {
 
         var vm = this;
 
@@ -31,21 +33,23 @@
             region2: [],
             departamento: [],
             provincia: [],
-            tipoStock: [],
+            tipoTienda: [],
             tiendas: []
         };
         vm.categorias = filtros.categorias;
+        vm.cleanFilters = cleanFilters;
         vm.departamentos = filtros.departamentos;
         vm.provincias = filtros.provincias;
         vm.region1 = filtros.region1;
         vm.region2 = filtros.region2;
+        vm.showItem = showItem;
         vm.stock = Stock.all();
         vm.subcategorias1 = filtros.subcategorias1;
         vm.subcategorias2 = filtros.subcategorias2;
         vm.submit = submit;
         vm.sync = sync;
         vm.selected = [];
-        vm.tipoStock = filtros.tipoStock;
+        vm.tipoTienda = filtros.tipoTienda;
         vm.tiendas = filtros.tiendas;
 
         vm.config = {
@@ -69,6 +73,12 @@
 
         function submit(e){
             e.preventDefault();
+            $http.post(API_URL+'stock/search',vm.filters).then(function success(response){
+                vm.stock = response.data;
+            },
+            function error(err){
+                console.log(err);
+            });/*
             Stock.search(vm.filters,
                 function success(response){
                     vm.stock = response;
@@ -76,7 +86,7 @@
                 function error(err) {
                     console.log(err);
                 }
-            );
+            );*/
 
         }
         function sync(bool, item, tipo_filtro){
@@ -101,8 +111,8 @@
                 }else if(tipo_filtro == "provincia"){
                     vm.filters.provincia.push(item);
 
-                }else if(tipo_filtro == "tipoStock"){
-                    vm.filters.tipoStock.push(item);
+                }else if(tipo_filtro == "tipoTienda"){
+                    vm.filters.tipoTienda.push(item);
 
                 }else if(tipo_filtro == "tienda"){
                     vm.filters.tiendas.push(item);
@@ -130,13 +140,34 @@
                 }else if(tipo_filtro == "provincia"){
                     dropItem(vm.filters.provincia, item);
 
-                }else if(tipo_filtro == "tipoStock"){
-                    dropItem(vm.filters.tipoStock, item);
+                }else if(tipo_filtro == "tipoTienda"){
+                    dropItem(vm.filters.tipoTienda, item);
 
                 }else if(tipo_filtro == "tienda"){
                     dropItem(vm.filters.tiendas, item);
                 }
             }
+        }
+
+        function showItem(item) {
+            var name = String(item.name).toUpperCase(),
+                searchText = String(vm.searchText).toUpperCase();
+            if (item.checked) {
+                return true; // Keep element if it is checked
+            }
+
+            if (name.includes(searchText)) {
+                return true; // Keep element if it matches search text
+            }
+            return false; // Remove element otherwise
+
+        }
+        function cleanFilters(){
+            for(var key in vm.filters){
+                vm.filters[key]=[];
+            }
+            $('.filled-in').attr('checked', false);
+            console.log(vm.filters);
         }
         /*$http({method:"POST",url: API_URL+"stock/search",data:vm.filters}).then(
             function success(response){

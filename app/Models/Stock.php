@@ -12,16 +12,10 @@ class Stock extends Model
         'cantidad',
         'categoria_id',
         'codigo',
-        'descripcion',
-        'fecha',
-        'imagen',
-        'observacion',
         'subcategoria1_id',
         'subcategoria2_id',
         'status',
-        'tienda_id',
-        'tipo_stock',
-        'ubicacion_id'
+        'tienda_id'
     ];
 
     public function stockImagen(){
@@ -44,10 +38,6 @@ class Stock extends Model
 
     }
 
-    public function ubicacion(){
-        return $this->belongsTo(Ubicacion::class, 'ubicacion_id');
-
-    }
 
     public function tienda(){
         return $this->belongsTo(Tienda::class, 'tienda_id');
@@ -61,6 +51,11 @@ class Stock extends Model
 
     public function tracking(){
         return $this->hasMany(Track::class, 'codigo');
+    }
+
+    public function stockStatus(){
+        return $this->belongsTo(StockStatus::class, 'status');
+
     }
 
 }

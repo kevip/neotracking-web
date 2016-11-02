@@ -44,6 +44,18 @@
               },
               module: 'private'
           })
+          .state('index.furniture-edit',{
+              url: '/furniture/:id/edit',
+              templateUrl: 'app/pages/furniture/views/furniture.edit.html',
+              controller: 'FurnitureEditController as ctrl',
+              resolve: {
+                  stock: ['Stock', '$stateParams',function(Stock, $stateParams){
+                      return Stock.find({id: $stateParams.id}).$promise;
+                  }]
+
+              },
+              module: 'private'
+          })
           .state('index.furniture-new',{
               url: '/furniture/new',
               templateUrl: 'app/pages/furniture/views/furniture.new.html',
@@ -51,8 +63,8 @@
               resolve: {
                   stocks: ['Stock',function(Stock){
                     return Stock.all().$promise;
+                  }]
 
-                }]
               },
               module: 'private'
           })

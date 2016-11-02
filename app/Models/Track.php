@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Track extends Model
@@ -17,11 +18,15 @@ class Track extends Model
         'num',
         'usr',
         'dtime',
-        'status',
+        'status'
     ];
 
     public function tienda(){
         return $this->belongsTo(Tienda::class, 'tienda_id');
+    }
+
+    public function usuario(){
+        return $this->belongsTo(User::class, 'usr');
     }
 
     public function trackImagen(){

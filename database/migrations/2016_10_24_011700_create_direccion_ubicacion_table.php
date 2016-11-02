@@ -14,13 +14,12 @@ class CreateDireccionUbicacionTable extends Migration
     {
         Schema::create('direccion_ubicacion', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('ciudad');
-            $table->string('distrito');
+            $table->integer('ciudad_id')->unsigned();
+            $table->integer('distrito_id')->unsigned();
             $table->integer('provincia_id')->unsigned();
             $table->integer('departamento_id')->unsigned();
             $table->integer('region1_id')->unsigned();
             $table->integer('region2_id')->unsigned();
-            $table->integer('usr');
             $table->dateTime('dtime');
             $table->timestamps();
 
