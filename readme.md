@@ -1,10 +1,12 @@
 #Instalación
-    ##Backend:
+    #Backend:
 
-        ```composer update
         ```
-    ##Frontend:
+        composer update
         ```
-        ```bower install
+    #Frontend:
+        
+        ```
+        bower install
         npm install
         ```
