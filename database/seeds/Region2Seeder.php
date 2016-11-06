@@ -14,22 +14,28 @@ class Region2Seeder extends Seeder
     {
         $regiones = [
             [
-                'nombre'        => 'Lima'
+                'nombre'        => 'Lima',
+                'region1_id'        => 1
             ],
             [
-                'nombre'        => 'Centro'
+                'nombre'        => 'Centro',
+                'region1_id'        => 1
             ],
             [
-                'nombre'        => 'Oriente'
+                'nombre'        => 'Oriente',
+                'region1_id'        => 2
             ],
             [
-                'nombre'        => 'Sur'
+                'nombre'        => 'Sur',
+                'region1_id'        => 2
             ],
             [
-                'nombre'        => 'Norte 1'
+                'nombre'        => 'Norte 1',
+                'region1_id'        => 2
             ],
             [
-                'nombre'        => 'Norte 2'
+                'nombre'        => 'Norte 2',
+                'region1_id'        => 2
             ]
         ];
 

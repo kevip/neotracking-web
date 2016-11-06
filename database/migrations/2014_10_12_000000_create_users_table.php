@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('company');
             $table->string('phone_number')->unique();
             $table->enum('status',['activo', 'pendiente', 'baja'])->default('pendiente');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

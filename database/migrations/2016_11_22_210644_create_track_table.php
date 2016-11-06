@@ -15,7 +15,10 @@ class CreateTrackTable extends Migration
         Schema::create('track', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('tienda_id')->unsigned();
+            $table->integer('status_id')->unsigned();
             $table->string('codigo');
+            $table->string('user_first_name');
+            $table->string('user_last_name');
             $table->string('obs');
             $table->decimal('lat',8,6);
             $table->decimal('lng',9,6);
@@ -26,6 +29,7 @@ class CreateTrackTable extends Migration
             $table->dateTime('dtime');
             $table->timestamps();
 
+            $table->foreign('status_id')->references('id')->on('track_status')->onDelete('cascade');
             $table->foreign('tienda_id')->references('id')->on('tienda')->onDelete('cascade');
         });
     }

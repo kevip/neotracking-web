@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDistritoTable extends Migration
+class CreateCiudadTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,12 @@ class CreateDistritoTable extends Migration
      */
     public function up()
     {
-        Schema::create('distrito', function (Blueprint $table) {
+        Schema::create('ciudad', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('provincia_id')->unsigned();
             $table->string('name');
             $table->timestamps();
+            $table->foreign('provincia_id')->references('id')->on('provincia')->onDelete('cascade');
         });
     }
 
@@ -26,6 +28,6 @@ class CreateDistritoTable extends Migration
      */
     public function down()
     {
-        Schema::drop('distrito');
+        Schema::drop('ciudad');
     }
 }

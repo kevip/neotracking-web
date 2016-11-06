@@ -9,12 +9,18 @@
 
     <h5 style="margin:0;display: inline-block;">Administrar Usuarios</h5>
     <a style="margin-bottom: 13px;margin-left: 10px;" ui-sref="index.user-new" title="crear nuevo" class="btn-floating waves-effect waves-light red"><i class="material-icons">add</i></a>
+    <div class="input-field">
+        <input id="buscar-usuario" type="text" ng-model="searchText">
+        <label for="buscar-usuario">Buscar</label>
+    </div>
     <ul class="collection">
-        <li data-id="{{usuario.id}}" class="collection-item avatar" ng-repeat="usuario in ctrl.usuarios">
+        <li data-id="{{usuario.id}}" class="collection-item avatar" ng-repeat="usuario in ctrl.usuarios | filter:searchText">
             <div class="m12">
                 <div class="col m11">
                     <span class="title"><b>{{usuario.first_name + ' ' + usuario.last_name}}</b></span>
+                    <p>Número: <b>{{usuario.phone_number}}</b></p>
                     <p>Email: {{usuario.email}} </br>Fecha de registro: {{usuario.created_at}}</p>
+
                 </div>
                 <div class="col m1">
                     <div class="chip yellow accent-1" ng-if="usuario.status=='pendiente'">{{usuario.status}}</div>
@@ -22,9 +28,9 @@
                     <div class="chip red accent-1" ng-if="usuario.status=='baja'">{{usuario.status}}</div>
                 </div>
                 <div class="secondary-content ">
-                    <a class="icono-alta" title="Dar de alta" ng-click="ctrl.showModalAlta($event)" ><i class="small material-icons">done</i></a>
+                    <a class="icono-alta" title="Dar de alta" ng-click="ctrl.showModalAlta($event)" ng-if="usuario.status != 'activo'"><i class="small material-icons">done</i></a>
                     <a class="icono-editar" title="Editar" ui-sref="index.user-edit({id:usuario.id})" ><i class="small material-icons">mode_edit</i></a>
-                    <a class="icono-baja" title="Dar de baja" ng-click="ctrl.showModalBaja($event)" ><i class="small material-icons">clear</i></a>
+                    <a class="icono-baja" title="Dar de baja" ng-click="ctrl.showModalBaja($event)" ng-if="usuario.status != 'baja'"><i class="small material-icons">clear</i></a>
                 </div>
             </div>
         </li>

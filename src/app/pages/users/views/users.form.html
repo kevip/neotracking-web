@@ -14,7 +14,7 @@
             <input ng-model="ctrl.user.last_name" class='validate'  type="text" placeholder="Apellidos"/>
         </div>
     </div>
-    <div class='row'>
+    <div class='row' ng-if="ctrl.state=='index.user-new'">
         <div class='input-field col s12'>
             <input ng-model="ctrl.user.phone_number" class='validate' type="text" placeholder="Teléfono"/>
         </div>

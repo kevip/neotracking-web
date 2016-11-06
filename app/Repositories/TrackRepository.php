@@ -7,6 +7,7 @@ use App\Models\Tienda;
 use App\Models\TrackImagen;
 use App\Models\Role;
 
+use App\Models\TrackStatus;
 use App\User;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -81,7 +82,7 @@ class TrackRepository
         $rol = Role::where('name','Supervisor')->first();
         $user->roles()->attach($rol->id);
 
-        return $user;
+        return User::find($user->id);
     }
     /**
      * @param $id
@@ -131,7 +132,23 @@ class TrackRepository
         $m->lng  = $request->get('lng');
         $m->num  = $request->get('num');
         $m->usr  = $usr->id;
+
+        if($usr->first_name){
+            $m->user_first_name = $usr->first_name;
+        }
+        if($usr->last_name){
+            $m->user_last_name = $usr->last_name;
+        }
+        if($usr['status'] =='pendiente') {
+            $t_status = TrackStatus::where('name', 'pendiente')->first();
+        }
+        else
+            $t_status = TrackStatus::where('name','alta')->first();
+
+        $m->status_id = $t_status->id;
         $m->save();
+
+        $this->cambiarTiendaMobiliario($m->codigo);
 
         if($request->file('photo1') != null) {
             $request->file('photo1')->getClientOriginalName();
@@ -206,6 +223,18 @@ class TrackRepository
         $status_pendiente = StockStatus::where('name','=','pendiente_baja')->first();
         $stock->status = $status_pendiente->id;
         $stock->save();
+    }
+
+    private function cambiarTiendaMobiliario($codigo){
+        $stock = Stock::with(['stockStatus'])->where('codigo',$codigo)->first();
+        $s = $stock->toArray();
+        $track_status_alta = TrackStatus::where('name', 'alta')->first();
+        if($s['stock_status']['name']=='alta'){
+            $trk = Track::where('status_id',$track_status_alta->id)->orderBy('created_at','desc')->first();
+            $stock->tienda_id = $trk->tienda_id;
+            $stock->save();
+            //return "entré";
+        }
     }
 
 }

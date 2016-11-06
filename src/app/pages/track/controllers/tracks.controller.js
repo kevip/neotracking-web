@@ -8,13 +8,43 @@
     /** @ngInject */
     TracksController.$inject = [
         '$http',
-        'Track'
+        'Track',
+        '$mdDialog',
+        '$scope'
     ];
 
-    function TracksController($http, Track) {
+    function TracksController($http, Track, $mdDialog, $scope) {
         var vm = this;
-
+        vm.ubicacion = {
+            lat: -12.046374,
+            lng: -77.0427934
+        };
         vm.tracks = Track.all();
+        vm.track={};
+        vm.showMap = showMap;
+
+        function showMap(track) {
+            vm.ubicacion.lat = track.lat;
+            vm.ubicacion.lng = track.lng;
+            /*$mdDialog.show({
+                controller: 'MapModalController',
+                controllerAs: 'modal',
+                templateUrl: 'app/pages/track/views/modals/map.modal.html',
+                locals:{
+                    ubicacion: vm.ubicacion
+                },
+                clickOutsideToClose:true,
+                fullscreen: false // Only for -xs, -sm breakpoints.
+            })
+                .then(function(answer) {
+                    console.log(answer);
+                    $scope.status = 'You said the information was "' + answer + '".';
+                }, function(err) {
+                    console.log(err);
+                    $scope.status = 'You cancelled the dialog.';
+                });
+            */
+        }
 
     }
 })();

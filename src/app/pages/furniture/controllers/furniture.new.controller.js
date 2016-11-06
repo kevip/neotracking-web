@@ -8,12 +8,9 @@
     /** @ngInject */
 
     FurnitureNewController.$inject = [
-        '$mdDialog',
-        'stocks',
         'Categoria',
         'Subcategoria1',
         'Subcategoria2',
-        'Stock',
         'toastr',
         '$state',
         '$http',
@@ -21,12 +18,9 @@
     ];
 
     function FurnitureNewController(
-        $mdDialog, 
-        stocks, 
         Categoria, 
         Subcategoria1, 
         Subcategoria2,
-        Stock,
         toastr,
         $state,
         $http,
@@ -38,6 +32,7 @@
         vm.subcategorias = Subcategoria2.all();
         console.log(vm.tipoStock);
         vm.stock = {};
+        vm.state = $state.current.name;
         vm.submit = submit;
 
 
@@ -45,6 +40,7 @@
             vm.tipoStock = res.data
         });
         function submit(e){
+            /**/
             e.preventDefault();
             Stock.create(vm.stock,
                 function success(res){

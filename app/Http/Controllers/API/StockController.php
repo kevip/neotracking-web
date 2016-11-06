@@ -51,7 +51,8 @@ class StockController extends Controller
         return Stock::with([
             'categoria',
             'subcategoria1',
-            'subcategoria2'
+            'subcategoria2',
+            'stockStatus'
         ])->find($id);
     }
 
@@ -61,6 +62,6 @@ class StockController extends Controller
 
     public function getHistory($codigo){
         //return Stock::with(['tracking']);
-        return Track::with(['tienda', 'trackImagen', 'usuario'])->where('codigo',$codigo)->get();
+        return Track::with(['tienda', 'trackImagen', 'usuario', 'status'])->where('codigo',$codigo)->orderBy('created_at','desc')->get();
     }
 }

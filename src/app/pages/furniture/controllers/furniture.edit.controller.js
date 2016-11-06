@@ -37,6 +37,7 @@
         vm.categorias = Subcategoria1.all();
         vm.subcategorias = Subcategoria2.all();
         vm.stock = stock;
+        vm.state = $state.current.name;
         vm.submit = submit;
 
 

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRegion2Table extends Migration
+class CreateTrackStatusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,9 @@ class CreateRegion2Table extends Migration
      */
     public function up()
     {
-        Schema::create('region2', function (Blueprint $table) {
+        Schema::create('track_status', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ class CreateRegion2Table extends Migration
      */
     public function down()
     {
-        Schema::drop('region2');
+        Schema::drop('track_status');
     }
 }

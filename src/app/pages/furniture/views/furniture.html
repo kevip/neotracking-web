@@ -9,8 +9,12 @@
 
 <h5 style="margin:0;display: inline-block;">Mobiliarios</h5>
 <a style="margin-bottom: 13px;margin-left: 10px;" title="crear nuevo" ui-sref="index.furniture-new" class="btn-floating btn waves-effect waves-light red"><i class="material-icons">add</i></a>
+<div class="input-field">
+    <input id="buscar-mobiliario" type="text" ng-model="searchText">
+    <label for="buscar-mobiliario">Buscar</label>
+</div>
 <ul class="collection">
-    <li data-codigo="{{stock.codigo}}" class="collection-item avatar" ng-repeat="stock in ctrl.stocks">
+    <li data-codigo="{{stock.codigo}}" class="collection-item avatar" ng-repeat="stock in ctrl.stocks | filter:searchText | orderBy: 'stock.stock_status.name':false ">
         <!--<div>
             <img src="{{ mobiliario.track_imagen[0].url}}" alt="" style="width:120px; height: 120px;">
         </div>-->
@@ -18,21 +22,29 @@
         <div>
             <p>
                 <b>Codigo:</b> {{ stock.codigo }}<br>
-                <b>Area:</b> {{ stock.categoria.tipo }}<br>
-                <b>Categoria:</b> {{ stock.subcategoria1.tipo }}<br/>
-                <b>Region:</b> {{ stock.tienda.direccion_ubicacion.region2.nombre }}<br/>
-                <b>Tienda:</b> {{ stock.tienda.name }}
-                <div class="chip red accent-1" ng-if="stock.stock_status.name=='pendiente_baja'">PENDIENTE DE BAJA</div>
-                <div class="chip green" ng-if="stock.stock_status.name=='alta'">ALTA</div>
-                <div class="chip green accent-1" ng-if="stock.stock_status.name=='pendiente_alta'">PENDIENTE DE ALTA</div>
-                <div class="chip red" ng-if="stock.stock_status.name=='baja'">BAJA</div>
+                <b>Area:</b> {{ stock.categoria }}<br>
+                <b>Categoria:</b> {{ stock.subcategoria1 }}<br/>
+                <b>Subcategoria:</b> {{ stock.subcategoria2 }}<br/>
+                <b>Tienda:</b> {{ stock.tienda }}
+                <div class="chip red accent-1" ng-if="stock.status=='pendiente_baja'">PENDIENTE DE BAJA</div>
+                <div class="chip green" ng-if="stock.status=='alta'">ALTA</div>
+                <div class="chip green accent-1"
+                     ng-if="stock.status=='pendiente_alta' || stock.status=='pendiente_alta_puede_editar'"
+                        >PENDIENTE DE ALTA</div>
+                <div class="chip red" ng-if="stock.status=='baja'">BAJA</div>
 
             </p>
         </div>
         <div class="secondary-content">
-            <a class="icono-detalle" title="Ver Detalle" ui-sref="index.furniture-detail({codigo:stock.codigo})" ><i class="small material-icons">visibility</i></a>
-            <a class="icono-editar" title="Editar" ui-sref="index.furniture-edit({id: stock.id})" ><i class="small material-icons">mode_edit</i></a>
-            <a class="icono-baja" title="Dar de baja" ng-if="stock.stock_status.name != 'baja'" ng-click="ctrl.showModalBaja($event)" ><i class="small material-icons">trending_down</i></a>
+            <a class="icono-detalle" title="Ver Detalle" ui-sref="index.furniture-detail({codigo:stock.codigo})"
+               ng-if="stock.stock_status.name!='pendiente_alta' && stock.stock_status.name!='pendiente_alta_puede_editar'">
+                <i class="small material-icons">visibility</i></a>
+            <a class="icono-editar" title="Editar" ui-sref="index.furniture-edit({id: stock.id})"
+               ng-if="stock.stock_status.name!='pendiente_alta'">
+                <i class="small material-icons">mode_edit</i></a>
+            <a class="icono-baja" title="Dar de baja"
+               ng-if="stock.stock_status.name != 'baja'" ng-click="ctrl.showModalBaja($event)" >
+                <i class="small material-icons">trending_down</i></a>
             <!--<a title="Aprobar" href="#modal1" class="modal-trigger"><i class="small material-icons">done</i></a>
             <a title="Eliminar" href="#modal2" class="modal-trigger"><i class="small material-icons">clear</i></a>-->
         </div>

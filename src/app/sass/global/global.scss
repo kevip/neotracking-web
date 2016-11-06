@@ -11,17 +11,50 @@ a:hover{
     padding-right: 3px !important;
   }
 }*/
+.filtros{
+  position: relative;
+}
 .checkbox-group-container{
   border: 1px solid red;
   margin: 1px;
+  padding: 8px;
+  width: 10.6%;
+  display: inline-block;
+  .input-field{
+    margin-top:0.7rem;
+    > .material-icons{
+      cursor: pointer;
+      position: absolute;
+      right:0;
+    }
+  }
+
+  &.half-height{
+    vertical-align: top;
+  }
   [type="checkbox"].filled-in:not(:checked) + label:after,
   [type="checkbox"].filled-in:checked + label:after{
     width: 14px;
     height: 14px;
   }
+  [type="checkbox"] + label{
+    line-height: 17px;
+  }
   [type="checkbox"].filled-in:checked + label:before{
     width: 6px;
     height: 9px;
+  }
+}
+.btn-filter-container{
+  position: absolute;
+  right: 41px;
+  top: 160px;
+  .btn-small{
+    padding: 0 1rem;
+  }
+  >a{
+    display: block;
+    margin: 5px 0;
   }
 }
 .icono-baja{

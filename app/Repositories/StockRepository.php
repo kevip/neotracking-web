@@ -12,7 +12,9 @@ class StockRepository
     private $STOCK_STATUS = [
         "alta" =>1,
         "baja" =>2,
-        "pendiente"=>3
+        "pendiente_alta"=>3,
+        "pendiente_baja"=>4,
+        "pendiente_alta_puede_editar"=>5
     ];
 
     public function baja(Request $request, $codigo){
@@ -46,20 +48,42 @@ class StockRepository
     }
     public function index(){
 
-        return Stock::with([
-            'stockImagen',
-            'categoria',
-            'subcategoria1',
-            'subcategoria2',
-            'stockStatus',
-            'tienda',
-            'tienda.tipoTienda',
-            'tienda.direccionUbicacion.region1',
-            'tienda.direccionUbicacion.region2',
-            'tienda.direccionUbicacion.departamento',
-            'tienda.direccionUbicacion.provincia'
+        $query1 = \DB::table("stock");
+        $query1 = $query1
+            ->join("tienda","tienda.id","=","stock.tienda_id")
+            ->join("stock_status","stock_status.id","=","stock.status")
+            ->where("stock_status.name", "=", "pendiente_alta")
+            ->orWhere("stock_status.name", "=", "pendiente_alta_puede_editar")
+            ->select(
+                "stock.codigo",
+                "tienda.name as tienda",
+                "stock_status.name as status"
+            )
+            ->orderBy('stock_status.name', 'desc');
+        $query1 = $query1->get();
 
-        ])->get();
+        $query2 = \DB::table("stock");
+        $query2 = $query2
+            ->join("categoria","categoria.id","=","stock.categoria_id")
+            ->join("subcategoria1","subcategoria1.id","=","stock.subcategoria1_id")
+            ->join("subcategoria2","subcategoria2.id","=","stock.subcategoria2_id")
+            ->join("tienda","tienda.id","=","stock.tienda_id")
+            ->join("stock_status","stock_status.id","=","stock.status")
+            ->where("stock_status.name", "!=", "baja")
+            ->where("stock_status.name", "!=", "pendiente_alta")
+            ->where("stock_status.name", "!=", "pendiente_alta_puede_editar")
+            ->select(
+                "stock.codigo",
+                "categoria.tipo as categoria",
+                "subcategoria1.tipo as subcategoria1",
+                "subcategoria2.tipo as subcategoria2",
+                "tienda.name as tienda",
+                "stock_status.name as status"
+            )
+            ->orderBy('stock_status.name', 'desc');
+        $query2 = $query2->get();
+
+        return array_merge($query1, $query2);
     }
 
     public function update(Request $request, $id){
@@ -82,6 +106,8 @@ class StockRepository
         if(!empty($cantidad)){
             $stock->cantidad = $cantidad;
         }
+        if($stock->status != $this->STOCK_STATUS['pendiente_baja'])
+            $stock->status = $this->STOCK_STATUS['alta'];
         $stock->save();
 
         return $stock;

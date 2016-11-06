@@ -10,6 +10,16 @@ class ReportesRepository {
 
 
     public function search(Request $request){
+        $all = $request->all();
+        $empty = true;
+        $arr = [];
+        foreach($all as $k => $v){
+            if(!empty($v))
+                $empty = false;
+
+        }
+        if($empty)
+            return [];
 
         $query = \DB::table("stock");
 
@@ -85,35 +95,54 @@ class ReportesRepository {
             }
             $query->whereIN("stock.tienda_id",$id_tienda );
         }
+        if($request->has('retail') && sizeof($request->get('retail'))>0){
+            $id_retail = [];
+            foreach($request->get('retail') as $key => $retail){
+                $id_retail[] = $retail['id'];
+            }
+            $query->whereIN("tienda.retail_id",$id_retail );
+        }
 
         $query = $query->join("tienda","tienda.id","=","stock.tienda_id")
+            ->join("retail","retail.id","=","tienda.retail_id")
+            ->join("tipo_tienda","tipo_tienda.id","=","tienda.tipo_tienda_id")
             ->join("direccion_ubicacion","direccion_ubicacion.id","=","tienda.direccion_ubicacion_id")
             ->join("provincia","provincia.id","=","direccion_ubicacion.provincia_id")
             ->join("departamento","departamento.id","=","direccion_ubicacion.departamento_id")
             ->join("region1","region1.id","=","direccion_ubicacion.region1_id")
             ->join("region2","region2.id","=","direccion_ubicacion.region2_id")
-            ->select("stock.id");
+            ->join("categoria","categoria.id","=","stock.categoria_id")
+            ->join("subcategoria1","subcategoria1.id","=","stock.subcategoria1_id")
+            ->join("subcategoria2","subcategoria2.id","=","stock.subcategoria2_id")
+            ->join("stock_status","stock_status.id","=","stock.status")
+            ->where("stock_status.name", "=", "alta")
+            ->orWhere("stock_status.name", "=", "pendiente_baja")
+            ->select(
+                "categoria.tipo as categoria",
+                "subcategoria1.tipo as subcategoria1",
+                "subcategoria2.tipo as subcategoria2",
+                "region1.nombre as region1",
+                "region2.nombre as region2",
+                "departamento.nombre as departamento",
+                "provincia.nombre as provincia",
+                "tienda.name as tienda",
+                "tipo_tienda.name as tipo_tienda",
+                "retail.name as retail",
+                \DB::raw('count(stock.id) as cantidad'))
+            ->groupBy(
+                'categoria',
+                'subcategoria1',
+                'subcategoria2',
+                'region1',
+                'region2',
+                'departamento',
+                'provincia',
+                'tienda',
+                'tipo_tienda'
+            );
 
         $stocks = $query->get();
-
-        $id_stock = [];
-        foreach($stocks as $key => $value){
-            $id_stock[] = $value->id;
-        }
-
-        return Stock::with([
-            'stockImagen',
-            'categoria',
-            'subcategoria1',
-            'subcategoria2',
-            'tienda.direccionUbicacion.region1',
-            'tienda.direccionUbicacion.region2',
-            'tienda.direccionUbicacion.departamento',
-            'tienda.direccionUbicacion.provincia',
-            'tienda',
-            'tienda.tipoTienda'
-
-        ])->findMany($id_stock);
+        return $stocks;
     }
 
 }

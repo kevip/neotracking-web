@@ -14,37 +14,60 @@ class DepartamentoSeeder extends Seeder
     {
         $departamentos = [
             [
-                'nombre'        => 'Amazonas'
+                'nombre'        => 'Amazonas',
+                'region2_id' => 6
             ],
             [
-                'nombre'        => 'Ancash'
+                'nombre'        => 'Ancash',
+                'region2_id' => 5
             ],
             [
-                'nombre'        => 'Apurímac'
+                'nombre'        => 'Apurímac',
+                'region2_id' => 6
             ],
             [
-                'nombre'        => 'Arequipa'
+                'nombre'        => 'Arequipa',
+                'region2_id' => 6
             ],
             [
-                'nombre'        => 'Ayacucho'
+                'nombre'        => 'Ayacucho',
+                'region2_id' => 6
             ],
             [
-                'nombre'        => 'Cajamarca'
+                'nombre'        => 'Cajamarca',
+                'region2_id' => 5
             ],
             [
-                'nombre'        => 'Lambayeque'
+                'nombre'        => 'Lambayeque',
+                'region2_id' => 5
             ],
             [
-                'nombre'        => 'Lima'
+                'nombre'        => 'Lima',
+                'region2_id' => 1
             ],
             [
-                'nombre'        => 'Huanuco'
+                'nombre'        => 'Huanuco',
+                'region2_id' => 3
             ],
             [
-                'nombre'        => 'Ica'
+                'nombre'        => 'Ica',
+                'region2_id' => 4
             ],
             [
-                'nombre'        => 'Ucayali'
+                'nombre'        => 'Ucayali',
+                'region2_id' => 3
+            ],
+            [
+                'nombre'        => 'Loreto',
+                'region2_id' => 6
+            ],
+            [
+                'nombre'        => 'Junin',
+                'region2_id' => 4
+            ],
+            [
+                'nombre'        => 'Piura',
+                'region2_id' => 5
             ]
         ];
 

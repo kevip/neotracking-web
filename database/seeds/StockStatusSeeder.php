@@ -24,6 +24,9 @@ class StockStatusSeeder extends Seeder
             ],
             [
                 'name'        => 'pendiente_baja'
+            ],
+            [
+                'name'        => 'pendiente_alta_puede_editar'
             ]
         ];
 

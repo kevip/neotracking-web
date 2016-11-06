@@ -14,34 +14,48 @@ class ProvinciaSeeder extends Seeder
     {
         $provincias = [
             [
-                'nombre'        => 'Cañete'
+                'nombre'        => 'Cañete',
+                'departamento_id' => 8
             ],
             [
-                'nombre'        => 'Lima'
+                'nombre'        => 'Lima',
+                'departamento_id' => 8
             ],
             [
-                'nombre'        => 'Chiclayo'
+                'nombre'        => 'Chiclayo',
+                'departamento_id' => 7
             ],
             [
-                'nombre'        => 'Chimbote'
+                'nombre'        => 'Chimbote',
+                'departamento_id' => 2
             ],
             [
-                'nombre'        => 'Huanuco'
+                'nombre'        => 'Huanuco',
+                'departamento_id' => 9
             ],
             [
-                'nombre'        => 'Ica'
+                'nombre'        => 'Ica',
+                'departamento_id' => 10
             ],
             [
-                'nombre'        => 'Maynas'
+                'nombre'        => 'Maynas',
+                'departamento_id' => 12
             ],
             [
-                'nombre'        => 'Chanchamayo'
+                'nombre'        => 'Chanchamayo',
+                'departamento_id' => 13
             ],
             [
-                'nombre'        => 'Arequipa'
+                'nombre'        => 'Arequipa',
+                'departamento_id' => 4
             ],
             [
-                'nombre'        => 'Coronel Portillo'
+                'nombre'        => 'Coronel Portillo',
+                'departamento_id' => 11
+            ],
+            [
+                'nombre'        => 'Piura',
+                'departamento_id' => 14
             ]
         ];
 

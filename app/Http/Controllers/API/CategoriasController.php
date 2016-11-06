@@ -12,6 +12,6 @@ class CategoriasController extends Controller
 {
 
     public function index(){
-        return Categoria::all();
+        return Categoria::orderBy('tipo')->get();
     }
 }

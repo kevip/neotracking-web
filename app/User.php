@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Track;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use App\Models\Role;
@@ -43,5 +44,8 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->belongsToMany(Role::class)->withTimestamps();
+    }
+    public function tracking(){
+        return $this->hasMany(Track::class, 'usr');
     }
 }

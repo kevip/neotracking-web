@@ -1,0 +1,105 @@
+<md-dialog aria-label="Nueva Tienda">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Nueva Tienda</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content" style="min-width: 700px;height: 900px;">
+                <div class="row">
+                    <div class="input-field">
+                        <input type="text" placeholder="Nombre" ng-model="ctrl.tienda.name"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field">
+                        <input type="text" placeholder="Direccion" ng-model="ctrl.tienda.direccion"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field">
+                        <md-select class="width-100" placeholder="Channel" data-ng-model="ctrl.tienda.channel_id">
+
+                            <md-option value="{{channel.id}}" ng-repeat="channel in ctrl.channel">{{channel.name}}</md-option>
+                        </md-select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field">
+                        <md-select class="width-100" placeholder="Retail" data-ng-model="ctrl.tienda.retail_id">
+
+                            <md-option value="{{retail.id}}" ng-repeat="retail in ctrl.retail">{{retail.name}}</md-option>
+                        </md-select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field">
+                        <md-select class="width-100" placeholder="Tipo: " data-ng-model="ctrl.tienda.tipo_tienda_id">
+
+                            <md-option value="{{tipoTienda.id}}" ng-repeat="tipoTienda in ctrl.tipoTienda">{{tipoTienda.name}}</md-option>
+                        </md-select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field">
+                        <md-select class="width-100" placeholder="Region 1" data-ng-model="ctrl.tienda.ubicacion.region1">
+                            <!--<md-option value="one">One</md-option>-->
+                            <md-option value="{{region1.id}}" ng-repeat="region1 in ctrl.region1">{{region1.nombre}}</md-option>
+                        </md-select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field">
+                        <md-select class="width-100" placeholder="Region 2" data-ng-model="ctrl.tienda.ubicacion.region2">
+                            <!--<md-option value="one">One</md-option>-->
+                            <md-option value="{{region2.id}}" ng-repeat="region2 in ctrl.region2">{{region2.nombre}}</md-option>
+                        </md-select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field">
+                        <md-select class="width-100" placeholder="Departamento" data-ng-model="ctrl.tienda.ubicacion.departamento_id">
+                            <!--<md-option value="one">One</md-option>-->
+                            <md-option value="{{departamento.id}}" ng-repeat="departamento in ctrl.departamentos">{{departamento.nombre}}</md-option>
+                        </md-select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field">
+                        <md-select class="width-100" placeholder="Provincia" data-ng-model="ctrl.tienda.ubicacion.provincia_id">
+                            <!--<md-option value="one">One</md-option>-->
+                            <md-option value="{{provincia.id}}" ng-repeat="provincia in ctrl.provincias">{{provincia.nombre}}</md-option>
+                        </md-select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field">
+                        <md-select class="width-100" placeholder="Ciudad" data-ng-model="ctrl.tienda.ubicacion.ciudad_id">
+                            <md-option value="{{ciudad.id}}" ng-repeat="ciudad in ctrl.ciudades">{{ciudad.name}}</md-option>
+                        </md-select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field">
+                        <md-select class="width-100" placeholder="Distrito" data-ng-model="ctrl.tienda.ubicacion.distrito_id">
+                            <md-option value="{{distrito.id}}" ng-repeat="distrito in ctrl.distritos">{{distrito.name}}</md-option>
+                        </md-select>
+                    </div>
+                </div>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="ctrl.registrar()">
+                Aceptar
+            </md-button>
+            <md-button ng-click="ctrl.cancel()">
+                Cancelar
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

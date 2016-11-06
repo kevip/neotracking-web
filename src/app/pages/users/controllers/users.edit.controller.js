@@ -19,6 +19,7 @@
         vm.getSelectedText = getSelectedText;
         vm.roles = Rol.all();
         vm.submit = submit;
+        vm.state = $state.current.name;
         vm.user = user;
 
         angular.forEach(user.roles,function(value, key){
@@ -41,6 +42,7 @@
                     $state.go('index.users');
                 }
             },function(err){
+                toastr.success(err);
                 console.log(err);
             });
         }

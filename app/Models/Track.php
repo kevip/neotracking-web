@@ -33,5 +33,8 @@ class Track extends Model
         return $this->hasMany(TrackImagen::class, 'track_id');
 
     }
+    public function status(){
+        return $this->belongsTo(TrackStatus::class, 'status_id');
+    }
 
 }

@@ -14,25 +14,32 @@ class CiudadSeeder extends Seeder
     {
         $ciudads = [
             [
-                'name'        => 'Ica'
+                'name'        => 'Ica',
+                'provincia_id' => 6
             ],
             [
-                'name'        => 'Iquitos'
+                'name'        => 'Iquitos',
+                'provincia_id' => 7
             ],
             [
-                'name'        => 'Lima'
+                'name'        => 'Lima',
+                'provincia_id' => 2
             ],
             [
-                'name'        => 'La Merced'
+                'name'        => 'La Merced',
+                'provincia_id' => 8
             ],
             [
-                'name'        => 'Piura'
+                'name'        => 'Piura',
+                'provincia_id' => 11
             ],
             [
-                'name'        => 'Arequipa'
+                'name'        => 'Arequipa',
+                'provincia_id' => 9
             ],
             [
-                'name'        => 'Pucallpa'
+                'name'        => 'Pucallpa',
+                'provincia_id' => 10
             ]
         ];
 

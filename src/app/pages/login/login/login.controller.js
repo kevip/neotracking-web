@@ -12,8 +12,8 @@
         var vm = this;
 
         vm.user = {
-            email: 'admin@trackingsystem.com',
-            password: 'admin'
+            email: '',
+            password: ''
         };
         vm.login = login;
 

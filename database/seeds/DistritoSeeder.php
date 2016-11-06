@@ -14,43 +14,56 @@ class DistritoSeeder extends Seeder
     {
         $distritos = [
             [
-                'name'        => 'Ica'
+                'name'        => 'Ica',
+                'ciudad_id'   => 1
             ],
             [
-                'name'        => 'Maynas'
+                'name'        => 'Maynas',
+                'ciudad_id'   => 2
             ],
             [
-                'name'        => 'Surco'
+                'name'        => 'Surco',
+                'ciudad_id'   => 3
             ],
             [
-                'name'        => 'Lima'
+                'name'        => 'Lima',
+                'ciudad_id'   => 3
             ],
             [
-                'name'        => 'Independencia'
+                'name'        => 'Independencia',
+                'ciudad_id'   => 3
             ],
             [
-                'name'        => 'Miraflores'
+                'name'        => 'Miraflores',
+                'ciudad_id'   => 3
             ],
             [
-                'name'        => 'Piura'
+                'name'        => 'Piura',
+                'ciudad_id'   => 5
             ],
             [
-                'name'        => 'Arequipa'
+                'name'        => 'Arequipa',
+                'ciudad_id'   => 6
             ],
             [
-                'name'        => 'Pucallpa'
+                'name'        => 'Pucallpa',
+                'ciudad_id'   => 7
             ],
             [
-                'name'        => 'Jesus Maria'
+                'name'        => 'Jesus Maria',
+                'ciudad_id'   => 3
             ],
             [
-                'name'        => 'San Isidro'
+                'name'        => 'San Isidro',
+                'ciudad_id'   => 3
             ],
             [
-                'name'        => 'San Miguel'
+                'name'        => 'San Miguel',
+                'ciudad_id'   => 3
             ],
             [
-                'name'        => 'Santa Anita'
+                'name'        => 'Santa Anita',
+                'ciudad_id'   => 3
             ]
         ];
 

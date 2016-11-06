@@ -12,7 +12,7 @@ class SubCategoria1Controller extends Controller
 {
 
     public function index(){
-        return Subcategoria1::all();
+        return Subcategoria1::orderBy('tipo')->get();
     }
 
     public function show($id){

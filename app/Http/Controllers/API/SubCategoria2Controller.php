@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 class SubCategoria2Controller extends Controller
 {
     public function index(){
-        return Subcategoria2::all();
+        return Subcategoria2::orderBy('tipo')->get();
     }
 
     public function show($id){

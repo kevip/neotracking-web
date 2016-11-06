@@ -7,6 +7,7 @@ use App\Models\Departamento;
 use App\Models\Provincia;
 use App\Models\Region1;
 use App\Models\Region2;
+use App\Models\Retail;
 use App\Models\Subcategoria1;
 use App\Models\Subcategoria2;
 use App\Models\Tienda;
@@ -31,23 +32,25 @@ class ReportesController extends Controller
     public function getFiltros(){
         $filtros = [];
 
-        $categorias = Categoria::all();
+        $categorias = Categoria::orderBy('tipo')->get();
 
-        $subcategorias1 = Subcategoria1::all();
+        $subcategorias1 = Subcategoria1::orderBy('tipo')->get();
 
-        $subcategorias2 = Subcategoria2::all();
+        $subcategorias2 = Subcategoria2::orderBy('tipo')->get();
 
-        $departamentos = Departamento::all();
+        $departamentos = Departamento::orderBy('nombre')->get();
 
-        $tiendas = Tienda::all();
+        $tiendas = Tienda::orderBy('name')->get();
 
-        $region1 = Region1::all();
+        $region1 = Region1::orderBy('nombre')->get();
 
-        $region2 = Region2::all();
+        $region2 = Region2::orderBy('nombre')->get();
 
-        $provincias = Provincia::all();
+        $provincias = Provincia::orderBy('nombre')->get();
 
-        $tipoTienda = TipoTienda::all();
+        $retail = Retail::orderBy('name')->get();
+
+        $tipoTienda = TipoTienda::orderBy('name')->get();
 
         $filtros = [
             "categorias" => $categorias,
@@ -58,6 +61,7 @@ class ReportesController extends Controller
             "region1" => $region1,
             "region2" => $region2,
             "provincias" => $provincias,
+            "retails" => $retail,
             "tipoTienda" => $tipoTienda
         ];
 

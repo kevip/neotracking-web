@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ProvinciaSeeder::class);
         $this->call(DireccionUbicacionSeeder::class);
         $this->call(StockStatusSeeder::class);
+        $this->call(TrackStatusSeeder::class);
 
     }
 }

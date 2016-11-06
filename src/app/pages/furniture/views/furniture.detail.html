@@ -10,25 +10,23 @@
                 <div class="col s12">
                     <a ui-sref="index.furniture" class="breadcrumb">Mobiliarios</a>
                     <a class="breadcrumb">Historial de mobiliario</a>
-                    <!--<a class="breadcrumb" style="float:right;">{{ctrl.user.first_name+' '+ ctrl.user.last_name}}</a>-->
+                    <a class="breadcrumb" style="float:right;">Código {{ctrl.codigo}}</a>
                 </div>
             </div>
         </nav>
-        <div ng-repeat="track in ctrl.tracks" class="card">
+        <div ng-repeat="track in ctrl.tracks" class="card" ng-if="track.status.name!='pendiente'">
 
             <div class="col s12 m12">
                 <h4>Tracking del {{track.created_at}}</h4>
-                <p>Por el usuario de teléfono: {{ track.usuario.phone_number }}</p>
                 <img ng-if="track.track_imagen.length>0" src="{{image.url}}" alt="" ng-repeat="image in track.track_imagen" style="max-height: 180px;max-width:180px"/>
             </div>
             <div class="col s12 m12 card">
                 <div class="detalle-contenido">
                     <!--<p class="flow-text"><b>Código:</b> 234234234</p>-->
+                    <p class="flow-text">Usuario: {{ track.user_first_name +' '+ track.user_last_name}}</p>
+                    <p class="flow-text">Teléfono: {{ track.usuario.phone_number }}</p>
                     <p class="flow-text">
                         Tienda: {{ track.tienda.name }}
-                    </p>
-                    <p class="flow-text">
-                        Codigo de Mueble: {{ track.codigo }}
                     </p>
                     <p class="flow-text">
                         Latitud: {{track.lat}}

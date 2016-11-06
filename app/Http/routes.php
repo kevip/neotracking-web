@@ -24,6 +24,12 @@ Route::group(['middleware' => ['cors']], function(){
 
             Route::resource('categoria', 'API\CategoriasController');
 
+            Route::get('ciudad', 'API\UbicacionController@getCiudad');
+
+            Route::get('channel', 'API\ChannelController@index');
+
+            Route::get('distrito', 'API\UbicacionController@getDistrito');
+
             Route::get('departamento', 'API\UbicacionController@getDepartamentos');
 
             Route::get('filtros', 'API\ReportesController@getFiltros');
@@ -31,6 +37,8 @@ Route::group(['middleware' => ['cors']], function(){
             Route::get('provincia', 'API\UbicacionController@getProvincias');
 
             Route::get('region1', 'API\UbicacionController@getRegion1');
+
+            Route::get('retail', 'API\RetailController@index');
 
             Route::get('region2', 'API\UbicacionController@getRegion2');
 
@@ -93,9 +101,9 @@ Route::group(['middleware' => ['cors']], function(){
      */
     Route::resource('user', 'API\UserController');
 
-    Route::resource('tienda', 'API\TiendasController');
+    Route::resource('api/tienda', 'API\TiendasController');
 
-    Route::get('api/tienda', 'API\TiendasController@index');
+    //Route::get('api/tienda', 'API\TiendasController@index');
 
     Route::resource('stock', 'API\StockController');
 

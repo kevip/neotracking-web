@@ -3,10 +3,10 @@
         <div></div>
     </div>
 </section>
-<section class="container usuarios">
+<section class="container usuarios" style="height: 405px;overflow: auto;">
 
     <h5>Registro de tracking</h5>
-    <table class="striped">
+    <table class="striped responsive-table">
         <thead>
         <tr>
             <th data-field="id">Tienda</th>
@@ -21,7 +21,7 @@
         </thead>
 
         <tbody>
-        <tr ng-repeat="track in ctrl.tracks">
+        <tr ng-repeat="track in ctrl.tracks | orderBy: 'track.created_at':true " ng-click="ctrl.showMap(track)">
             <td>{{track.tienda.name}}</td>
             <td>{{track.codigo}}</td>
             <td>{{track.obs}}</td>
@@ -34,3 +34,8 @@
         </tbody>
     </table>
 </section>
+<div class="container">
+    <ng-map center="{{ctrl.ubicacion.lat}},{{ctrl.ubicacion.lng}}" zoom="15">
+        <marker position="{{ctrl.ubicacion.lat}},{{ctrl.ubicacion.lng}}" title="Hello World!"></marker>
+    </ng-map>
+</div>

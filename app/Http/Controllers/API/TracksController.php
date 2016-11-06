@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Track;
+use App\Models\TrackStatus;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -22,6 +24,7 @@ class TracksController extends Controller
      * @return Track
      */
     public function index(){
+
         return Track::with(['tienda', 'trackImagen', 'usuario'])->get();
     }
 

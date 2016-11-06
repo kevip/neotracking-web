@@ -12,7 +12,9 @@
         '$http',
         'Stock',
         'filtros',
-        '$scope'
+        '$scope',
+        '$mdDialog','DTOptionsBuilder', 'DTColumnBuilder',
+        '$q'
     ];
 
     function HomeController(
@@ -20,7 +22,8 @@
         $http,
         Stock,
         filtros,
-        $scope) {
+        $scope,
+        $mdDialog,DTOptionsBuilder, DTColumnBuilder, $q) {
 
         var vm = this;
 
@@ -34,16 +37,19 @@
             departamento: [],
             provincia: [],
             tipoTienda: [],
-            tiendas: []
+            tiendas: [],
+            retail: []
         };
         vm.categorias = filtros.categorias;
         vm.cleanFilters = cleanFilters;
         vm.departamentos = filtros.departamentos;
+        vm.dtInstance = {};
         vm.provincias = filtros.provincias;
         vm.region1 = filtros.region1;
         vm.region2 = filtros.region2;
         vm.showItem = showItem;
-        vm.stock = Stock.all();
+        vm.showModalNuevaTienda = showModalNuevaTienda;
+        //vm.stock = Stock.all().$promise;
         vm.subcategorias1 = filtros.subcategorias1;
         vm.subcategorias2 = filtros.subcategorias2;
         vm.submit = submit;
@@ -51,6 +57,11 @@
         vm.selected = [];
         vm.tipoTienda = filtros.tipoTienda;
         vm.tiendas = filtros.tiendas;
+        vm.retails = filtros.retails;
+
+        var def = $q.defer();
+        def.resolve([]);
+        vm.stock = def.promise;
 
         vm.config = {
             autoHideScrollbar: false,
@@ -61,20 +72,71 @@
             setHeight: 200,
             scrollInertia: 0
         };
+        vm.config_last_checkbox_group = {
+            autoHideScrollbar: false,
+            theme: 'dark',
+            advanced:{
+                updateOnContentResize: false
+            },
+            setHeight: 100,
+            scrollInertia: 0
+        };
 
         function dropItem(filter, item){
-            for(var i =0;i<filter.length;i++){
-                if(filter[i].id == item.id){
-                    filter.splice(i,1);
-                    break;
+            if(typeof item == 'undefined'){
+
+                for (var j = 0; j <= filter.length; j++) {
+                    console.log(filter);
+                    filter.splice(j, 1);
+                }
+            }
+            else
+            {
+                for (var i = 0; i < filter.length; i++) {
+                    if (filter[i].id == item.id) {
+                        filter.splice(i, 1);
+                        break;
+                    }
                 }
             }
         }
 
+        function showModalNuevaTienda(){
+            $mdDialog.show({
+                controller: 'TiendaNewModalController',
+                controllerAs: 'ctrl',
+                fullscrean: true,
+                parent: angular.element(document.body),
+                templateUrl: 'app/pages/home/views/modals/tienda.new.modal.html',
+                locals:{
+                    departamentos: vm.departamentos,
+                    provincias: vm.provincias,
+                    region1: vm.region1,
+                    region2: vm.region2,
+                    tipoTienda: vm.tipoTienda
+                },
+                clickOutsideToClose:true,
+                fullscreen: false // Only for -xs, -sm breakpoints.
+            })
+                .then(function(answer) {
+                    console.log(answer);
+                    $scope.status = 'You said the information was "' + answer + '".';
+                }, function(err) {
+                    console.log(err);
+                    $scope.status = 'You cancelled the dialog.';
+                });
+        }
+
         function submit(e){
             e.preventDefault();
+            console.log(vm.filters);
             $http.post(API_URL+'stock/search',vm.filters).then(function success(response){
-                vm.stock = response.data;
+                var def = $q.defer();
+                //vm.stock = response.data;
+                def.resolve(response.data);
+                vm.stock = def.promise;
+                console.log(vm.stock);
+                vm.dtInstance.rerender()
             },
             function error(err){
                 console.log(err);
@@ -117,6 +179,9 @@
                 }else if(tipo_filtro == "tienda"){
                     vm.filters.tiendas.push(item);
 
+                }else if(tipo_filtro == "retail"){
+                    vm.filters.retail.push(item);
+
                 }
             }
             else{
@@ -145,6 +210,9 @@
 
                 }else if(tipo_filtro == "tienda"){
                     dropItem(vm.filters.tiendas, item);
+
+                }else if(tipo_filtro == "retail"){
+                    dropItem(vm.filters.retail, item);
                 }
             }
         }
@@ -163,37 +231,49 @@
 
         }
         function cleanFilters(){
-            for(var key in vm.filters){
-                vm.filters[key]=[];
-            }
+
             $('.filled-in').attr('checked', false);
+            for(var k in vm.filters){
+                dropItem(vm.filters[k]);
+            }
+            for(var k in vm.filters){
+                dropItem(vm.filters[k]);
+            }
+
             console.log(vm.filters);
         }
-        /*$http({method:"POST",url: API_URL+"stock/search",data:vm.filters}).then(
-            function success(response){
-                console.log(response);
-            },
-            function error(err) {
-                console.log(err);
-            });
-
-        console.log(vm.stock);
-
-        /*$scope.selected = [];
-
-        /*$scope.query = {
-            order: 'name',
-            limit: 5,
-            page: 1
-        };
-
-        function success(desserts) {
-            $scope.desserts = desserts;
-        }
-
-        $scope.getDesserts = function () {
-            $scope.promise = $nutrition.desserts.get($scope.query, success).$promise;
-        };*/
+        vm.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
+            console.log(vm.stock);
+                return vm.stock;
+            })
+            .withDOM('lrtip')
+            .withPaginationType('full_numbers')
+            .withOption('bFilter', false)
+            // Active Buttons extension
+            .withButtons([
+                'print',
+                'excel',
+                {
+                    text: 'Some button',
+                    key: '1',
+                    action: function (e, dt, node, config) {
+                        alert('Button activated');
+                    }
+                }
+            ]);
+        vm.dtColumns = [
+            DTColumnBuilder.newColumn('categoria').withTitle('Area'),
+            DTColumnBuilder.newColumn('subcategoria1').withTitle('Categoria'),
+            DTColumnBuilder.newColumn('subcategoria2').withTitle('Subcategoria'),
+            DTColumnBuilder.newColumn('region1').withTitle('Region 1'),
+            DTColumnBuilder.newColumn('region2').withTitle('Region 2'),
+            DTColumnBuilder.newColumn('departamento').withTitle('Departamento'),
+            DTColumnBuilder.newColumn('provincia').withTitle('Provincia'),
+            DTColumnBuilder.newColumn('tienda').withTitle('Tienda'),
+            DTColumnBuilder.newColumn('tipo_tienda').withTitle('Tipo'),
+            DTColumnBuilder.newColumn('retail').withTitle('Retail'),
+            DTColumnBuilder.newColumn('cantidad').withTitle('Cantidad')
+        ];
 
     }
 })();
