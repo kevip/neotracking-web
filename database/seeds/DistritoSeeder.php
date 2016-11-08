@@ -68,7 +68,7 @@ class DistritoSeeder extends Seeder
         ];
 
         foreach ($distritos as $distrito) {
-            Distrito::create($distrito);
+            //Distrito::create($distrito);
         }
     }
 }

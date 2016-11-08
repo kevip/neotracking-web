@@ -60,7 +60,7 @@ class ProvinciaSeeder extends Seeder
         ];
 
         foreach ($provincias as $provincia) {
-            Provincia::create($provincia);
+            //Provincia::create($provincia);
         }
     }
 }

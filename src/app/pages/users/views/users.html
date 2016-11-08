@@ -15,7 +15,7 @@
     </div>
     <ul class="collection">
         <li data-id="{{usuario.id}}" class="collection-item avatar" ng-repeat="usuario in ctrl.usuarios | filter:searchText">
-            <div class="m12">
+            <div class="m12" ng-if="usuario.roles[0]!='Administrador'">
                 <div class="col m11">
                     <span class="title"><b>{{usuario.first_name + ' ' + usuario.last_name}}</b></span>
                     <p>Número: <b>{{usuario.phone_number}}</b></p>

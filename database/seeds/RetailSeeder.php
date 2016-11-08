@@ -79,7 +79,7 @@ class RetailSeeder extends Seeder
         ];
 
         foreach ($retails as $retail) {
-            Retail::create($retail);
+            //Retail::create($retail);
         }
     }
 }

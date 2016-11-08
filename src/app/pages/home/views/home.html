@@ -157,8 +157,16 @@
     </form>
 
     <div class="row">
+        <button class="btn" ng-click="exportToExcel('#table1')" style="float:right;margin-top: 50px;margin-right: 12px;padding: 0 10px;
+    font-size: 11px;">
+            Exportar a excel
+        </button>
+        <button class="btn" ng-click="ctrl.printData()" style="float:right;margin-top: 50px;margin-right: 12px;padding: 0 10px;
+    font-size: 11px;">
+            Imprimir
+        </button>
         <div class="col s12">
-            <table datatable="" dt-instance="ctrl.dtInstance" dt-options="ctrl.dtOptions" dt-columns="ctrl.dtColumns" class="striped"></table>
+            <table id="table1" datatable="" dt-instance="ctrl.dtInstance" dt-options="ctrl.dtOptions" dt-columns="ctrl.dtColumns" class="striped"></table>
         </div>
     </div>
 
@@ -238,4 +246,13 @@
         <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{ctrl.stock.count}}" md-on-paginate="getDesserts" md-page-select></md-table-pagination>
     </div>-->
 </div>
+<style>
+    .dataTables_paginate{
+        display:none;
+    }
+    .dataTables_info,
+    .dataTables_length{
+        display:none;
+    }
+</style>
 <!--</section>-->

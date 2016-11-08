@@ -14,7 +14,9 @@
         'filtros',
         '$scope',
         '$mdDialog','DTOptionsBuilder', 'DTColumnBuilder',
-        '$q'
+        '$q',
+        'Excel',
+        '$timeout'
     ];
 
     function HomeController(
@@ -23,7 +25,7 @@
         Stock,
         filtros,
         $scope,
-        $mdDialog,DTOptionsBuilder, DTColumnBuilder, $q) {
+        $mdDialog,DTOptionsBuilder, DTColumnBuilder, $q, Excel, $timeout) {
 
         var vm = this;
 
@@ -275,5 +277,18 @@
             DTColumnBuilder.newColumn('cantidad').withTitle('Cantidad')
         ];
 
+        $scope.exportToExcel=function(tableId){ // ex: '#my-table'
+            var exportHref=Excel.tableToExcel(tableId,'WireWorkbenchDataExport');
+            $timeout(function(){location.href=exportHref;},100); // trigger download
+        };
+        vm.printData = printData;
+        function printData()
+        {
+            var divToPrint=document.getElementById("table1");
+            var newWin= window.open("");
+            newWin.document.write(divToPrint.outerHTML);
+            newWin.print();
+            newWin.close();
+        }
     }
 })();

@@ -28,7 +28,7 @@ class ChannelSeeder extends Seeder
         ];
 
         foreach ($channels as $channel) {
-            Channel::create($channel);
+            //Channel::create($channel);
         }
     }
 }

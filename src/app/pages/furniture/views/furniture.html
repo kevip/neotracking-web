@@ -25,7 +25,7 @@
                 <b>Area:</b> {{ stock.categoria }}<br>
                 <b>Categoria:</b> {{ stock.subcategoria1 }}<br/>
                 <b>Subcategoria:</b> {{ stock.subcategoria2 }}<br/>
-                <b>Tienda:</b> {{ stock.tienda }}
+                <p ng-if="stock.status!='pendiente_alta_puede_editar' && stock.status!='pendiente_alta'"><b>Tienda:</b> {{ stock.tienda }}</p>
                 <div class="chip red accent-1" ng-if="stock.status=='pendiente_baja'">PENDIENTE DE BAJA</div>
                 <div class="chip green" ng-if="stock.status=='alta'">ALTA</div>
                 <div class="chip green accent-1"
@@ -37,13 +37,13 @@
         </div>
         <div class="secondary-content">
             <a class="icono-detalle" title="Ver Detalle" ui-sref="index.furniture-detail({codigo:stock.codigo})"
-               ng-if="stock.stock_status.name!='pendiente_alta' && stock.stock_status.name!='pendiente_alta_puede_editar'">
+               ng-if="stock.status!='pendiente_alta' && stock.status!='pendiente_alta_puede_editar'">
                 <i class="small material-icons">visibility</i></a>
             <a class="icono-editar" title="Editar" ui-sref="index.furniture-edit({id: stock.id})"
-               ng-if="stock.stock_status.name!='pendiente_alta'">
+               ng-if="stock.status!='pendiente_alta'">
                 <i class="small material-icons">mode_edit</i></a>
             <a class="icono-baja" title="Dar de baja"
-               ng-if="stock.stock_status.name != 'baja'" ng-click="ctrl.showModalBaja($event)" >
+               ng-if="stock.status != 'baja'" ng-click="ctrl.showModalBaja($event)" >
                 <i class="small material-icons">trending_down</i></a>
             <!--<a title="Aprobar" href="#modal1" class="modal-trigger"><i class="small material-icons">done</i></a>
             <a title="Eliminar" href="#modal2" class="modal-trigger"><i class="small material-icons">clear</i></a>-->

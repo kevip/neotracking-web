@@ -40,7 +40,7 @@ class Region2Seeder extends Seeder
         ];
 
         foreach ($regiones as $region) {
-            Region2::create($region);
+            //Region2::create($region);
         }
     }
 }

@@ -19,12 +19,6 @@ class UsersTableSeeder extends Seeder
                 'email'     => 'admin@trackingsystem.com',
                 'password'  => 'admin',
                 'phone_number' => '956235689'
-            ],
-            [
-                'username'      => 'Supervisor',
-                'email'     => 'support@trackingsystem.com',
-                'password'  => 'support',
-                'phone_number' => '956121545'
             ]
         ];
 

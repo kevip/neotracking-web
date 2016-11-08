@@ -20,9 +20,22 @@ class UserController extends Controller
         $this->userRepository = $userRepository;
     }
 
+    /**
+     * Return all users except the administrator
+     * @return array
+     */
     public function index()
     {
-        return User::with('roles')->get();
+        $usrs =  User::with('roles')->get();
+        $users = [];
+        foreach($usrs->toArray() as $key => $user){
+            foreach($user['roles'] as $k => $rol){
+                if($rol['name'] !="Administrador"){
+                    $users[] = $user;
+                }
+            }
+        }
+        return $users;
     }
 
     public function show($id)

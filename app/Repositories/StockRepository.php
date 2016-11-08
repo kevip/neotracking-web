@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Track;
 use Symfony\Component\HttpFoundation\Request;
 
 use App\Models\Stock;
@@ -55,6 +56,7 @@ class StockRepository
             ->where("stock_status.name", "=", "pendiente_alta")
             ->orWhere("stock_status.name", "=", "pendiente_alta_puede_editar")
             ->select(
+                "stock.id",
                 "stock.codigo",
                 "tienda.name as tienda",
                 "stock_status.name as status"
@@ -73,6 +75,7 @@ class StockRepository
             ->where("stock_status.name", "!=", "pendiente_alta")
             ->where("stock_status.name", "!=", "pendiente_alta_puede_editar")
             ->select(
+                "stock.id",
                 "stock.codigo",
                 "categoria.tipo as categoria",
                 "subcategoria1.tipo as subcategoria1",
@@ -102,12 +105,24 @@ class StockRepository
         if(!empty($subcategoria2)){
             $stock->subcategoria2_id = $subcategoria2;
         }
-        $cantidad = $request->cantidad;
-        if(!empty($cantidad)){
-            $stock->cantidad = $cantidad;
-        }
-        if($stock->status != $this->STOCK_STATUS['pendiente_baja'])
+
+        if($stock->status != $this->STOCK_STATUS['pendiente_baja']) {
+            $query = \DB::table("track");
+            $query = $query
+                ->where('track.codigo',$stock->codigo)
+                ->where('track_status.name','alta')
+                ->join("track_status","track_status.id","=","track.status_id")
+                ->join("tienda", "tienda.id", "=", "track.tienda_id")
+                ->select("tienda.id")
+                ->orderBy('track.created_at','desc');
+            $tienda = $query->first();
+
+
             $stock->status = $this->STOCK_STATUS['alta'];
+            if($tienda) {
+                $stock->tienda_id = $tienda->id;
+            }
+        }
         $stock->save();
 
         return $stock;

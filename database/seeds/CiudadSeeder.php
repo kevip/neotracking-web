@@ -44,7 +44,7 @@ class CiudadSeeder extends Seeder
         ];
 
         foreach ($ciudads as $ciudad) {
-            Ciudad::create($ciudad);
+            //Ciudad::create($ciudad);
         }
     }
 }

@@ -60,9 +60,16 @@ class TrackRepository
      * @param $codigo
      * @return Stock
      */
-    private function createStockOnTrack($codigo, $tienda){
-
-        $status_pendiente = StockStatus::where('name','=','pendiente_alta')->first();
+    private function createStockOnTrack($codigo, $tienda, $phone_number){
+        $user = User::where('phone_number', $phone_number)->first();
+        if($user) {
+            if($user->status=="pendiente") {
+                $status_pendiente = StockStatus::where('name', '=', 'pendiente_alta')->first();
+            }else{
+                $status_pendiente = StockStatus::where('name', '=', 'pendiente_alta_puede_editar')->first();
+            }
+        }else
+            $status_pendiente = StockStatus::where('name', '=', 'pendiente_alta')->first();
         $stock = new Stock();
         $stock->codigo = $codigo;
         $stock->tienda_id = $tienda;
@@ -109,7 +116,7 @@ class TrackRepository
         $codigo = $request->get('codigo');
         $stock = Stock::where('codigo', $codigo)->first();
         if(empty($stock)) {
-            $stck = $this->createStockOnTrack($codigo, $tienda);
+            $stck = $this->createStockOnTrack($codigo, $tienda, $request->get('num'));
         }else{
             if($request->get('flag')=='Baja'){
                 $this->sugerirBaja($stock);

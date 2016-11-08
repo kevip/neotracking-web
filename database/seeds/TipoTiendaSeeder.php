@@ -25,7 +25,7 @@ class TipoTiendaSeeder extends Seeder
         ];
 
         foreach($tipos_tienda as $tipo_tienda){
-            TipoTienda::create($tipo_tienda);
+            //TipoTienda::create($tipo_tienda);
         }
     }
 }
