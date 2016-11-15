@@ -28,9 +28,13 @@
       }
       function stateChangeStart(e, toState, toParams, fromState, fromParams){
           //if( ($.inArray($location.path(), privateRoutes) !== -1) && !authUser.isLoggedIn()){
+          console.log(toState);
           if( toState.module==="private" && !authUser.isLoggedIn()){
               toastr.error("Debe iniciar sesion");
               $location.path('/login');
+              //$state.go('login');
+          }else if( toState.name==="login" && authUser.isLoggedIn()){
+              $location.path('/');
               //$state.go('login');
           }
 

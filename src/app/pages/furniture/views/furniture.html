@@ -11,7 +11,7 @@
 <a style="margin-bottom: 13px;margin-left: 10px;" title="crear nuevo" ui-sref="index.furniture-new" class="btn-floating btn waves-effect waves-light red"><i class="material-icons">add</i></a>
 <div class="input-field">
     <input id="buscar-mobiliario" type="text" ng-model="searchText">
-    <label for="buscar-mobiliario">Buscar</label>
+    <label style="left:0;" for="buscar-mobiliario">Buscar</label>
 </div>
 <ul class="collection">
     <li data-codigo="{{stock.codigo}}" class="collection-item avatar" ng-repeat="stock in ctrl.stocks | filter:searchText | orderBy: 'stock.stock_status.name':false ">

@@ -114,7 +114,7 @@
 
             <div class="" style="height: 141px; overflow-y:auto; ">
                 <p>
-                <div ng-repeat="tienda in ctrl.tiendas | filter: ctrl.showItem | orderBy: 'bool'">
+                <div ng-repeat="tienda in ctrl.tiendas | filter: ctrl.showItem ">
                     <input type="checkbox" id="{{'tienda'+$index}}" ng-change="ctrl.sync(tienda.bool, tienda, 'tienda')" ng-model="tienda.bool" class="filled-in"/>
                     <label for="{{'tienda'+$index}}">{{tienda.name}}</label>
                 </div>
@@ -138,9 +138,9 @@
                 </p>
             </div>
         </div>
-        <div class="checkbox-group-container half-height" style="width: 8.6%;">
+        <div class="checkbox-group-container" style="width: 8.6%;">
             <h6>Tipo</h6>
-            <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config_last_checkbox_group">
+            <div class=" " ng-scrollbars ng-scrollbars-config="ctrl.config">
                 <p>
                 <div ng-repeat="tipoTienda in ctrl.tipoTienda">
                     <input type="checkbox" id="{{'ts'+$index}}" ng-change="ctrl.sync(bool, tipoTienda, 'tipoTienda')" ng-model="bool" class="filled-in"/>
@@ -149,24 +149,74 @@
                 </p>
             </div>
         </div>
-        <div class="btn-filter-container">
+        <!--<div class="btn-filter-container">
             <a class="btn btn-small" ng-click="ctrl.submit($event)">Filtrar</a>
             <a class="btn btn-small orange darken-4" ng-click="ctrl.cleanFilters($event)">Limpiar Filtros</a>
-        </div>
+        </div>-->
 
     </form>
 
-    <div class="row">
-        <button class="btn" ng-click="exportToExcel('#table1')" style="float:right;margin-top: 50px;margin-right: 12px;padding: 0 10px;
-    font-size: 11px;">
-            Exportar a excel
-        </button>
-        <button class="btn" ng-click="ctrl.printData()" style="float:right;margin-top: 50px;margin-right: 12px;padding: 0 10px;
-    font-size: 11px;">
-            Imprimir
-        </button>
+    <div class="row actions">
+        <a class="tooltipped btn-floating green text-center" ng-click="exportToExcel('#table1')" data-position="top" data-delay="50" data-tooltip="Exportar">
+            <img class="export-excel-icon" src="http://www.iconsfind.com/wp-content/uploads/2014/01/20140119_52db7037ceecb.png" alt=""/>
+        </a>
+        <a class="tooltipped btn-floating blue" ng-click="ctrl.printData()" data-position="top" data-delay="50" data-tooltip="Imprimir">
+            <i class="material-icons left">print</i>
+        </a>
+        <a class="btn btn-small" ng-click="ctrl.submit($event)">Filtrar</a>
+        <a class="btn btn-small orange darken-4" ng-click="ctrl.cleanFilters($event)">Limpiar Filtros</a>
+        <!--<div class="col s12">
+            <table id="table1" datatable="" dt-instance="ctrl.dtInstance" dt-options="ctrl.dtOptions" dt-columns="ctrl.dtColumns" class="striped bordered centered"></table>
+            <h5 class="truncate" style="float: right;">Total: {{ctrl.total}}</h5>
+        </div>-->
         <div class="col s12">
-            <table id="table1" datatable="" dt-instance="ctrl.dtInstance" dt-options="ctrl.dtOptions" dt-columns="ctrl.dtColumns" class="striped"></table>
+            <table id="table1" class="striped bordered centered">
+                <thead>
+                    <tr>
+                        <th>Area</th>
+                        <th>Categoria</th>
+                        <th>Subcategoria</th>
+                        <th>Region1</th>
+                        <th>Region2</th>
+                        <th>Departamento</th>
+                        <th>Provincia</th>
+                        <th>Tienda</th>
+                        <th>Tipo</th>
+                        <th>Retail</th>
+                        <th>Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="stock in ctrl.stocki" ng-click="ctrl.abrirHistorial(stock);">
+                        <td>{{ stock.categoria }}</td>
+                        <td>{{ stock.subcategoria1 }}</td>
+                        <td>{{ stock.subcategoria2 }}</td>
+                        <td>{{ stock.region1 }}</td>
+                        <td>{{ stock.region2 }}</td>
+                        <td>{{ stock.departamento }}</td>
+                        <td>{{ stock.provincia }}</td>
+                        <td>{{ stock.tienda }}</td>
+                        <td>{{ stock.tipo_tienda }}</td>
+                        <td>{{ stock.retail }}</td>
+                        <td>{{ stock.cantidad }}</td>
+
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Total: {{ctrl.total}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--<h5 class="truncate" style="float: right;">Total: {{ctrl.total}}</h5>-->
         </div>
     </div>
 
@@ -254,5 +304,34 @@
     .dataTables_length{
         display:none;
     }
+    .actions .btn,
+    .actions a{
+        float:right;
+        margin-top: 50px;
+        margin-right: 12px;
+        font-size: 11px;
+    }
+    .actions .btn{
+        padding: 0 10px;
+    }
+    #table1,
+    #table1 tr th,
+    #table1 tr td{
+        /*border: 1px solid;*/
+    }
+    .export-excel-icon{
+        width: 17px;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
 </style>
+<script>
+    $(document).ready(function(){
+        $('.tooltipped').tooltip({delay: 50});
+    });
+</script>
 <!--</section>-->

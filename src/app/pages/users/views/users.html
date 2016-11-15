@@ -11,7 +11,7 @@
     <a style="margin-bottom: 13px;margin-left: 10px;" ui-sref="index.user-new" title="crear nuevo" class="btn-floating waves-effect waves-light red"><i class="material-icons">add</i></a>
     <div class="input-field">
         <input id="buscar-usuario" type="text" ng-model="searchText">
-        <label for="buscar-usuario">Buscar</label>
+        <label style="left:0;" for="buscar-usuario">Buscar</label>
     </div>
     <ul class="collection">
         <li data-id="{{usuario.id}}" class="collection-item avatar" ng-repeat="usuario in ctrl.usuarios | filter:searchText">

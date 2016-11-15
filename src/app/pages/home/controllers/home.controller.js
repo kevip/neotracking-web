@@ -30,6 +30,7 @@
         var vm = this;
 
         //vm.categorias = categorias;
+        vm.abrirHistorial = abrirHistorial;
         vm.filters = {
             categoria: [],
             subcategoria1: [],
@@ -49,6 +50,7 @@
         vm.provincias = filtros.provincias;
         vm.region1 = filtros.region1;
         vm.region2 = filtros.region2;
+        vm.retails = filtros.retails;
         vm.showItem = showItem;
         vm.showModalNuevaTienda = showModalNuevaTienda;
         //vm.stock = Stock.all().$promise;
@@ -59,7 +61,7 @@
         vm.selected = [];
         vm.tipoTienda = filtros.tipoTienda;
         vm.tiendas = filtros.tiendas;
-        vm.retails = filtros.retails;
+        vm.total = 0;
 
         var def = $q.defer();
         def.resolve([]);
@@ -118,7 +120,7 @@
                     tipoTienda: vm.tipoTienda
                 },
                 clickOutsideToClose:true,
-                fullscreen: false // Only for -xs, -sm breakpoints.
+
             })
                 .then(function(answer) {
                     console.log(answer);
@@ -133,24 +135,22 @@
             e.preventDefault();
             console.log(vm.filters);
             $http.post(API_URL+'stock/search',vm.filters).then(function success(response){
-                var def = $q.defer();
-                //vm.stock = response.data;
-                def.resolve(response.data);
-                vm.stock = def.promise;
-                console.log(vm.stock);
-                vm.dtInstance.rerender()
+                    vm.stocki = response.data;
+                    /*var def = $q.defer();
+                    def.resolve(response.data);
+                    vm.stock = def.promise;
+                    vm.dtInstance.rerender();
+                    */
+                    console.log(vm.stock);
+                    vm.total = 0;
+                    for(var i=0;i<response.data.length;i++){
+                        vm.total += response.data[i].cantidad;
+
+                    }
             },
             function error(err){
                 console.log(err);
-            });/*
-            Stock.search(vm.filters,
-                function success(response){
-                    vm.stock = response;
-                },
-                function error(err) {
-                    console.log(err);
-                }
-            );*/
+            });
 
         }
         function sync(bool, item, tipo_filtro){
@@ -244,7 +244,7 @@
 
             console.log(vm.filters);
         }
-        vm.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
+        /*vm.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
             console.log(vm.stock);
                 return vm.stock;
             })
@@ -275,11 +275,13 @@
             DTColumnBuilder.newColumn('tipo_tienda').withTitle('Tipo'),
             DTColumnBuilder.newColumn('retail').withTitle('Retail'),
             DTColumnBuilder.newColumn('cantidad').withTitle('Cantidad')
-        ];
+        ];*/
 
         $scope.exportToExcel=function(tableId){ // ex: '#my-table'
-            var exportHref=Excel.tableToExcel(tableId,'WireWorkbenchDataExport');
-            $timeout(function(){location.href=exportHref;},100); // trigger download
+            var exportHref=Excel.tableToExcel(tableId,'Reporte de Stock');
+            $timeout(function(){
+                location.href=exportHref;
+            },100); // trigger download
         };
         vm.printData = printData;
         function printData()
@@ -289,6 +291,38 @@
             newWin.document.write(divToPrint.outerHTML);
             newWin.print();
             newWin.close();
+        }
+
+
+        function abrirHistorial(stock){
+            console.log(stock);
+            $http.post(API_URL+'stock/codigos', stock).then(function success(response){
+                    $mdDialog.show({
+                        controller: 'FurnitureHistory',
+                        controllerAs: 'ctrl',
+                        fullscrean: true,
+                        parent: angular.element(document.body),
+                        templateUrl: 'app/pages/home/views/modals/furniture.history.modal.html',
+                        locals:{
+                            codigos: response.data
+
+                        },
+                        clickOutsideToClose:true,
+                        fullscreen: false // Only for -xs, -sm breakpoints.
+                    })
+                        .then(function(answer) {
+                            console.log(answer);
+                            $scope.status = 'You said the information was "' + answer + '".';
+                        }, function(err) {
+                            console.log(err);
+                            $scope.status = 'You cancelled the dialog.';
+                        });
+                },
+                function error(err){
+                    console.log(err);
+                });
+            return;
+
         }
     }
 })();

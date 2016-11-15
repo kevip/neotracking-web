@@ -2,12 +2,95 @@
 
 namespace App\Repositories;
 
+use App\Models\Track;
 use Symfony\Component\HttpFoundation\Request;
 use App\Models\Stock;
 use App\User;
 
 class ReportesRepository {
 
+    /**
+     * Retorna un array con los ultimos tracks de cada codigo encontrado
+     * @param Request $request
+     * @return array
+     */
+    public function getCodigos(Request $request){
+        $query = \DB::table("stock");
+
+        if($request->categoria){
+            $query = $query->where("categoria.tipo",$request->categoria);
+        }
+        if($request->subcategoria1){
+            $query = $query->where("subcategoria1.tipo",$request->subcategoria1);
+        }
+        if($request->subcategoria2){
+            $query = $query->where("subcategoria2.tipo",$request->subcategoria2);
+        }
+        if($request->tienda){
+            $query = $query->where("tienda.name",$request->tienda);
+        }
+        if($request->tipo_tienda){
+            $query = $query->where("tipo_tienda.name",$request->tipo_tienda);
+        }
+        if($request->departamento){
+            $query = $query->where("departamento.nombre",$request->departamento);
+        }
+        if($request->provincia){
+            $query = $query->where("provincia.nombre",$request->provincia);
+        }
+        if($request->region1){
+            $query = $query->where("region1.nombre",$request->region1);
+        }
+        if($request->region2){
+            $query = $query->where("region2.nombre",$request->region2);
+        }
+        if($request->retail){
+            $query = $query->where("retail.name",$request->retail);
+        }
+
+        $query = $query->join("tienda","tienda.id","=","stock.tienda_id")
+            ->join("retail","retail.id","=","tienda.retail_id")
+            ->join("tipo_tienda","tipo_tienda.id","=","tienda.tipo_tienda_id")
+            ->join("direccion_ubicacion","direccion_ubicacion.id","=","tienda.direccion_ubicacion_id")
+            ->join("provincia","provincia.id","=","direccion_ubicacion.provincia_id")
+            ->join("departamento","departamento.id","=","direccion_ubicacion.departamento_id")
+            ->join("region1","region1.id","=","direccion_ubicacion.region1_id")
+            ->join("region2","region2.id","=","direccion_ubicacion.region2_id")
+            ->join("categoria","categoria.id","=","stock.categoria_id")
+            ->join("subcategoria1","subcategoria1.id","=","stock.subcategoria1_id")
+            ->join("subcategoria2","subcategoria2.id","=","stock.subcategoria2_id")
+            ->join("stock_status","stock_status.id","=","stock.status")
+            ->where("stock_status.name", "=", "alta")
+            ->orWhere("stock_status.name", "=", "pendiente_baja")
+            ->select(
+                "stock.codigo"
+            );
+
+        $results = $query->get();
+        $codigos = [];
+        foreach($results as $key => $result){
+            $codigos[] = $result->codigo;
+        }
+        $tracks  = Track::with(['tienda', 'trackImagen', 'usuario', 'status'])->whereIN('codigo',$codigos)->orderBy('created_at','desc')->get();
+        $trck = [];
+        foreach ($tracks as $key => $track) {
+            if(sizeof($trck)==0){
+                $trck[] = $track;
+            }
+            else if(sizeof($trck)>0 ){
+                $add = true;
+                foreach($trck as $t){
+                    if($t['codigo'] == $track['codigo']){
+                        $add = false;
+                    }
+                }
+                if($add){
+                    $trck[] = $track;
+                }
+            }
+        }
+        return $trck;
+    }
 
     public function search(Request $request){
         $all = $request->all();

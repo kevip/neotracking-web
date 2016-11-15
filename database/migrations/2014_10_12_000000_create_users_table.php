@@ -17,7 +17,8 @@ class CreateUsersTable extends Migration
             $table->string('username');
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('company');
+            $table->string('linea');
+            $table->string('ciudad');
             $table->string('phone_number')->unique();
             $table->enum('status',['activo', 'pendiente', 'baja'])->default('pendiente');
             $table->string('email');

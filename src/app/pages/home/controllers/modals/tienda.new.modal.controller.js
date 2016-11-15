@@ -28,7 +28,6 @@
         vm.region2 = region2;
         vm.registrar = registrar;
         vm.tipoTienda = tipoTienda;
-        console.log(tipoTienda);
 
         $http.get(API_URL+'ciudad').then(
             function success(res){

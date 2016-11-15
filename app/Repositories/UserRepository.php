@@ -21,6 +21,8 @@ class UserRepository
     ];
 
     /**
+     * Da de alta usuarios y sus respectivos tracking
+     * Cambia la ubicacion del mueble a la ultima tienda donde se hizo tracking
      * @param Request $request
      * @param $id
      * @return User
@@ -51,6 +53,10 @@ class UserRepository
             if($s_a['stock_status']['name'] =='pendiente_alta'){
                 $trk = Track::where('status_id',$track_status_alta->id)->orderBy('created_at','desc')->first();
                 $s->status = $stock_status_alta->id;
+                $s->tienda_id = $trk->tienda_id;
+                $s->save();
+            }else if($s_a['stock_status']['name'] != 'baja'){
+                $trk = Track::where('status_id',$track_status_alta->id)->orderBy('created_at','desc')->first();
                 $s->tienda_id = $trk->tienda_id;
                 $s->save();
             }

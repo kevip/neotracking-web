@@ -1,0 +1,37 @@
+<md-dialog aria-label="Nueva Tienda">
+    <form ng-cloak style="max-width: 600px;">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Codigos</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div id="reporte">
+                <div class="row">
+                </div>
+                <div class="md-dialog-content">
+                    <div ng-repeat="codigo in ctrl.codigos" class="row">
+                        <div class="col s12">
+                            <h4 class="truncate">Codigo: {{codigo.codigo}}</h4>
+                            <div style="width:100%;text-align: center;">
+                                <img style="max-width: 250px;" src="{{codigo.track_imagen[0].url}}" alt=""/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="ctrl.printData()">
+                Imprimir
+            </md-button>
+            <md-button ng-click="ctrl.cancel()">
+                Cancelar
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

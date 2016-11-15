@@ -6,6 +6,10 @@
 <section class="container usuarios" style="height: 405px;overflow: auto;">
 
     <h5>Registro de tracking</h5>
+    <div class="input-field">
+        <input id="buscar-track" type="text" ng-model="searchText">
+        <label style="left:0;" for="buscar-track">Buscar</label>
+    </div>
     <table class="striped responsive-table">
         <thead>
         <tr>
@@ -21,7 +25,7 @@
         </thead>
 
         <tbody>
-        <tr ng-repeat="track in ctrl.tracks | orderBy: 'track.created_at':true " ng-click="ctrl.showMap(track)">
+        <tr ng-repeat="track in ctrl.tracks | filter:searchText | orderBy: 'track.created_at':true " ng-click="ctrl.showMap(track)">
             <td>{{track.tienda.name}}</td>
             <td>{{track.codigo}}</td>
             <td>{{track.obs}}</td>

@@ -29,29 +29,34 @@
         var vm = this;
         vm.areas = Categoria.all();
         vm.categorias = Subcategoria1.all();
+        vm.mobiliario = {};
         vm.subcategorias = Subcategoria2.all();
-        console.log(vm.tipoStock);
         vm.stock = {};
         vm.state = $state.current.name;
         vm.submit = submit;
+        vm.selectOnMatch = true;
 
-
-        $http.get(API_URL+'tipo-stock').then(function(res){
-            vm.tipoStock = res.data
-        });
         function submit(e){
             /**/
             e.preventDefault();
-            Stock.create(vm.stock,
-                function success(res){
-                    toastr.success("Se registró mueble con éxito");
-                    $state.go('index.furniture');
-                },
-                function error(error){
-                    console.log(error);
-                    toastr.error(error);
-                }
-            );
+            var mobiliario={};
+            if(vm.searchArea && vm.searchCategoria && vm.searchSubCategoria){
+                mobiliario.categoria = vm.mobiliario.categoria?vm.mobiliario.categoria:vm.searchArea.toUpperCase();
+                mobiliario.subcategoria1 = vm.mobiliario.subcategoria1?vm.mobiliario.subcategoria1:vm.searchCategoria.toUpperCase();
+                mobiliario.subcategoria2 = vm.mobiliario.subcategoria2?vm.mobiliario.subcategoria2:vm.searchSubCategoria.toUpperCase();
+                console.log(mobiliario);
+                $http.post(API_URL+'mobiliario',mobiliario).then(
+                    function success(res){
+                        toastr.success('Se creó mobiliario con éxito!');
+                        $state.go('index.furniture');
+                    },
+                    function error(err){
+                        toastr.error('No se pudo crear mobiliario');
+                    }
+                );
+            }else {
+                toastr.warning('Debe completar todos los campos');
+            }
         }
     }
 })();

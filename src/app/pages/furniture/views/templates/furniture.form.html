@@ -1,4 +1,4 @@
-<form class="col s12">
+<form class="col s12 form-furniture">
     <div class='row'>
         <div class='col s12'>
         </div>
@@ -16,48 +16,111 @@
     </div>-->
     <div class='row'>
         <div class='input-field col s12'>
-            <div class="col s2">
+            <div class="col s3">
                 <p class="red-text text-darken-2">Area</p>
             </div>
-            <div class="col s11">
-                <md-select class="width-100" placeholder="Area" data-ng-model="ctrl.stock.categoria">
-                    <!--<md-option value="one">One</md-option>-->
+            <div class="col s10">
+                <!--<md-select class="width-100" placeholder="Area" data-ng-model="ctrl.stock.categoria">
                     <md-option value="{{area.id}}" ng-repeat="area in ctrl.areas">{{area.tipo}}</md-option>
-                </md-select>
+                </md-select>-->
+                <md-autocomplete
+                        md-no-cache="true"
+                        md-selected-item="ctrl.mobiliario.categoria"
+                        md-select-on-match="ctrl.selectOnMatch"
+                        md-match-case-insensitive="true"
+                        md-search-text="ctrl.searchArea"
+                        md-selected-item-change="ctrl.selectedItemChange(item)"
+                        md-items="area in ctrl.areas | filter: ctrl.searchArea"
+                        md-item-text="area.tipo"
+                        md-min-length="0"
+                        placeholder="Ingresar area">
+                    <md-item-template>
+                        <span md-highlight-text="ctrl.searchArea" md-highlight-flags="^i">{{area.tipo}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        No se encontró resultado para: "{{ctrl.searchArea}}"
+                        <!--<a ng-click="ctrl.newState(ctrl.searchArea)">Crear uno nuevo</a>-->
+                    </md-not-found>
+                </md-autocomplete>
             </div>
+            <!--<div class="col s2">
+                <a title="nuevo" class="btn-floating btn waves-effect waves-light red" href=""><i class="material-icons">add</i></a>
+            </div>-->
         </div>
     </div>
     <div class='row'>
         <div class='input-field col s12'>
-            <div class="col s2">
+            <div class="col s3">
                 <p class="red-text text-darken-2">Categoría</p>
             </div>
-            <div class="col s11">
-                <md-select class="width-100" placeholder="Categoria" data-ng-model="ctrl.stock.subcategoria1">
-                    <!--<md-option value="one">One</md-option>-->
-                    <md-option value="{{categoria.id}}" ng-repeat="categoria in ctrl.categorias">{{categoria.tipo}}</md-option>
-                </md-select>
+            <div class="col s10">
+                <md-autocomplete
+                        md-no-cache="true"
+                        md-selected-item="ctrl.mobiliario.subcategoria1"
+                        md-select-on-match="ctrl.selectOnMatch"
+                        md-match-case-insensitive="true"
+                        md-search-text="ctrl.searchCategoria"
+                        md-selected-item-change="ctrl.selectedItemChange(item)"
+                        md-items="categoria in ctrl.categorias | filter: ctrl.searchCategoria"
+                        md-item-text="categoria.tipo"
+                        md-min-length="0"
+                        placeholder="Ingresar categoria">
+                    <md-item-template>
+                        <span md-highlight-text="ctrl.searchCategoria" md-highlight-flags="^i">{{categoria.tipo}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        No se encontró resultado para: "{{ctrl.searchCategoria}}"
+                        <!--<a ng-click="ctrl.newState(ctrl.searchCategoria)">Crear uno nuevo</a>-->
+                    </md-not-found>
+                </md-autocomplete>
             </div>
+            <!--<div class="col s2">
+                <a title="nuevo" class="btn-floating btn waves-effect waves-light red" href=""><i class="material-icons">add</i></a>
+            </div>-->
         </div>
     </div>
     <div class='row'>
         <div class='input-field col s12'>
-            <div class="col s2">
+            <div class="col s3">
                 <p class="red-text text-darken-2">Subcategoria</p>
             </div>
-            <div class="col s11">
-                <md-select class="width-100" placeholder="Subcategoria" data-ng-model="ctrl.stock.subcategoria2">
-                    <!--<md-option value="one">One</md-option>-->
-                    <md-option value="{{subcategoria2.id}}" ng-repeat="subcategoria2 in ctrl.subcategorias">{{subcategoria2.tipo}}</md-option>
-                </md-select>
+            <div class="col s10">
+                <md-autocomplete
+                        md-no-cache="true"
+                        md-selected-item="ctrl.mobiliario.subcategoria2"
+                        md-select-on-match="ctrl.selectOnMatch"
+                        md-match-case-insensitive="true"
+                        md-search-text="ctrl.searchSubCategoria"
+                        md-selected-item-change="ctrl.selectedItemChange(item)"
+                        md-items="subcategoria in ctrl.subcategorias | filter: ctrl.searchSubCategoria | uppercase"
+                        md-item-text="subcategoria.tipo"
+                        md-min-length="0"
+                        placeholder="Ingresar subcategoria">
+                    <md-item-template>
+                        <span md-highlight-text="ctrl.searchSubCategoria" md-highlight-flags="^i">{{subcategoria.tipo}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        No se encontró resultado para: "{{ctrl.searchSubCategoria}}"
+                        <!--<a ng-click="ctrl.newState(ctrl.searchCategoria)">Crear uno nuevo</a>-->
+                    </md-not-found>
+                </md-autocomplete>
             </div>
+            <!--<div class="col s2">
+                <a title="nuevo" class="btn-floating btn waves-effect waves-light red" href=""><i class="material-icons">add</i></a>
+            </div>-->
+
         </div>
     </div>
 
     <br />
     <center>
         <div class='row'>
-            <button ng-click="ctrl.submit($event)" type='submit' class='col offset-s3 s6 btn btn-large waves-effect red darken-2'>Editar</button>
+            <button ng-click="ctrl.submit($event)" type='submit' class='col offset-s3 s6 btn btn-large waves-effect red darken-2'>Registrar</button>
         </div>
     </center>
 </form>
+<style>
+    .form-furniture .input-field  input[type="search"]{
+        text-transform: uppercase;
+    }
+</style>

@@ -24,7 +24,7 @@ class CreateTrackTable extends Migration
             $table->decimal('lng',9,6);
             $table->string('num');
             $table->string('flag');
-            $table->string('guid')->unique();
+            $table->string('guid');
             $table->integer('usr');
             $table->dateTime('dtime');
             $table->timestamps();

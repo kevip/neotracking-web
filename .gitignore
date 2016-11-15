@@ -8,6 +8,7 @@ dist/
 /vendor
 /node_modules
 /public/storage
+/public/images
 Homestead.yaml
 Homestead.json
 .env

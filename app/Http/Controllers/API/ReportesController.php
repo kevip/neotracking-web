@@ -71,4 +71,8 @@ class ReportesController extends Controller
     public function search(Request $request){
         return $this->reportesRepository->search($request);
     }
+
+    public function getCodigos(Request $request){
+        return $this->reportesRepository->getCodigos($request);
+    }
 }

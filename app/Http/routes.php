@@ -34,6 +34,8 @@ Route::group(['middleware' => ['cors']], function(){
 
             Route::get('filtros', 'API\ReportesController@getFiltros');
 
+            Route::post('mobiliario', 'API\MobiliarioController@store');
+
             Route::get('provincia', 'API\UbicacionController@getProvincias');
 
             Route::get('region1', 'API\UbicacionController@getRegion1');
@@ -63,6 +65,8 @@ Route::group(['middleware' => ['cors']], function(){
            // Route::get('stock/search', 'API\StockController@search');
 
             Route::post('stock/search', 'API\ReportesController@search');
+
+            Route::post('stock/codigos', 'API\ReportesController@getCodigos');
 
             Route::put('stock/{id}/baja', 'API\StockController@baja');
 

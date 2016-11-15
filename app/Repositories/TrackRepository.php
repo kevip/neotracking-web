@@ -9,6 +9,7 @@ use App\Models\Role;
 
 use App\Models\TrackStatus;
 use App\User;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Request;
 
 use App\Models\Track;
@@ -61,6 +62,7 @@ class TrackRepository
      * @return Stock
      */
     private function createStockOnTrack($codigo, $tienda, $phone_number){
+
         $user = User::where('phone_number', $phone_number)->first();
         if($user) {
             if($user->status=="pendiente") {
@@ -70,11 +72,17 @@ class TrackRepository
             }
         }else
             $status_pendiente = StockStatus::where('name', '=', 'pendiente_alta')->first();
-        $stock = new Stock();
+        /*$stock = new Stock();
         $stock->codigo = $codigo;
         $stock->tienda_id = $tienda;
         $stock->status = $status_pendiente->id;
-        $stock->save();
+        $stock->save();*/
+        $stock = Stock::create([
+            'codigo' => $codigo,
+            'tienda_id' => $tienda,
+            'status' => $status_pendiente->id
+        ]);
+        Log::debug("Nuevo mobiliario:". $stock->id);
         return $stock;
     }
 
@@ -88,7 +96,7 @@ class TrackRepository
         ]);
         $rol = Role::where('name','Supervisor')->first();
         $user->roles()->attach($rol->id);
-
+        Log::debug("Usuario nuevo: ".$user->id);
         return User::find($user->id);
     }
     /**
@@ -112,8 +120,10 @@ class TrackRepository
         if($request->get('tienda')!=null) {
             $tienda = $request->get('tienda');
         }
+        Log::debug("Tienda: ".$tienda);
 
         $codigo = $request->get('codigo');
+        Log::debug("codigo:". $codigo);
         $stock = Stock::where('codigo', $codigo)->first();
         if(empty($stock)) {
             $stck = $this->createStockOnTrack($codigo, $tienda, $request->get('num'));
@@ -125,6 +135,7 @@ class TrackRepository
 
         $phone_number = $request->get('num');
         $usr = User::where('phone_number', $phone_number)->first();
+        Log::debug("Teléfono usuario:". $phone_number);
         if(empty($usr)) {
             $usr = $this->createUserOnTrack($phone_number);
         }
@@ -154,10 +165,12 @@ class TrackRepository
 
         $m->status_id = $t_status->id;
         $m->save();
+        Log::debug("Nuevo track: ".$m->guid);
 
         $this->cambiarTiendaMobiliario($m->codigo);
 
         if($request->file('photo1') != null) {
+            Log::debug("Subio foto1: ");
             $request->file('photo1')->getClientOriginalName();
             $imageName = $m->id. '_1_' . $request->file('photo1')->getClientOriginalName()//.'.' .$request->file('photo')->getClientOriginalExtension()
             ;
@@ -169,6 +182,7 @@ class TrackRepository
 
         }
         if($request->file('photo2') != null) {
+            Log::debug("Subio foto2: ");
             $request->file('photo2')->getClientOriginalName();
             $imageName = $m->id . '_2_' . $request->file('photo2')->getClientOriginalName()//.'.' .$request->file('photo')->getClientOriginalExtension()
             ;
@@ -180,6 +194,7 @@ class TrackRepository
 
         }
         if($request->file('photo3') != null) {
+            Log::debug("Subio foto3: ");
             $request->file('photo3')->getClientOriginalName();
             $imageName = $m->id . '_3_' . $request->file('photo3')->getClientOriginalName()//.'.' .$request->file('photo')->getClientOriginalExtension()
             ;
@@ -190,6 +205,7 @@ class TrackRepository
             $photo3 = $this->regPhoto($m->id, $request->file('photo3'), $imageName);
         }
         if($request->file('photo4') != null) {
+            Log::debug("Subio foto4: ");
             $request->file('photo4')->getClientOriginalName();
             $imageName = $m->id . '_4_' . $request->file('photo4')->getClientOriginalName()//.'.' .$request->file('photo')->getClientOriginalExtension()
             ;
@@ -240,6 +256,7 @@ class TrackRepository
             $trk = Track::where('status_id',$track_status_alta->id)->orderBy('created_at','desc')->first();
             $stock->tienda_id = $trk->tienda_id;
             $stock->save();
+            Log::debug("Se cambio de tienda a mobiliario");
             //return "entré";
         }
     }
