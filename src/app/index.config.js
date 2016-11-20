@@ -17,8 +17,7 @@
     toastrConfig.preventDuplicates = true;
     toastrConfig.progressBar = true;
       $authProvider.loginUrl = "http://localhost:8000/auth_login";
-      //$authProvider.loginUrl = "http://www.neoprojects.com.pe/neotracking-web/public/auth_login";
-      //$authProvider.loginUrl = "http://lg.neoprojects.com.pe/auth_login";
+      
 
   }
 

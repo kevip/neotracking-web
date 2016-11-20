@@ -160,9 +160,10 @@
         <a class="tooltipped btn-floating green text-center" ng-click="exportToExcel('#table1')" data-position="top" data-delay="50" data-tooltip="Exportar">
             <img class="export-excel-icon" src="http://www.iconsfind.com/wp-content/uploads/2014/01/20140119_52db7037ceecb.png" alt=""/>
         </a>
-        <a class="tooltipped btn-floating blue" ng-click="ctrl.printData()" data-position="top" data-delay="50" data-tooltip="Imprimir">
+        <a class="tooltipped btn-floating blue" ng-click="ctrl.printData('table1')" data-position="top" data-delay="50" data-tooltip="Imprimir">
             <i class="material-icons left">print</i>
         </a>
+        <a class="btn btn-small" ng-click="ctrl.printData('table2')" >Imprimir detalles</a>
         <a class="btn btn-small" ng-click="ctrl.submit($event)">Filtrar</a>
         <a class="btn btn-small orange darken-4" ng-click="ctrl.cleanFilters($event)">Limpiar Filtros</a>
         <!--<div class="col s12">
@@ -170,7 +171,7 @@
             <h5 class="truncate" style="float: right;">Total: {{ctrl.total}}</h5>
         </div>-->
         <div class="col s12">
-            <table id="table1" class="striped bordered centered">
+            <table id="table1" class="striped bordered centered" border="1" cellspacing="0" cellpadding="3" style="text-align:center;">
                 <thead>
                     <tr>
                         <th>Area</th>
@@ -202,6 +203,66 @@
 
                     </tr>
                     <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Total: {{ctrl.total}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table id="table2" class="striped bordered centered" border="1" cellspacing="0" cellpadding="3" style="text-align:center;">
+                <thead>
+                <tr>
+                    <th>Area</th>
+                    <th>Categoria</th>
+                    <th>Subcategoria</th>
+                    <th>Region1</th>
+                    <th>Region2</th>
+                    <th>Departamento</th>
+                    <th>Provincia</th>
+                    <th>Tienda</th>
+                    <th>Tipo</th>
+                    <th>Retail</th>
+                    <th>Imagen</th>
+                    <th>Codigo</th>
+                    <th>Cantidad</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="stock in ctrl.stocki">
+                        <td>{{ stock.categoria }}</td>
+                        <td>{{ stock.subcategoria1 }}</td>
+                        <td>{{ stock.subcategoria2 }}</td>
+                        <td>{{ stock.region1 }}</td>
+                        <td>{{ stock.region2 }}</td>
+                        <td>{{ stock.departamento }}</td>
+                        <td>{{ stock.provincia }}</td>
+                        <td>{{ stock.tienda }}</td>
+                        <td>{{ stock.tipo_tienda }}</td>
+                        <td>{{ stock.retail }}</td>
+                        <td>
+                            <div ng-repeat="codigo in stock.codigos" class="h60" style="height: 60px;">
+                                <img style="width:50px; height: 50px;" class="code-img" src="{{ codigo.track.track_imagen[0].url }}" alt=""/>
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-repeat="codigo in stock.codigos" class="h60" style="height: 60px;">
+                                {{ codigo.codigo}}
+                            </div>
+                        </td>
+                        <td>{{ stock.cantidad }}</td>
+
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -297,36 +358,25 @@
     </div>-->
 </div>
 <style>
-    .dataTables_paginate{
-        display:none;
+    @media print {
+        #table2{
+            /*display: initial;*/
+        }
     }
-    .dataTables_info,
-    .dataTables_length{
-        display:none;
+    @media print {
+        tr, th, td{
+            border: 1px solid #000 !important !important;
+        }
     }
-    .actions .btn,
-    .actions a{
-        float:right;
-        margin-top: 50px;
-        margin-right: 12px;
-        font-size: 11px;
+    @media print {
+    > tbody > tr > td{
+        text-align: right !important;
     }
-    .actions .btn{
-        padding: 0 10px;
     }
-    #table1,
-    #table1 tr th,
-    #table1 tr td{
-        /*border: 1px solid;*/
-    }
-    .export-excel-icon{
-        width: 17px;
-        margin: auto;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
+    @media print {
+        .h60{
+            height: 60px !important;
+        }
     }
 </style>
 <script>

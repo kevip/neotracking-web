@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Models\StockStatus;
 use App\Models\Track;
+use App\Models\TrackStatus;
 use Symfony\Component\HttpFoundation\Request;
 use App\Models\Stock;
 use App\User;
@@ -99,7 +101,6 @@ class ReportesRepository {
         foreach($all as $k => $v){
             if(!empty($v))
                 $empty = false;
-
         }
         if($empty)
             return [];
@@ -186,18 +187,126 @@ class ReportesRepository {
             $query->whereIN("tienda.retail_id",$id_retail );
         }
 
-        $query = $query->join("tienda","tienda.id","=","stock.tienda_id")
-            ->join("retail","retail.id","=","tienda.retail_id")
-            ->join("tipo_tienda","tipo_tienda.id","=","tienda.tipo_tienda_id")
-            ->join("direccion_ubicacion","direccion_ubicacion.id","=","tienda.direccion_ubicacion_id")
-            ->join("provincia","provincia.id","=","direccion_ubicacion.provincia_id")
-            ->join("departamento","departamento.id","=","direccion_ubicacion.departamento_id")
-            ->join("region1","region1.id","=","direccion_ubicacion.region1_id")
-            ->join("region2","region2.id","=","direccion_ubicacion.region2_id")
-            ->join("categoria","categoria.id","=","stock.categoria_id")
-            ->join("subcategoria1","subcategoria1.id","=","stock.subcategoria1_id")
-            ->join("subcategoria2","subcategoria2.id","=","stock.subcategoria2_id")
-            ->join("stock_status","stock_status.id","=","stock.status")
+        //$query_group = $this->_joinAndGroup($query);
+
+        $stocks = $this->_join($query);
+
+        /**
+         *  get all tracks with status 'alta'
+         */
+        $status = TrackStatus::where('name','alta')->first();
+        $tracks = Track::with('trackImagen')->where('status_id', $status['id'])->orderBy('created_at','desc')->get();
+        $stck = [];
+        foreach($stocks as $key => $stock)
+        {
+
+            if(sizeof($stck)>0) {
+                $is_in = false;
+                foreach ($stck as $k => &$s) {
+                    $s_temp = collect($s)->except(['codigos','cantidad']);
+                    $stock_temp = collect($stock)->except(['codigo']);
+                    if ($s_temp == $stock_temp) {
+                        /*
+                         * Si encuentra un mobiliario con las mismas caracteristicas
+                         */
+                        $is_in = true;
+                        $s = $s->map(function($item, $key) use($stock, $tracks){
+                            /*
+                             * aumenta la cantidad de mobiliarios del mismo tipo
+                             */
+                            if($key=='cantidad') {
+                                $item++;
+                                return $item;
+                            }
+                            /*
+                             * agrega el codigo del mueble a un array de codigos
+                             */
+                            else if($key == 'codigos'){
+                                //$item[] = $stock->codigo;
+                                $stock_track = new \stdClass();
+                                $stock_track->codigo = $stock->codigo;
+
+                                $stock_track->track = $this->_getTracking($tracks,$stock->codigo);
+                                $item[] = $stock_track;
+                                return $item;
+                            }
+                            return $item;
+                        });
+                        break;
+                    }
+                }
+
+                if(!$is_in) {
+                    /*$stock->codigos[] = $stock->codigo;
+                    $stock->cantidad = 1;
+                    $tmp = collect($stock)->except('codigo');
+                    $stck[] = $tmp;*/
+                    $stock_track = new \stdClass();
+                    $stock_track->codigo = $stock->codigo;
+                    $stock_track->track = $this->_getTracking($tracks,$stock->codigo);
+
+                    $stock->codigos[] = $stock_track;
+                    $stock->cantidad = 1;
+                    $tmp = collect($stock)->except('codigo');
+                    $stck[] = $tmp;
+                }
+            }else {
+                /*
+                 * Si stck esta vacio se le asigna el primer elemento de stocks[]
+                 */
+
+                $stock_track = new \stdClass();
+                $stock_track->codigo = $stock->codigo;
+                $stock_track->track = $this->_getTracking($tracks,$stock->codigo);
+
+                $stock->codigos[] = $stock_track;
+                $stock->cantidad = 1;
+                $tmp = collect($stock)->except('codigo');
+                $stck[] = $tmp;
+
+            }
+        }
+
+        return $stck;
+
+        //return $tracks;
+        //return $stocks;
+    }
+
+    private function _getTracking(&$tracks, $codigo){
+        $found = false;
+        $trck = null;
+
+        foreach ($tracks as $key => &$track) {
+            if($track->codigo = $codigo && !$found){
+                $found = true;
+                $trck = $track;
+                unset($track);
+            }else if($track->codigo = $codigo && $found){
+                unset($track);
+            }
+        }
+        return $trck;
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    private function _joinAndGroup($query)
+    {
+        return $query->join("tienda", "tienda.id", "=", "stock.tienda_id")
+            ->join("retail", "retail.id", "=", "tienda.retail_id")
+            ->join("tipo_tienda", "tipo_tienda.id", "=", "tienda.tipo_tienda_id")
+            ->join("direccion_ubicacion", "direccion_ubicacion.id", "=", "tienda.direccion_ubicacion_id")
+            ->join("provincia", "provincia.id", "=", "direccion_ubicacion.provincia_id")
+            ->join("departamento", "departamento.id", "=", "direccion_ubicacion.departamento_id")
+            ->join("region1", "region1.id", "=", "direccion_ubicacion.region1_id")
+            ->join("region2", "region2.id", "=", "direccion_ubicacion.region2_id")
+            ->join("categoria", "categoria.id", "=", "stock.categoria_id")
+            ->join("subcategoria1", "subcategoria1.id", "=", "stock.subcategoria1_id")
+            ->join("subcategoria2", "subcategoria2.id", "=", "stock.subcategoria2_id")
+            ->join("stock_status", "stock_status.id", "=", "stock.status")
             ->where("stock_status.name", "=", "alta")
             ->orWhere("stock_status.name", "=", "pendiente_baja")
             ->select(
@@ -222,10 +331,36 @@ class ReportesRepository {
                 'provincia',
                 'tienda',
                 'tipo_tienda'
-            );
-
-        $stocks = $query->get();
-        return $stocks;
+            )->get();
+    }
+    private function _join($query)
+    {
+        return $query->join("tienda", "tienda.id", "=", "stock.tienda_id")
+            ->join("retail", "retail.id", "=", "tienda.retail_id")
+            ->join("tipo_tienda", "tipo_tienda.id", "=", "tienda.tipo_tienda_id")
+            ->join("direccion_ubicacion", "direccion_ubicacion.id", "=", "tienda.direccion_ubicacion_id")
+            ->join("provincia", "provincia.id", "=", "direccion_ubicacion.provincia_id")
+            ->join("departamento", "departamento.id", "=", "direccion_ubicacion.departamento_id")
+            ->join("region1", "region1.id", "=", "direccion_ubicacion.region1_id")
+            ->join("region2", "region2.id", "=", "direccion_ubicacion.region2_id")
+            ->join("categoria", "categoria.id", "=", "stock.categoria_id")
+            ->join("subcategoria1", "subcategoria1.id", "=", "stock.subcategoria1_id")
+            ->join("subcategoria2", "subcategoria2.id", "=", "stock.subcategoria2_id")
+            ->join("stock_status", "stock_status.id", "=", "stock.status")
+            ->where("stock_status.name", "=", "alta")
+            ->orWhere("stock_status.name", "=", "pendiente_baja")
+            ->select(
+                "stock.codigo",
+                "categoria.tipo as categoria",
+                "subcategoria1.tipo as subcategoria1",
+                "subcategoria2.tipo as subcategoria2",
+                "region1.nombre as region1",
+                "region2.nombre as region2",
+                "departamento.nombre as departamento",
+                "provincia.nombre as provincia",
+                "tienda.name as tienda",
+                "tipo_tienda.name as tipo_tienda",
+                "retail.name as retail")->get();
     }
 
 }

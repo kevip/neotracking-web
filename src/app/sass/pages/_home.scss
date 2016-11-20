@@ -1,0 +1,69 @@
+.dataTables_paginate{
+  display:none;
+}
+.dataTables_info,
+.dataTables_length{
+  display:none;
+}
+.actions .btn,
+.actions a{
+  float:right;
+  margin-top: 50px;
+  margin-right: 12px;
+  font-size: 11px;
+}
+.actions .btn{
+  padding: 0 10px;
+}
+#table1,
+#table1 tr th,
+#table1 tr td{
+  /*border: 1px solid;*/
+}
+
+.export-excel-icon{
+  width: 17px;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+@media screen{
+  #table2{
+    display: none;
+    .code-img{
+      width: 50px;
+    }
+    .h60{
+      height: 60px;
+    }
+    tr,td{
+      border: 1px solid black;
+    }
+    > tbody > tr > td{
+      text-align: right;
+    }
+  }
+}
+@media print {
+  #table2{
+    /*display: initial;*/
+  }
+}
+@media print {
+  tr, th, td{
+    border: 1px solid #000 !important !important;
+  }
+}
+@media print {
+  > tbody > tr > td{
+    text-align: right !important;
+  }
+}
+@media print {
+  .h60{
+    height: 60px !important;
+  }
+}

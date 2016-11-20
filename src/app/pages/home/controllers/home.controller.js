@@ -284,9 +284,19 @@
             },100); // trigger download
         };
         vm.printData = printData;
-        function printData()
+        function printData(data)
         {
-            var divToPrint=document.getElementById("table1");
+            var divToPrint=document.getElementById(data);
+            var htmlToPrint = '' +
+                '<style type="text/css">' +
+                '#table th, table td {' +
+                'border:1px solid #000;' +
+                'padding;0.5em;' +
+                '}' +
+                '.code-img{'+
+                'width: 50px;}'+
+                '</style>';
+            htmlToPrint += divToPrint.outerHTML;
             var newWin= window.open("");
             newWin.document.write(divToPrint.outerHTML);
             newWin.print();
@@ -295,7 +305,6 @@
 
 
         function abrirHistorial(stock){
-            console.log(stock);
             $http.post(API_URL+'stock/codigos', stock).then(function success(response){
                     $mdDialog.show({
                         controller: 'FurnitureHistory',
@@ -321,7 +330,7 @@
                 function error(err){
                     console.log(err);
                 });
-            return;
+            //return;
 
         }
     }

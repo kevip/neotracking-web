@@ -14,5 +14,6 @@
     function ContainerController($state, $scope) {
         var vm = this;
         vm.state =$scope.state= $state.current.name;
+        
     }
 })();
