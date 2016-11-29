@@ -25,7 +25,7 @@ class TracksController extends Controller
      */
     public function index(){
 
-        return Track::with(['tienda', 'trackImagen', 'usuario'])->get();
+        return Track::with(['tienda', 'trackImagen', 'usuario'])->orderBy('created_at', 'asc')->get();
     }
 
     /**

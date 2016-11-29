@@ -3,43 +3,49 @@
         <div></div>
     </div>
 </section>
-<section class="container usuarios" style="height: 405px;overflow: auto;">
+<section class="container usuarios tracking-container">
 
     <h5>Registro de tracking</h5>
+    <i ng-click="ctrl.refresh()" class="material-icons tooltipped refresh-icon" data-position="top" data-delay="50" data-tooltip="Actualizar">loop</i>
     <div class="input-field">
         <input id="buscar-track" type="text" ng-model="searchText">
         <label style="left:0;" for="buscar-track">Buscar</label>
     </div>
-    <table class="striped responsive-table">
-        <thead>
-        <tr>
-            <th data-field="id">Tienda</th>
-            <th data-field="id">Código</th>
-            <th data-field="id">Observacion</th>
-            <th data-field="id">Latitud</th>
-            <th data-field="id">Longitud</th>
-            <!--<th data-field="id">usr</th>-->
-            <th data-field="id">Número</th>
-            <th data-field="id">Fecha</th>
-        </tr>
-        </thead>
+    <div style="overflow: auto;height: 405px">
+        <table class="striped responsive-table">
+            <thead>
+            <tr>
+                <th data-field="id">Tienda</th>
+                <th data-field="id">Código</th>
+                <th data-field="id">Observacion</th>
+                <th data-field="id">Latitud</th>
+                <th data-field="id">Longitud</th>
+                <th data-field="id">Número</th>
+                <th data-field="id">Fecha</th>
+            </tr>
+            </thead>
 
-        <tbody>
-        <tr ng-repeat="track in ctrl.tracks | filter:searchText | orderBy: 'track.created_at':true " ng-click="ctrl.showMap(track)">
-            <td>{{track.tienda.name}}</td>
-            <td>{{track.codigo}}</td>
-            <td>{{track.obs}}</td>
-            <td>{{track.lat}}</td>
-            <td>{{track.lng}}</td>
-            <!--<td>{{track.usr}}</td>-->
-            <td>{{track.num}}</td>
-            <td>{{track.created_at}}</td>
-        </tr>
-        </tbody>
-    </table>
+            <tbody>
+            <tr ng-repeat="track in ctrl.tracks | filter:searchText | orderBy: 'track.created_at':true " ng-click="ctrl.showMap(track)">
+                <td>{{track.tienda.name}}</td>
+                <td>{{track.codigo}}</td>
+                <td>{{track.obs}}</td>
+                <td>{{track.lat}}</td>
+                <td>{{track.lng}}</td>
+                <td>{{track.num}}</td>
+                <td>{{track.created_at}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </section>
 <div class="container">
     <ng-map center="{{ctrl.ubicacion.lat}},{{ctrl.ubicacion.lng}}" zoom="15">
         <marker position="{{ctrl.ubicacion.lat}},{{ctrl.ubicacion.lng}}" title="Hello World!"></marker>
     </ng-map>
 </div>
+<script>
+    $(document).ready(function(){
+        $('.tooltipped').tooltip({delay: 50});
+    });
+</script>

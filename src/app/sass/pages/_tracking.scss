@@ -1,0 +1,9 @@
+.tracking-container{
+  position: relative;
+  .refresh-icon{
+    position: absolute;
+    right: 0;
+    top: 2px;
+    cursor: pointer;
+  }
+}

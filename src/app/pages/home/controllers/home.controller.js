@@ -57,6 +57,7 @@
         vm.subcategorias1 = filtros.subcategorias1;
         vm.subcategorias2 = filtros.subcategorias2;
         vm.submit = submit;
+        vm.submitSugeridosBaja = submitSugeridosBaja;
         vm.sync = sync;
         vm.selected = [];
         vm.tipoTienda = filtros.tipoTienda;
@@ -119,7 +120,7 @@
                     region2: vm.region2,
                     tipoTienda: vm.tipoTienda
                 },
-                clickOutsideToClose:true,
+                clickOutsideToClose:true
 
             })
                 .then(function(answer) {
@@ -131,17 +132,14 @@
                 });
         }
 
-        function submit(e){
+        function submit(e, sugeridos_baja){
             e.preventDefault();
-            console.log(vm.filters);
-            $http.post(API_URL+'stock/search',vm.filters).then(function success(response){
+            var filters = vm.filters;
+            if(sugeridos_baja === 'sugeridos_baja') {
+                filters.sugeridos_baja = true;
+            }
+            $http.post(API_URL+'stock/search',filters).then(function success(response){
                     vm.stocki = response.data;
-                    /*var def = $q.defer();
-                    def.resolve(response.data);
-                    vm.stock = def.promise;
-                    vm.dtInstance.rerender();
-                    */
-                    console.log(vm.stock);
                     vm.total = 0;
                     for(var i=0;i<response.data.length;i++){
                         vm.total += response.data[i].cantidad;
@@ -153,6 +151,24 @@
             });
 
         }
+
+        function submitSugeridosBaja(e){
+            e.preventDefault();
+            var filters = vm.filters;
+            filters.sugeridos_baja = true;
+            $http.post(API_URL+'stock/search',filters).then(function success(response){
+                    vm.stocki = response.data;
+                    vm.total = 0;
+                    for(var i=0;i<response.data.length;i++){
+                        vm.total += response.data[i].cantidad;
+
+                    }
+                },
+                function error(err){
+                    console.log(err);
+                });
+        }
+
         function sync(bool, item, tipo_filtro){
             if(bool){
                 if(tipo_filtro == "categoria"){
@@ -330,7 +346,7 @@
                 function error(err){
                     console.log(err);
                 });
-            //return;
+    //      //return;
 
         }
     }

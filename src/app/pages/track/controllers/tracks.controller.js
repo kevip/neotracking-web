@@ -15,14 +15,20 @@
 
     function TracksController($http, Track, $mdDialog, $scope) {
         var vm = this;
+        vm.refresh = refresh;
+        vm.showMap = showMap;
+        vm.tracks = Track.all();
+        vm.track={};
+        //coordenadas del centro de lima por defecto
         vm.ubicacion = {
             lat: -12.046374,
             lng: -77.0427934
         };
-        vm.tracks = Track.all();
-        vm.track={};
-        vm.showMap = showMap;
 
+        function refresh(){
+            vm.tracks = Track.all();
+            console.log("refresh!");
+        }
         function showMap(track) {
             vm.ubicacion.lat = track.lat;
             vm.ubicacion.lng = track.lng;

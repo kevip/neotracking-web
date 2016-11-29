@@ -10,7 +10,9 @@ use App\Models\Role;
 use App\Models\TrackStatus;
 use App\User;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Request;
+use Carbon\Carbon;
 
 use App\Models\Track;
 use App\Models\StockStatus;
@@ -127,10 +129,8 @@ class TrackRepository
         $stock = Stock::where('codigo', $codigo)->first();
         if(empty($stock)) {
             $stck = $this->createStockOnTrack($codigo, $tienda, $request->get('num'));
-        }else{
-            if($request->get('flag')=='Baja'){
-                $this->sugerirBaja($stock);
-            }
+        }else if($request->get('flag')=='Baja') {
+            $this->sugerirBaja($stock);
         }
 
         $phone_number = $request->get('num');
@@ -165,55 +165,47 @@ class TrackRepository
 
         $m->status_id = $t_status->id;
         $m->save();
+
         Log::debug("Nuevo track: ".$m->guid);
 
-        $this->cambiarTiendaMobiliario($m->codigo);
+        $this->cambiarTiendaMobiliario($m);
 
-        if($request->file('photo1') != null) {
-            Log::debug("Subio foto1: ");
-            $request->file('photo1')->getClientOriginalName();
-            $imageName = $m->id. '_1_' . $request->file('photo1')->getClientOriginalName()//.'.' .$request->file('photo')->getClientOriginalExtension()
-            ;
-            $request->file('photo1')->move(
-                base_path() . '/public/images/', $imageName
-            );
-
-            $photo1 = $this->regPhoto($m->id, $request->file('photo1'), $imageName);
-
-        }
-        if($request->file('photo2') != null) {
-            Log::debug("Subio foto2: ");
-            $request->file('photo2')->getClientOriginalName();
-            $imageName = $m->id . '_2_' . $request->file('photo2')->getClientOriginalName()//.'.' .$request->file('photo')->getClientOriginalExtension()
-            ;
-            $request->file('photo2')->move(
-                base_path() . '/public/images/', $imageName
-            );
-
-            $photo2 = $this->regPhoto($m->id, $request->file('photo2'), $imageName);
+        $now = Carbon::now();
+        $timestamp = $now->timestamp;
+        if($request->get('photo1') != null) {
+            Log::debug("Subiendo foto1... ");
+            $imageName = $m->id. '_1_' .$timestamp. '.jpg';
+            $img = base64_decode($request->get('photo1'));
+            $path_image =base_path() . '/public/images/' . $imageName;
+            file_put_contents( $path_image, $img);
+            //Storage::disk('public_image')->put($imageName, $img);
+            $photo1 = $this->regPhoto($m->id, $imageName, $path_image);
 
         }
-        if($request->file('photo3') != null) {
-            Log::debug("Subio foto3: ");
-            $request->file('photo3')->getClientOriginalName();
-            $imageName = $m->id . '_3_' . $request->file('photo3')->getClientOriginalName()//.'.' .$request->file('photo')->getClientOriginalExtension()
-            ;
-            $request->file('photo3')->move(
-                base_path() . '/public/images/', $imageName
-            );
+        if($request->get('photo2') != null) {
+            Log::debug("Subiendo foto2... ");
+            $imageName = $m->id. '_2_' .$timestamp. '.jpg';
+            $img = base64_decode($request->get('photo2'));
+            $path_image =base_path() . '/public/images/' . $imageName;
+            file_put_contents( $path_image, $img);
+            $photo1 = $this->regPhoto($m->id, $imageName, $path_image);
 
-            $photo3 = $this->regPhoto($m->id, $request->file('photo3'), $imageName);
         }
-        if($request->file('photo4') != null) {
-            Log::debug("Subio foto4: ");
-            $request->file('photo4')->getClientOriginalName();
-            $imageName = $m->id . '_4_' . $request->file('photo4')->getClientOriginalName()//.'.' .$request->file('photo')->getClientOriginalExtension()
-            ;
-            $request->file('photo4')->move(
-                base_path() . '/public/images/', $imageName
-            );
-
-            $photo4 = $this->regPhoto($m->id, $request->file('photo4'), $imageName);
+        if($request->get('photo3') != null) {
+            Log::debug("Subiendo foto3... ");
+            $imageName = $m->id. '_3_' .$timestamp. '.jpg';
+            $img = base64_decode($request->get('photo3'));
+            $path_image =base_path() . '/public/images/' . $imageName;
+            file_put_contents( $path_image, $img);
+            $photo1 = $this->regPhoto($m->id, $imageName, $path_image);
+        }
+        if($request->get('photo4') != null) {
+            Log::debug("Subiendo foto4... ");
+            $imageName = $m->id. '_4_' .$timestamp. '.jpg';
+            $img = base64_decode($request->get('photo2'));
+            $path_image =base_path() . '/public/images/' . $imageName;
+            file_put_contents( $path_image, $img);
+            $photo1 = $this->regPhoto($m->id, $imageName, $path_image);
         }
         //$this->em->detach($m);
         return response()->json(array('code' => $m->codigo));
@@ -225,20 +217,18 @@ class TrackRepository
      * @param $imageName
      * @return TrackImagen
      */
-    private function regPhoto($track_id, $file, $imageName){
+    private function regPhoto($track_id, $name, $imageName){
         $img = new TrackImagen();
         $img->track_id = $track_id;
 
-        $tipo = $file->getClientOriginalExtension();
-        $img->type = $tipo;
+        $img->type = 'jpg';
 
-        $name = $file->getClientOriginalName();
         $img->name = $name;
 
-        $img->url = 'http://lg.neoprojects.com.pe/images/' . $imageName;
-        //$img->url = base_path() . '/public/images/' . $imageName;
+        $img->url = 'http://lg.neoprojects.com.pe/images/' . $name;
 
         $img->save();
+        Log::debug("Se subio imagen");
         return $img;
     }
 
@@ -248,17 +238,24 @@ class TrackRepository
         $stock->save();
     }
 
-    private function cambiarTiendaMobiliario($codigo){
-        $stock = Stock::with(['stockStatus'])->where('codigo',$codigo)->first();
+    /**
+     * Cambia la ubicacion del mueble cuando un supervisor hace tracking si el mueble esta en estado de 'alta',
+     * el tracking tambien debera estar en estado de 'alta'
+     * @param $track
+     */
+    private function cambiarTiendaMobiliario($track){
+        $stock = Stock::with(['stockStatus'])->where('codigo',$track->codigo)->first();
         $s = $stock->toArray();
         $track_status_alta = TrackStatus::where('name', 'alta')->first();
-        if($s['stock_status']['name']=='alta'){
-            $trk = Track::where('status_id',$track_status_alta->id)->orderBy('created_at','desc')->first();
-            $stock->tienda_id = $trk->tienda_id;
-            $stock->save();
-            Log::debug("Se cambio de tienda a mobiliario");
-            //return "entré";
-        }
+        //if($s['stock_status']['name']=='alta'){
+            /*
+             * Si el tracking esta en estado de 'alta' se asigna la tienda donde se hizo el tracking al mueble
+             */
+            if($track->status_id == $track_status_alta->id){
+                $stock->tienda_id = $track->tienda_id;
+                $stock->save();
+            }
+        //}
     }
 
 }

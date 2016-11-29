@@ -26,16 +26,17 @@ class UserController extends Controller
      */
     public function index()
     {
-        $usrs =  User::with('roles')->get();
+        $usrs =  User::with('roles')->where('status','!=','baja')->orderBy('status','desc')->get();
         $users = [];
-        foreach($usrs->toArray() as $key => $user){
+        //uncomment line bellow to exclude administrators
+        /*foreach($usrs->toArray() as $key => $user){
             foreach($user['roles'] as $k => $rol){
                 if($rol['name'] !="Administrador"){
                     $users[] = $user;
                 }
             }
-        }
-        return $users;
+        }*/
+        return $usrs;
     }
 
     public function show($id)
