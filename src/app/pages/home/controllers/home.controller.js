@@ -57,7 +57,6 @@
         vm.subcategorias1 = filtros.subcategorias1;
         vm.subcategorias2 = filtros.subcategorias2;
         vm.submit = submit;
-        vm.submitSugeridosBaja = submitSugeridosBaja;
         vm.sync = sync;
         vm.selected = [];
         vm.tipoTienda = filtros.tipoTienda;
@@ -134,10 +133,11 @@
 
         function submit(e, sugeridos_baja){
             e.preventDefault();
-            var filters = vm.filters;
-            if(sugeridos_baja === 'sugeridos_baja') {
-                filters.sugeridos_baja = true;
-            }
+            var filters = angular.copy(vm.filters);
+            filters.sugeridos_baja = '';
+            if(sugeridos_baja === 'sugeridos_baja')
+                filters.sugeridos_baja = sugeridos_baja;
+            console.log(filters.sugeridos_baja);
             $http.post(API_URL+'stock/search',filters).then(function success(response){
                     vm.stocki = response.data;
                     vm.total = 0;
@@ -152,22 +152,7 @@
 
         }
 
-        function submitSugeridosBaja(e){
-            e.preventDefault();
-            var filters = vm.filters;
-            filters.sugeridos_baja = true;
-            $http.post(API_URL+'stock/search',filters).then(function success(response){
-                    vm.stocki = response.data;
-                    vm.total = 0;
-                    for(var i=0;i<response.data.length;i++){
-                        vm.total += response.data[i].cantidad;
 
-                    }
-                },
-                function error(err){
-                    console.log(err);
-                });
-        }
 
         function sync(bool, item, tipo_filtro){
             if(bool){

@@ -292,11 +292,12 @@ class ReportesRepository {
             ->join("subcategoria1", "subcategoria1.id", "=", "stock.subcategoria1_id")
             ->join("subcategoria2", "subcategoria2.id", "=", "stock.subcategoria2_id")
             ->join("stock_status", "stock_status.id", "=", "stock.status");
-        if(empty($sugeridos_baja)){
+        if($sugeridos_baja == 'sugeridos_baja'){
+            $query = $query->where("stock_status.name", "=", "pendiente_baja");
+
+        }else
             $query = $query->where("stock_status.name", "=", "alta")
                 ->orWhere("stock_status.name", "=", "pendiente_baja");
-        }else
-            $query = $query->where("stock_status.name", "=", "pendiente_baja");
 
         return $query->select(
                 "stock.codigo",
