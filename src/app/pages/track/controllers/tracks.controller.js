@@ -27,7 +27,6 @@
 
         function refresh(){
             vm.tracks = Track.all();
-            console.log("refresh!");
         }
         function showMap(track) {
             vm.ubicacion.lat = track.lat;

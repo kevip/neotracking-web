@@ -32,7 +32,14 @@
                 <td>{{track.obs}}</td>
                 <td>{{track.lat}}</td>
                 <td>{{track.lng}}</td>
-                <td>{{track.num}}</td>
+                <td>
+                    <a>
+                        <md-tooltip md-direction="top">
+                            {{ (track.usuario.first_name == '' && track.usuario.first_name== '')?'No reconocido':(track.usuario.first_name + ' ' + track.usuario.last_name) }}
+                        </md-tooltip>
+                        {{track.num}}
+                    </a>
+                </td>
                 <td>{{track.created_at}}</td>
             </tr>
             </tbody>
