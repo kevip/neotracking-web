@@ -123,7 +123,7 @@ class TrackRepository
             $tienda = $request->get('tienda');
         }
         Log::debug("Tienda: ".$tienda);
-
+        Log::debug("all: ". json_encode($request->except(['photo1', 'photo2', 'photo3' ,'photo4'])));
         $codigo = $request->get('codigo');
         Log::debug("codigo:". $codigo);
         $stock = Stock::where('codigo', $codigo)->first();
@@ -131,6 +131,7 @@ class TrackRepository
             $stck = $this->createStockOnTrack($codigo, $tienda, $request->get('num'));
         }else if($request->get('flag')=='Baja') {
             $this->sugerirBaja($stock);
+            Log::debug("Se sugirio la baja");
         }
 
         $phone_number = $request->get('num');

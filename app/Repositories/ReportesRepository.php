@@ -62,8 +62,7 @@ class ReportesRepository {
             ->join("subcategoria1","subcategoria1.id","=","stock.subcategoria1_id")
             ->join("subcategoria2","subcategoria2.id","=","stock.subcategoria2_id")
             ->join("stock_status","stock_status.id","=","stock.status")
-            ->where("stock_status.name", "=", "alta")
-            ->orWhere("stock_status.name", "=", "pendiente_baja")
+            ->where("stock_status.name", "!=", "baja")
             ->select(
                 "stock.codigo"
             );
@@ -97,7 +96,6 @@ class ReportesRepository {
     public function search(Request $request){
         $all = $request->all();
         $empty = true;
-        $arr = [];
         foreach($all as $k => $v){
             if(!empty($v))
                 $empty = false;
@@ -296,8 +294,7 @@ class ReportesRepository {
             $query = $query->where("stock_status.name", "=", "pendiente_baja");
 
         }else
-            $query = $query->where("stock_status.name", "=", "alta")
-                ->orWhere("stock_status.name", "=", "pendiente_baja");
+            $query = $query->where("stock_status.name", "<>", "baja");
 
         return $query->select(
                 "stock.codigo",
@@ -311,7 +308,7 @@ class ReportesRepository {
                 "stock_status.name as status",
                 "tienda.name as tienda",
                 "tipo_tienda.name as tipo_tienda",
-                "retail.name as retail")->get();
+                "retail.name as retail")->orderBy('categoria','asc')->get();
     }
 
 }
