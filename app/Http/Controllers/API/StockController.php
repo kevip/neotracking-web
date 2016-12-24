@@ -60,6 +60,10 @@ class StockController extends Controller
         return $this->stockRepository->update($request, $id);
     }
 
+    public function getLastTrack($codigo){
+        return Track::with(['trackImagen', 'status'])->where('codigo',$codigo)->orderBy('created_at','desc')->first();
+    }
+
     public function getHistory($codigo){
         //return Stock::with(['tracking']);
         return Track::with(['tienda', 'trackImagen', 'usuario', 'status'])->where('codigo',$codigo)->orderBy('created_at','desc')->get();

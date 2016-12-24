@@ -72,6 +72,8 @@ Route::group(['middleware' => ['cors']], function(){
 
             Route::get('stock/{codigo}/historial', 'API\StockController@getHistory');
 
+            Route::get('stock/{codigo}/last-track', 'API\StockController@getLastTrack');
+
             Route::post('stock-nuevo', 'API\StockController@newStock');
 
             //Route::resource('tienda', 'API\TiendasController');

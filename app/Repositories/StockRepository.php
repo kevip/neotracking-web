@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Track;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Request;
 
 use App\Models\Stock;
@@ -90,18 +91,27 @@ class StockRepository
     }
 
     public function update(Request $request, $id){
+        $validator = \Validator::make($request->all(), [
+            'categoria_id' => 'required | integer | min:1',
+            'subcategoria1_id' => 'required | integer | min:1',
+            'subcategoria2_id' => 'required | integer | min:1'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 428);
+        }
         $stock = Stock::find($id);
-        $categoria = $request->categoria;
+
+        $categoria = $request->categoria_id;
         if(!empty($categoria)){
             $stock->categoria_id = $categoria;
         }
 
-        $subcategoria1 = $request->subcategoria1;
+        $subcategoria1 = $request->subcategoria1_id;
         if(!empty($subcategoria1)){
             $stock->subcategoria1_id = $subcategoria1;
         }
 
-        $subcategoria2 = $request->subcategoria2;
+        $subcategoria2 = $request->subcategoria2_id;
         if(!empty($subcategoria2)){
             $stock->subcategoria2_id = $subcategoria2;
         }

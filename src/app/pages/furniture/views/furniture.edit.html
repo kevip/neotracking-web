@@ -21,23 +21,20 @@
                 </div>
             </div>
 
-            <!--<div class='row'>
+            <div class='row' ng-if="ctrl.track.track_imagen.length>0">
                 <div class='input-field col s12'>
-                    <div class="col s2">
-                        <p class="red-text text-darken-2">Código</p>
-                    </div>
-                    <div class="col s11">
-                        <input ng-model="ctrl.stock.codigo" class='validate' type="text" placeholder="Codigo" required/>
+                    <div class="col s3" ng-repeat="image in ctrl.track.track_imagen">
+                        <img class="responsive-img"  src="{{image.url}}" src="" alt=""/>
                     </div>
                 </div>
-            </div>-->
+            </div>
             <div class='row'>
                 <div class='input-field col s12'>
                     <div class="col s2">
                         <p class="red-text text-darken-2">Area</p>
                     </div>
                     <div class="col s11">
-                        <md-select class="width-100" placeholder="Area" data-ng-model="ctrl.stock.categoria">
+                        <md-select class="width-100" placeholder="Area" ng-model="ctrl.stock.categoria_id">
                             <md-option value="">Seleccionar area</md-option>
                             <md-option value="{{area.id}}" ng-repeat="area in ctrl.areas" >{{area.tipo}}</md-option>
                         </md-select>
@@ -50,7 +47,7 @@
                         <p class="red-text text-darken-2">Categoría</p>
                     </div>
                     <div class="col s11">
-                        <md-select class="width-100" placeholder="Categoria" data-ng-model="ctrl.stock.subcategoria1">
+                        <md-select class="width-100" placeholder="Categoria" ng-model="ctrl.stock.subcategoria1_id">
                             <!--<md-option value="one">One</md-option>-->
                             <md-option value="{{categoria.id}}" ng-repeat="categoria in ctrl.categorias" >{{categoria.tipo}}</md-option>
                         </md-select>
@@ -63,7 +60,7 @@
                         <p class="red-text text-darken-2">Subcategoria</p>
                     </div>
                     <div class="col s11">
-                        <md-select class="width-100" placeholder="Subcategoria" data-ng-model="ctrl.stock.subcategoria2">
+                        <md-select class="width-100" placeholder="Subcategoria" ng-model="ctrl.stock.subcategoria2_id">
                             <!--<md-option value="one">One</md-option>-->
                             <md-option value="{{subcategoria2.id}}" ng-repeat="subcategoria2 in ctrl.subcategorias" >{{subcategoria2.tipo}}</md-option>
                         </md-select>

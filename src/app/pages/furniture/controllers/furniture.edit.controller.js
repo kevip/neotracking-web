@@ -39,6 +39,12 @@
         vm.stock = stock;
         vm.state = $state.current.name;
         vm.submit = submit;
+        $http.get(API_URL+'stock/'+vm.stock.codigo+'/last-track').then(
+            function success(res){
+                vm.track = res.data;
+                console.log(vm.track);
+            }
+        );
 
 
         function submit(e){
@@ -51,16 +57,6 @@
             }, function error(err){
                 console.log(err);
             });
-            /*Stock.update(vm.stock,
-                function success(res){
-                    toastr.success("Se registró mueble con éxito");
-                    $state.go('index.furniture');
-                },
-                function error(error){
-                    console.log(error);
-                    toastr.error(error);
-                }
-            );*/
         }
     }
 })();
