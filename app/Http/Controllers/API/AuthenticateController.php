@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -12,7 +13,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthenticateController extends Controller
 {
-    public function authenticatse(Request $request)
+    /*public function authenticatse(Request $request)
     {
         // grab credentials from the request
         $credentials = $request->only('email', 'password');
@@ -29,10 +30,14 @@ class AuthenticateController extends Controller
 
         // all good so return the token
         return response()->json(compact('token'));
-    }
+    }*/
     public function authenticate(Request $request){
         $credentials = $request->only('email','password');
         $token = null;
+        $user = User::where('email',$request->email)->first();
+        if($user->status !=='activo'){
+            return response()->json(['error' => 'Acceso Invalido'],401);
+        }
         try{
             if(!$token = JWTAuth::attempt($credentials)){
                 return response()->json(['error' => 'Acceso Invalido'],401);

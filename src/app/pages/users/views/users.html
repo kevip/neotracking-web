@@ -17,7 +17,8 @@
         <li data-id="{{usuario.id}}" class="collection-item avatar" ng-repeat="usuario in ctrl.usuarios | filter:searchText">
             <div class="m12" ng-if="usuario.roles[0]!='Administrador'">
                 <div class="col m11">
-                    <span class="title"><b>{{usuario.first_name + ' ' + usuario.last_name}}</b></span>
+                    <span class="title"><b>{{usuario.first_name + ' ' + usuario.last_name}}</b></span><br/>
+                    <span class="new badge role-tag" data-badge-caption="{{rol.name}}" ng-repeat="rol in usuario.roles"></span><br/>
                     <p>Número: <b>{{usuario.phone_number}}</b></p>
                     <p>Email: {{usuario.email}} </br>Fecha de registro: {{usuario.created_at}}</p>
 

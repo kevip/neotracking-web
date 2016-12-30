@@ -33,7 +33,8 @@
             </p>
         </div>
     </div>
-    <div class='row' ng-if="ctrl.state=='index.user-new'">
+    <!--<div class='row' ng-if="ctrl.state=='index.user-new'">-->
+    <div class='row' ng-show="ctrl.user.rol == 1">
         <div class='input-field col s12'>
             <input ng-model="ctrl.user.password" class='validate' type='password' placeholder="Contraseña" />
         </div>
@@ -44,11 +45,11 @@
     <br />
     <center>
         <div class='row'>
-            <button ng-click="ctrl.submit($event)" type='submit' class='col offset-s3 s6 btn btn-large waves-effect red darken-2'>Registrar</button>
+            <button ng-if="ctrl.state=='index.user-new'" ng-click="ctrl.submit($event)" type='submit' class='col offset-s3 s6 btn btn-large waves-effect red darken-2'>Registrar</button>
+            <button ng-if="ctrl.state=='index.user-edit'" ng-click="ctrl.submit($event)" type='submit' class='col offset-s3 s6 btn btn-large waves-effect red darken-2'>Editar</button>
         </div>
     </center>
 </form>
 <script>
     $('select').material_select('destroy');
-    console.log("hoa");
 </script>

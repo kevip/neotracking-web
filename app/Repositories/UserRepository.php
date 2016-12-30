@@ -161,6 +161,7 @@ class UserRepository
         }
         $user->first_name   = $request->first_name;
         $user->last_name    = $request->last_name;
+        $user->password     = $request->password;
         $user->save();
         if(!empty($request->rol)){
             foreach($user->roles as $key => $rol){
