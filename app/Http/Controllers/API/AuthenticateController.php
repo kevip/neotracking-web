@@ -35,8 +35,11 @@ class AuthenticateController extends Controller
         $credentials = $request->only('email','password');
         $token = null;
         $user = User::where('email',$request->email)->first();
-        if($user->status !=='activo'){
-            return response()->json(['error' => 'Acceso Invalido'],401);
+        if(empty($user)){
+            return response()->json(['error' => 'No existe usuario'],401);
+        }
+        else if($user['status'] !=='activo'){
+            return response()->json(['error' => 'Debe dar de alta al usuario'],401);
         }
         try{
             if(!$token = JWTAuth::attempt($credentials)){

@@ -26,11 +26,17 @@ Route::group(['middleware' => ['cors']], function(){
 
             Route::get('ciudad', 'API\UbicacionController@getCiudad');
 
+            Route::get('ciudad-by-provincia', 'API\UbicacionController@getCiudadesByProvincia');
+
             Route::get('channel', 'API\ChannelController@index');
 
             Route::get('distrito', 'API\UbicacionController@getDistrito');
 
+            Route::get('distrito-by-ciudad', 'API\UbicacionController@getDistritosByCiudad');
+
             Route::get('departamento', 'API\UbicacionController@getDepartamentos');
+
+            Route::get('departamento-by-region2', 'API\UbicacionController@getDepartamentosByRegion2');
 
             Route::get('filtros', 'API\ReportesController@getFiltros');
 
@@ -38,11 +44,15 @@ Route::group(['middleware' => ['cors']], function(){
 
             Route::get('provincia', 'API\UbicacionController@getProvincias');
 
+            Route::get('provincia-by-departamento', 'API\UbicacionController@getProvinciasByDepartamento');
+
             Route::get('region1', 'API\UbicacionController@getRegion1');
 
             Route::get('retail', 'API\RetailController@index');
 
             Route::get('region2', 'API\UbicacionController@getRegion2');
+
+            Route::get('region2-by-region1', 'API\UbicacionController@getRegion2ByRegion1');
 
             Route::get('rol', 'API\RolesController@index');
 
@@ -75,6 +85,8 @@ Route::group(['middleware' => ['cors']], function(){
             Route::get('stock/{codigo}/last-track', 'API\StockController@getLastTrack');
 
             Route::post('stock-nuevo', 'API\StockController@newStock');
+
+            Route::get('stock-registros', 'API\StockController@getRegistros');
 
             //Route::resource('tienda', 'API\TiendasController');
 

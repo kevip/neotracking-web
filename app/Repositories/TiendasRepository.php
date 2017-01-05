@@ -39,7 +39,7 @@ class TiendasRepository {
             'retail_id' => $request->retail_id,
             'tipo_tienda_id'  => $request->tipo_tienda_id,
             'direccion'  =>  $request->direccion,
-            'name' => $request->name,
+            'name' => strtoupper($request->name),
             'direccion_ubicacion_id' => $ub->id
         ]);
 

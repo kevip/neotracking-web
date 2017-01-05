@@ -8,6 +8,13 @@
 <section class="container usuarios">
 
 <h5 style="margin:0;display: inline-block;">Mobiliarios</h5>
+    <p style="float: right;">
+        Registros:
+        <span class="green-text ">{{'Alta: '+ctrl.stock_registros.alta }} </span>,
+        <span class="red-text">{{'Baja: '+ctrl.stock_registros.baja}}</span>,
+        <span class="yellow-text text-darken-2">{{'Pendiente de alta: '+ctrl.stock_registros.pendientes }}</span>,
+        <span class="red-text text-lighten-3">{{'Pendiente de baja: '+ctrl.stock_registros.pendiente_baja}}</span>
+    </p>
 <a style="margin-bottom: 13px;margin-left: 10px;" title="crear nuevo" ui-sref="index.furniture-new" class="btn-floating btn waves-effect waves-light red"><i class="material-icons">add</i></a>
 <div class="input-field">
     <input id="buscar-mobiliario" type="text" ng-model="searchText">

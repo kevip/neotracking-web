@@ -16,7 +16,8 @@
         '$mdDialog','DTOptionsBuilder', 'DTColumnBuilder',
         '$q',
         'Excel',
-        '$timeout'
+        '$timeout',
+        'Tienda'
     ];
 
     function HomeController(
@@ -25,7 +26,7 @@
         Stock,
         filtros,
         $scope,
-        $mdDialog,DTOptionsBuilder, DTColumnBuilder, $q, Excel, $timeout) {
+        $mdDialog,DTOptionsBuilder, DTColumnBuilder, $q, Excel, $timeout, Tienda) {
 
         var vm = this;
 
@@ -90,7 +91,6 @@
             if(typeof item == 'undefined'){
 
                 for (var j = 0; j <= filter.length; j++) {
-                    console.log(filter);
                     filter.splice(j, 1);
                 }
             }
@@ -123,10 +123,10 @@
 
             })
                 .then(function(answer) {
-                    console.log(answer);
-                    $scope.status = 'You said the information was "' + answer + '".';
+                    Tienda.all().$promise.then(function(res){
+                        vm.tiendas = res;
+                    });
                 }, function(err) {
-                    console.log(err);
                     $scope.status = 'You cancelled the dialog.';
                 });
         }
@@ -137,7 +137,6 @@
             filters.sugeridos_baja = '';
             if(sugeridos_baja === 'sugeridos_baja')
                 filters.sugeridos_baja = sugeridos_baja;
-            console.log(filters.sugeridos_baja);
             $http.post(API_URL+'stock/search',filters).then(function success(response){
                     vm.stocki = response.data;
                     vm.total = 0;
@@ -243,7 +242,6 @@
                 dropItem(vm.filters[k]);
             }
 
-            console.log(vm.filters);
         }
         /*vm.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
             console.log(vm.stock);
@@ -321,7 +319,6 @@
                         fullscreen: false // Only for -xs, -sm breakpoints.
                     })
                         .then(function(answer) {
-                            console.log(answer);
                             $scope.status = 'You said the information was "' + answer + '".';
                         }, function(err) {
                             console.log(err);
