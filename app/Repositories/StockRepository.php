@@ -48,7 +48,7 @@ class StockRepository
         $stock->save();
         return $stock;
     }
-    public function index(){
+    public function index(Request $request){
 
         $query1 = \DB::table("stock");
         $query1 = $query1
@@ -86,6 +86,24 @@ class StockRepository
             )
             ->orderBy('stock_status.name', 'desc');
         $query2 = $query2->get();
+
+        $stock = collect(array_merge($query1, $query2));
+        if(isset($request->page)){
+            $page = $request->page;
+            $pagination = isset($request->pagination) ? $request->pagination : 20;
+            $prev_page = ($page-1 <= 0) ? null : $page-1;
+            $next_page = (count($stock->forPage($page+1,$pagination))) ? $page+1 : null;
+
+            $response = new \StdClass();
+
+            $response->prev_page = $prev_page;
+            $response->current_page = intval($page);
+            $response->next_page = $next_page;
+            $response->data = $stock->forPage($page,$pagination);
+            $response->per_page = $pagination;
+            $response->total = count($stock);
+            return collect($response);
+        }
 
         return array_merge($query1, $query2);
     }

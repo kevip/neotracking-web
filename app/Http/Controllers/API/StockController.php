@@ -30,9 +30,9 @@ class StockController extends Controller
         return TipoStock::all();
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->stockRepository->index();
+        return $this->stockRepository->index($request);
 
     }
 

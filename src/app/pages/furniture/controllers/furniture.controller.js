@@ -11,12 +11,13 @@
         '$mdDialog',
         'stocks',
         '$http',
-        'API_URL'
+        'API_URL',
+        'Stock'
     ];
 
-    function FurnitureController($mdDialog, stocks, $http, API_URL) {
+    function FurnitureController($mdDialog, stocks, $http, API_URL, Stock) {
         var vm = this;
-
+        vm.pageChangeHandler = pageChangeHandler;
         vm.showModalBaja = showModalBaja;
         vm.stock_registros = {
             alta : 0,
@@ -25,11 +26,26 @@
             baja : 0
         };
         vm.stocks = stocks;
+        vm.disablePaginator = false;
 
         $http.get(API_URL+'stock-registros').then(function(res){
             vm.stock_registros = res.data;
             vm.stock_registros.pendientes = res.data.pendiente_alta + res.data.pendiente_alta_puede_editar;
         });
+
+        function pageChangeHandler(newPageNumber, e){
+            if(!vm.disablePaginator){
+                vm.disablePaginator = true;
+                Stock.paginate({
+                    page: newPageNumber
+                }).$promise.then(successGetStock,errorGetStock);
+            }
+        }
+
+        function errorGetStock(){
+            vm.disablePaginator = false;
+        }
+
         function showModalBaja(e){
             var codigo = $(e.currentTarget).parent().parent().data('codigo');            
             $mdDialog.show({
@@ -40,6 +56,11 @@
                     codigo: codigo
                 }
             });
+        }
+
+        function successGetStock(response){
+            vm.disablePaginator = false;
+            vm.stocks = response;
         }
 
         function BajaMobiliarioModalController($http, API_URL, codigo, $mdDialog, toastr){

@@ -26,7 +26,11 @@
             </thead>
 
             <tbody>
-            <tr ng-repeat="track in ctrl.tracks | filter:searchText | orderBy: 'track.created_at':true " ng-click="ctrl.showMap(track)">
+            <!--<tr ng-repeat="track in ctrl.tracks | filter:searchText | orderBy: 'track.created_at':true " ng-click="ctrl.showMap(track)">-->
+            <tr dir-paginate="track in ctrl.tracks.data | itemsPerPage: ctrl.tracks.per_page"
+                total-items="ctrl.tracks.total"
+                current-page="ctrl.tracks.current_page"
+                ng-click="ctrl.showMap(track)">
                 <td>{{track.tienda.name}}</td>
                 <td>{{track.codigo}}</td>
                 <td>{{track.obs}}</td>
@@ -45,6 +49,7 @@
             </tbody>
         </table>
     </div>
+    <dir-pagination-controls ng-disabled="ctrl.disablePaginator" boundary-links="true" on-page-change="ctrl.pageChangeHandler(newPageNumber, $event)"></dir-pagination-controls>
 </section>
 <div class="container">
     <ng-map center="{{ctrl.ubicacion.lat}},{{ctrl.ubicacion.lng}}" zoom="15">

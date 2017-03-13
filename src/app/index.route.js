@@ -38,7 +38,10 @@
               controller: 'FurnitureController as ctrl',
               resolve: {
                   stocks: ['Stock',function(Stock){
-                    return Stock.all().$promise;
+                      //añadir parametro 'pagination' para obetener cantidad de items por pagina
+                    return Stock.paginate({
+                        page: 1
+                    }).$promise;
 
                 }]
               },
@@ -60,12 +63,6 @@
               url: '/furniture/new',
               templateUrl: 'app/pages/furniture/views/furniture.new.html',
               controller: 'FurnitureNewController as ctrl',
-              resolve: {
-                  stocks: ['Stock',function(Stock){
-                    return Stock.all().$promise;
-                  }]
-
-              },
               module: 'private'
           })
           .state('index.furniture-detail',{
@@ -85,7 +82,16 @@
               url: '/tracks',
               templateUrl: 'app/pages/track/views/tracks.html',
               controller: 'TracksController as ctrl',
-              module: 'private'
+              module: 'private',
+              resolve: {
+                  tracks: ['Track',function(Track){
+                      //añadir parametro 'pagination' para obetener cantidad de items por pagina
+                      return Track.paginate({
+                          page: 1
+                      }).$promise;
+
+                  }]
+              }
           })
           .state('index.users',{
               url: '/users',

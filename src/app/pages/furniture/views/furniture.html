@@ -21,10 +21,10 @@
     <label style="left:0;" for="buscar-mobiliario">Buscar</label>
 </div>
 <ul class="collection">
-    <li data-codigo="{{stock.codigo}}" class="collection-item avatar" ng-repeat="stock in ctrl.stocks | filter:searchText | orderBy: 'stock.stock_status.name':false ">
-        <!--<div>
-            <img src="{{ mobiliario.track_imagen[0].url}}" alt="" style="width:120px; height: 120px;">
-        </div>-->
+    <!--<li data-codigo="{{stock.codigo}}" class="collection-item avatar"
+        ng-repeat="stock in ctrl.stocks | filter:searchText | orderBy: 'stock.stock_status.name':false ">-->
+    <li data-codigo="{{stock.codigo}}" class="collection-item avatar"
+        dir-paginate="stock in ctrl.stocks.data | itemsPerPage: ctrl.stocks.per_page" total-items="ctrl.stocks.total" current-page="ctrl.stocks.current_page">
 
         <div>
             <p>
@@ -57,4 +57,6 @@
         </div>
     </li>
 </ul>
+    <dir-pagination-controls ng-disabled="ctrl.disablePaginator" boundary-links="true" on-page-change="ctrl.pageChangeHandler(newPageNumber, $event)"></dir-pagination-controls>
+    <!--<dir-pagination-controls boundary-links="true" on-page-change="ctrl.pageChangeHandler(newPageNumber)" template-url="dirPagination.tpl.html"></dir-pagination-controls>-->
 </section>
