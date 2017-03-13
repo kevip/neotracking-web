@@ -8,6 +8,8 @@ class Stock extends Model
 {
     protected $table = 'stock';
 
+    protected $perPage = 15;
+
     protected $fillable = [
         'cantidad',
         'categoria_id',

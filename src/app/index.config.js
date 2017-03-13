@@ -14,10 +14,10 @@
     toastrConfig.allowHtml = true;
     toastrConfig.timeOut = 3000;
     toastrConfig.positionClass = 'toast-top-right';
-    toastrConfig.preventDuplicates = true;
+    toastrConfig.preventDuplicates = false;
     toastrConfig.progressBar = true;
       $authProvider.loginUrl = "http://localhost:8000/auth_login";
-      
+      //$authProvider.loginUrl = "http://lg.neoprojects.com.pe/auth_login";
 
   }
 

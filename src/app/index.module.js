@@ -17,7 +17,8 @@
           'ngScrollbars',
           'ngMap',
           'datatables',
-          'datatables.buttons'
+          'datatables.buttons',
+          'angularUtils.directives.dirPagination'
       ]);
 
 })();

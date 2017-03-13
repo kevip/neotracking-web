@@ -8,16 +8,19 @@
     /** @ngInject */
     TracksController.$inject = [
         '$http',
+        'tracks',
         'Track',
         '$mdDialog',
         '$scope'
     ];
 
-    function TracksController($http, Track, $mdDialog, $scope) {
+    function TracksController($http, tracks, Track, $mdDialog, $scope) {
         var vm = this;
-        vm.refresh = refresh;
+        vm.disablePaginator = false;
         vm.showMap = showMap;
-        vm.tracks = Track.all();
+        vm.pageChangeHandler = pageChangeHandler;
+        vm.refresh = refresh;
+        vm.tracks = tracks;
         vm.track={};
         //coordenadas del centro de lima por defecto
         vm.ubicacion = {
@@ -25,30 +28,33 @@
             lng: -77.0427934
         };
 
-        function refresh(){
-            vm.tracks = Track.all();
+        function errorGetTracks(){
+            vm.disablePaginator = false;
         }
+
+        function refresh(){
+            Track.paginate({
+                page: 1
+            }).$promise.then(successGetTracks,errorGetTracks);
+        }
+
+        function pageChangeHandler(newPageNumber){
+            if(!vm.disablePaginator){
+                vm.disablePaginator = true;
+                Track.paginate({
+                    page: newPageNumber
+                }).$promise.then(successGetTracks,errorGetTracks);
+            }
+        }
+
         function showMap(track) {
             vm.ubicacion.lat = track.lat;
             vm.ubicacion.lng = track.lng;
-            /*$mdDialog.show({
-                controller: 'MapModalController',
-                controllerAs: 'modal',
-                templateUrl: 'app/pages/track/views/modals/map.modal.html',
-                locals:{
-                    ubicacion: vm.ubicacion
-                },
-                clickOutsideToClose:true,
-                fullscreen: false // Only for -xs, -sm breakpoints.
-            })
-                .then(function(answer) {
-                    console.log(answer);
-                    $scope.status = 'You said the information was "' + answer + '".';
-                }, function(err) {
-                    console.log(err);
-                    $scope.status = 'You cancelled the dialog.';
-                });
-            */
+        }
+
+        function successGetTracks(response){
+            vm.disablePaginator = false;
+            vm.tracks = response;
         }
 
     }
