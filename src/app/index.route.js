@@ -70,11 +70,9 @@
               templateUrl: 'app/pages/furniture/views/furniture.detail.html',
               controller: 'FurnitureDetailController as ctrl',
               resolve: {
-                tracks: ['Stock', '$stateParams', 'API_URL',function(Stock, $stateParams, API_URL){
-                    console.log(API_URL+'stock/'+$stateParams.codigo+'/historial');
-
-                    //return Stock.find({id: $stateParams.id});
-                }]
+                  stock: ['Stock', '$stateParams', function(Stock, $stateParams){
+                      return Stock.find({id:0, code:$stateParams.codigo}).$promise;
+                  }]
               },
               module: 'private'
           })

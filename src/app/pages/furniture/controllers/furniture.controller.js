@@ -12,11 +12,14 @@
         'stocks',
         '$http',
         'API_URL',
-        'Stock'
+        'Stock',
+        '$timeout',
+        '$scope'
     ];
 
-    function FurnitureController($mdDialog, stocks, $http, API_URL, Stock) {
-        var vm = this;
+    function FurnitureController($mdDialog, stocks, $http, API_URL, Stock, $timeout, $scope) {
+        var vm = this,
+            timeoutPromise;
         vm.pageChangeHandler = pageChangeHandler;
         vm.showModalBaja = showModalBaja;
         vm.stock_registros = {
@@ -33,17 +36,47 @@
             vm.stock_registros.pendientes = res.data.pendiente_alta + res.data.pendiente_alta_puede_editar;
         });
 
+        $scope.$watch('ctrl.keyword', searchFurniture, true);
+
         function pageChangeHandler(newPageNumber, e){
             if(!vm.disablePaginator){
                 vm.disablePaginator = true;
                 Stock.paginate({
-                    page: newPageNumber
+                    page: newPageNumber,
+                    keyword:vm.keyword
                 }).$promise.then(successGetStock,errorGetStock);
             }
         }
 
         function errorGetStock(){
             vm.disablePaginator = false;
+        }
+
+        /**
+         * This method makes an http call to users for every keyup and there's a delay of 800ms for every request,
+         * if a new http request is called before 800ms the last request is canceled
+         * @param keyword
+         * @param oldKeyword
+         */
+        function searchFurniture(keyword, oldKeyword){
+            //@TODO Create directive so you dont have to reuse this code
+            $timeout.cancel(timeoutPromise);
+            timeoutPromise = $timeout(function() {
+                if(typeof keyword !== 'undefined'){
+                    if(keyword.length>=3){
+                        Stock.paginate({
+                            page: 1,
+                            keyword:vm.keyword
+                        }).$promise.then(successGetStock,errorGetStock);
+                    }else if(typeof oldKeyword!=="undefined") {
+                        if(keyword.length<oldKeyword.length && keyword.length<3) {
+                            Stock.paginate({
+                                page: 1
+                            }).$promise.then(successGetStock,errorGetStock);
+                        }
+                    }
+                }
+            }, 500);
         }
 
         function showModalBaja(e){

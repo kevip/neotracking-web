@@ -47,8 +47,17 @@ class StockController extends Controller
     }
 
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        $code = $request->get('code');
+        if(isset($code)){
+            return Stock::with([
+                'categoria',
+                'subcategoria1',
+                'subcategoria2',
+                'stockStatus'
+            ])->where('codigo',$code)->first();
+        }
         return Stock::with([
             'categoria',
             'subcategoria1',

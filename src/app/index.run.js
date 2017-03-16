@@ -8,7 +8,6 @@
   /** @ngInject */
   function runBlock($rootScope, $location, authUser, toastr, $state) {
       var privateRoutes = [
-
           '/',
           '/admin',
           '/furniture/new',
@@ -16,7 +15,7 @@
           '/users',
           '/user/new'
       ];
-      //$rootScope.$on('$routeChangeStart', routeChangeStart);
+
       $rootScope.$on('$stateChangeStart',stateChangeStart);
 
       function routeChangeStart(){

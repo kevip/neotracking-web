@@ -55,14 +55,19 @@ class StockRepository
             ->join("tienda","tienda.id","=","stock.tienda_id")
             ->join("stock_status","stock_status.id","=","stock.status")
             ->where("stock_status.name", "=", "pendiente_alta")
-            ->orWhere("stock_status.name", "=", "pendiente_alta_puede_editar")
-            ->select(
+            ->orWhere("stock_status.name", "=", "pendiente_alta_puede_editar");
+
+        $query1 = $query1->select(
                 "stock.id",
                 "stock.codigo",
                 "tienda.name as tienda",
                 "stock_status.name as status"
             )
             ->orderBy('stock_status.name', 'desc');
+
+        if(isset($request->keyword))
+            $this->_searchColumn($query1,$request->keyword, 'tienda.name');
+
         $query1 = $query1->get();
 
         $query2 = \DB::table("stock");
@@ -74,8 +79,12 @@ class StockRepository
             ->join("stock_status","stock_status.id","=","stock.status")
             ->where("stock_status.name", "!=", "baja")
             ->where("stock_status.name", "!=", "pendiente_alta")
-            ->where("stock_status.name", "!=", "pendiente_alta_puede_editar")
-            ->select(
+            ->where("stock_status.name", "!=", "pendiente_alta_puede_editar");
+
+        if(isset($request->keyword))
+            $this->_searchColumn($query2, $request->keyword, 'tienda.name');
+
+        $query2 = $query2->select(
                 "stock.id",
                 "stock.codigo",
                 "categoria.tipo as categoria",
@@ -88,6 +97,7 @@ class StockRepository
         $query2 = $query2->get();
 
         $stock = collect(array_merge($query1, $query2));
+
         if(isset($request->page)){
             $page = $request->page;
             $pagination = isset($request->pagination) ? $request->pagination : 20;
@@ -182,6 +192,10 @@ class StockRepository
         }
 
         return $stock;
+    }
+
+    private function _searchColumn(&$query, $keyword, $column){
+        $query = $query->where($column, "like", "%" . $keyword . "%");
     }
 
 }

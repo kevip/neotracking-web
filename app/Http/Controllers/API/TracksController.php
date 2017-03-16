@@ -26,7 +26,21 @@ class TracksController extends Controller
      */
     public function index(Request $request)
     {
-        $tracks = Track::with(['tienda', 'trackImagen', 'usuario'])->orderBy('created_at', 'asc')->get();
+        if(isset($request->keyword)) {
+            $tracks = Track::with([
+                'tienda' => function($query) use ($request) {
+                    $query->where('name', 'like', '%' . $request->keyword . '%');
+                },
+                'trackImagen',
+                'usuario'
+            ])->orderBy('created_at', 'asc')->get();
+
+            $tracks = $tracks->filter(function($value, $key) use ($tracks){
+                return !is_null($value->tienda);
+            });
+        }else{
+            $tracks = Track::with(['tienda', 'trackImagen', 'usuario'])->orderBy('created_at', 'asc')->get();
+        }
 
         if(isset($request->page)){
             $page = $request->page;
@@ -61,6 +75,10 @@ class TracksController extends Controller
 
     public function baja(Request $request, $id){
         return $this->trackRepository->baja($request, $id);
+    }
+
+    private function _searchColumn(&$query, $keyword, $column){
+        $query = $query->where($column, "like", "%" . $keyword . "%");
     }
 
 
