@@ -67,7 +67,53 @@
                     </div>
                 </div>
             </div>
-
+            <div class='row'>
+                <div class='input-field col s12'>
+                    <div class="col s2">
+                        <p class="red-text text-darken-2">Precio(S/)</p>
+                    </div>
+                    <div class="col s11">
+                        <input type="text" ng-model="ctrl.stock.precio" ui-number-mask="2"/>
+                    </div>
+                </div>
+            </div>
+            <!--<div class='row'>
+                <div class='input-field col s12'>
+                    <div class="col s2">
+                        <p class="red-text text-darken-2">Proveedor</p>
+                    </div>
+                    <div class="col s11">
+                        <input type="text" ng-model="ctrl.stock.proveedor"/>
+                    </div>
+                </div>
+            </div>-->
+            <div class='row'>
+                <div class='input-field col s12'>
+                    <div class="col s3">
+                        <p class="red-text text-darken-2">Area</p>
+                    </div>
+                    <div class="col s10">
+                        <md-autocomplete
+                                md-no-cache="true"
+                                md-selected-item="ctrl.proveedor.nombre"
+                                md-select-on-match="ctrl.selectOnMatch"
+                                md-match-case-insensitive="true"
+                                md-search-text="ctrl.searchProveedor"
+                                md-selected-item-change="ctrl.selectedItemChange(item)"
+                                md-items="proveedor in ctrl.proveedores | filter: ctrl.searchProveedor"
+                                md-item-text="proveedor.nombre"
+                                md-min-length="0"
+                                placeholder="Proveedor">
+                            <md-item-template>
+                                <span md-highlight-text="ctrl.searchProveedor" md-highlight-flags="^i">{{proveedor.nombre}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                                No se encontró resultado para: "{{ctrl.searchProveedor}}"
+                            </md-not-found>
+                        </md-autocomplete>
+                    </div>
+                </div>
+            </div>
             <br />
             <center>
                 <div class='row'>

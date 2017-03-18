@@ -42,6 +42,8 @@ Route::group(['middleware' => ['cors']], function(){
 
             Route::post('mobiliario', 'API\MobiliarioController@store');
 
+            Route::resource('proveedores', 'API\ProveedoresController');
+
             Route::get('provincia', 'API\UbicacionController@getProvincias');
 
             Route::get('provincia-by-departamento', 'API\UbicacionController@getProvinciasByDepartamento');

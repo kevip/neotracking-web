@@ -18,7 +18,8 @@
           'ngMap',
           'datatables',
           'datatables.buttons',
-          'angularUtils.directives.dirPagination'
+          'angularUtils.directives.dirPagination',
+          'ui.utils.masks'
       ]);
 
 })();

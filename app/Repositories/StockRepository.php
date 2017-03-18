@@ -118,11 +118,13 @@ class StockRepository
         return array_merge($query1, $query2);
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $validator = \Validator::make($request->all(), [
             'categoria_id' => 'required | integer | min:1',
             'subcategoria1_id' => 'required | integer | min:1',
-            'subcategoria2_id' => 'required | integer | min:1'
+            'subcategoria2_id' => 'required | integer | min:1',
+            'precio'        => 'regex:/^\d*(\.\d{1,2})?$/ | max: 9999999999.99'
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 428);
@@ -142,6 +144,10 @@ class StockRepository
         $subcategoria2 = $request->subcategoria2_id;
         if(!empty($subcategoria2)){
             $stock->subcategoria2_id = $subcategoria2;
+        }
+        $precio = $request->precio;
+        if(!empty($precio)){
+            $stock->precio = $precio;
         }
 
         if($stock->status != $this->STOCK_STATUS['pendiente_baja']) {

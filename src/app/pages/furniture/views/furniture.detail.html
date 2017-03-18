@@ -17,9 +17,9 @@
         <div class="col s12 m12 card">
             <div class="col s12 m12">
                 <p>Vida útil: <b>{{ ctrl.vida_util + ' años'}}</b></p>
-                <p>Fecha Adquisición: <b>{{ctrl.stock.created_at}}</b></p>
-                <p>Precio:</p>
-                <p>Proveedor:</p>
+                <p>Fecha Adquisición: <b>{{ctrl.stock.created_at | date:'MM/dd/yyyy'}}</b></p>
+                <p>Precio: <b>{{ctrl.stock.precio | currency : 'S/.'}}</b></p>
+                <p>Proveedor: <b>{{ctrl.stock.proveedor}}</b></p>
             </div>
         </div>
         <div ng-repeat="track in ctrl.tracks" class="card" ng-if="track.status.name!='pendiente'">
